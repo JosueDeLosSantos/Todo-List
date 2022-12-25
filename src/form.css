@@ -1,0 +1,59 @@
+form {
+    background-color: lightcyan;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid hsl(0, 0%, 80%);
+}
+
+input, select {
+    height: 30px;
+    padding: 0 10px 0 10px;
+}
+
+input,
+textarea {
+    border: 1px solid hsl(0, 0%, 80%);
+    border-radius: 5px;
+    width: 95%;
+}
+
+textarea {
+    padding: 10px;
+}
+
+input:focus-visible,
+textarea:focus-visible {
+    outline: 1px solid hsl(0, 0%, 80%);
+}
+
+select {
+    border: none;
+    outline: none;
+    background-color: hsl(0, 0%, 95%);
+    border: 1px solid hsl(0, 0%, 90%);
+    width: 100%;
+}
+
+fieldset {
+    border: none;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+fieldset>legend {
+    font-weight: 600;
+}
+
+fieldset>label {
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+button {
+    
+    margin-top: 30px;
+    border-radius: 5px;
+    border: 1px solid hsl(0, 0%, 80%);
+}
