@@ -1,4 +1,5 @@
 import * as services from "./services";
+import * as DOM from "./DOM";
 import "./index.css";
 import "./form.css";
 import pinIcon from "./icons/pin.png";
@@ -20,6 +21,7 @@ const addProject = document.querySelector(".addProject");
 const fieldset = document.querySelector("fieldset");
 const projectCatcher = document.querySelector(".projectCatcher");
 const addProjectLink = document.querySelector(".addProjectLink");
+const DOMprojectList = document.querySelector(".DOMprojectList");
 
 main.appendChild(centerDiv);
 main.removeChild(form);
@@ -28,18 +30,21 @@ function showForm() {
   main.removeChild(centerDiv);
   main.appendChild(form);
 
-  let titleInput =
+  const titleInput =
     document.body.children[1].children[0].children[0].children[2];
-  let descriptionInput =
+  const descriptionInput =
     document.body.children[1].children[0].children[0].children[4];
-  let dateInput = document.body.children[1].children[0].children[0].children[6];
-  let priorityInput =
+  const dateInput =
+    document.body.children[1].children[0].children[0].children[6];
+  const priorityInput =
     document.body.children[1].children[0].children[0].children[8];
 
+  //Cleans all the inputs value
   titleInput.value = "";
   descriptionInput.value = "";
   dateInput.value = "";
   priorityInput.value = "";
+  projectCatcher.value = "";
 
   const projectList = fieldset.children[10];
   if (projectList.hidden == true) projectList.hidden = false;
@@ -48,6 +53,7 @@ window.showForm = showForm;
 spanCenter3.addEventListener("click", showForm);
 
 let taskRepo = [];
+let projectRepo = ["All"];
 
 function hideForm(e) {
   main.appendChild(centerDiv);
@@ -57,15 +63,45 @@ function hideForm(e) {
   let description = e.target.parentNode.children[4].value;
   let date = e.target.parentNode.children[6].value;
   let priority = e.target.parentNode.children[8].value;
-  const projectList = fieldset.children[10].value;
+  let projectList = fieldset.children[10].value;
 
   let task = { title, description, date, priority, projectList };
-  taskRepo.push(task);
-  console.log(taskRepo);
+  console.log(projectList);
   addProjectLink.hidden = false;
   projectCatcher.hidden = true;
-  if (services.onlyLettersAndNumbers(projectCatcher.value))
-    console.log(projectCatcher.value);
+
+  if (
+    services.onlyLetters(projectCatcher.value) ||
+    services.onlyLettersAndNumbers(projectCatcher.value)
+  ) {
+    //Returns if the project has already been added.
+    if (
+      services.arrWordFinder(projectRepo, projectCatcher.value) ==
+      projectCatcher.value
+    ) {
+      projectList = projectCatcher.value;
+      task = { title, description, date, priority, projectList };
+      taskRepo.push(task);
+      console.log(taskRepo);
+      return;
+    }
+
+    if (projectCatcher.value == "") {
+      projectList = projectList;
+      task = { title, description, date, priority, projectList };
+      taskRepo.push(task);
+      console.log(taskRepo);
+      return;
+    }
+
+    projectRepo.push(projectCatcher.value);
+    projectList = projectCatcher.value;
+    DOM.appendOption(DOMprojectList, projectCatcher.value);
+  }
+
+  task = { title, description, date, priority, projectList };
+  taskRepo.push(task);
+  console.log(taskRepo);
 }
 window.hideForm = hideForm;
 button.addEventListener("click", hideForm);
