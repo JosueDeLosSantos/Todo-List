@@ -1,3 +1,4 @@
+import * as services from "./services";
 import "./index.css";
 import "./form.css";
 import pinIcon from "./icons/pin.png";
@@ -18,6 +19,7 @@ const spanCenter3 = document.querySelector(".spanCenter3");
 const addProject = document.querySelector(".addProject");
 const fieldset = document.querySelector("fieldset");
 const projectCatcher = document.querySelector(".projectCatcher");
+const addProjectLink = document.querySelector(".addProjectLink");
 
 main.appendChild(centerDiv);
 main.removeChild(form);
@@ -38,6 +40,9 @@ function showForm() {
   descriptionInput.value = "";
   dateInput.value = "";
   priorityInput.value = "";
+
+  const projectList = fieldset.children[10];
+  if (projectList.hidden == true) projectList.hidden = false;
 }
 window.showForm = showForm;
 spanCenter3.addEventListener("click", showForm);
@@ -52,10 +57,15 @@ function hideForm(e) {
   let description = e.target.parentNode.children[4].value;
   let date = e.target.parentNode.children[6].value;
   let priority = e.target.parentNode.children[8].value;
+  const projectList = fieldset.children[10].value;
 
-  let task = { title, description, date, priority };
+  let task = { title, description, date, priority, projectList };
   taskRepo.push(task);
   console.log(taskRepo);
+  addProjectLink.hidden = false;
+  projectCatcher.hidden = true;
+  if (services.onlyLettersAndNumbers(projectCatcher.value))
+    console.log(projectCatcher.value);
 }
 window.hideForm = hideForm;
 button.addEventListener("click", hideForm);
@@ -64,8 +74,7 @@ function projectMaker(e) {
   const projectList = e.target.parentNode.parentNode.children[10];
   projectList.hidden = true;
   projectCatcher.hidden = false;
-  e.target.hidden = true;
-  console.log(projectList);
+  addProjectLink.hidden = true;
 }
 window.projectMaker = projectMaker;
 addProject.addEventListener("click", projectMaker);
