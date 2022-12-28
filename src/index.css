@@ -348,6 +348,10 @@ template {
   display: none;
 }
 
+body {
+  background-color:hsl(180, 100%, 100%);
+}
+
 nav {
     display: flex;
     justify-content: space-between;

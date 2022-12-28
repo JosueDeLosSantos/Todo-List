@@ -1,8 +1,13 @@
+:root {
+    --gray-border:hsl(0, 0%, 30%);
+}
+
 form {
-    background-color: lightcyan;
+    background-color: hsl(200, 100%, 94%);
     padding: 15px;
     border-radius: 10px;
-    border: 1px solid hsl(0, 0%, 80%);
+    border: 1px solid var(--gray-border);
+    color: var(--gray-border);
 }
 
 input, select {
@@ -12,9 +17,10 @@ input, select {
 
 input,
 textarea {
-    border: 1px solid hsl(0, 0%, 80%);
+    border: 1px solid var(--gray-border);
     border-radius: 5px;
     width: 95%;
+    color: inherit;
 }
 
 textarea {
@@ -23,15 +29,16 @@ textarea {
 
 input:focus-visible,
 textarea:focus-visible {
-    outline: 1px solid hsl(0, 0%, 80%);
+    outline: 1px solid var(--gray-border);
 }
 
 select {
     border: none;
     outline: none;
     background-color: hsl(0, 0%, 95%);
-    border: 1px solid hsl(0, 0%, 90%);
+    border: 1px solid var(--gray-border);
     width: 100%;
+    color: inherit;
 }
 
 fieldset {
@@ -52,8 +59,8 @@ fieldset>label {
 }
 
 button {
-    
+    padding: 5px 20px 5px 20px;
     margin-top: 30px;
     border-radius: 5px;
-    border: 1px solid hsl(0, 0%, 80%);
+    border: 1px solid var(--gray-border);
 }
