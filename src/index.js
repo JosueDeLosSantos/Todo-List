@@ -15,6 +15,9 @@ const centerDiv = document.querySelector(".centerDiv");
 const form = document.querySelector("form");
 const button = document.querySelector("button");
 const spanCenter3 = document.querySelector(".spanCenter3");
+const addProject = document.querySelector(".addProject");
+const fieldset = document.querySelector("fieldset");
+const projectCatcher = document.querySelector(".projectCatcher");
 
 main.appendChild(centerDiv);
 main.removeChild(form);
@@ -37,6 +40,7 @@ function showForm() {
   priorityInput.value = "";
 }
 window.showForm = showForm;
+spanCenter3.addEventListener("click", showForm);
 
 let taskRepo = [];
 
@@ -54,6 +58,14 @@ function hideForm(e) {
   console.log(taskRepo);
 }
 window.hideForm = hideForm;
-
-spanCenter3.addEventListener("click", showForm);
 button.addEventListener("click", hideForm);
+
+function projectMaker(e) {
+  const projectList = e.target.parentNode.parentNode.children[10];
+  projectList.hidden = true;
+  projectCatcher.hidden = false;
+  e.target.hidden = true;
+  console.log(projectList);
+}
+window.projectMaker = projectMaker;
+addProject.addEventListener("click", projectMaker);
