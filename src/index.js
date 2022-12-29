@@ -38,31 +38,32 @@ function showForm() {
     document.body.children[1].children[0].children[0].children[6];
   const priorityInput =
     document.body.children[1].children[0].children[0].children[8];
+  const projectList = fieldset.children[10];
 
-  //Cleans all the inputs value
+  // Cleans all the inputs value
   titleInput.value = "";
   descriptionInput.value = "";
   dateInput.value = "";
   priorityInput.value = "";
   projectCatcher.value = "";
+  projectList.value = "All";
 
-  const projectList = fieldset.children[10];
-  if (projectList.hidden == true) projectList.hidden = false;
+  if (projectList.hidden === true) projectList.hidden = false;
 }
 window.showForm = showForm;
 spanCenter3.addEventListener("click", showForm);
 
-let taskRepo = [];
-let projectRepo = ["All"];
+const taskRepo = [];
+const projectRepo = ["All"];
 
 function hideForm(e) {
   main.appendChild(centerDiv);
   main.removeChild(form);
 
-  let title = e.target.parentNode.children[2].value;
-  let description = e.target.parentNode.children[4].value;
-  let date = e.target.parentNode.children[6].value;
-  let priority = e.target.parentNode.children[8].value;
+  const title = e.target.parentNode.children[2].value;
+  const description = e.target.parentNode.children[4].value;
+  const date = e.target.parentNode.children[6].value;
+  const priority = e.target.parentNode.children[8].value;
   let projectList = fieldset.children[10].value;
 
   let task = { title, description, date, priority, projectList };
@@ -70,24 +71,23 @@ function hideForm(e) {
   addProjectLink.hidden = false;
   projectCatcher.hidden = true;
 
+  if (projectCatcher.value === "") {
+    task = { title, description, date, priority, projectList };
+    taskRepo.push(task);
+    console.log(taskRepo);
+    return;
+  }
+
   if (
     services.onlyLetters(projectCatcher.value) ||
     services.onlyLettersAndNumbers(projectCatcher.value)
   ) {
-    //Returns if the project has already been added.
     if (
-      services.arrWordFinder(projectRepo, projectCatcher.value) ==
+      // if the project has already been added to projectRepo.
+      services.arrWordFinder(projectRepo, projectCatcher.value) ===
       projectCatcher.value
     ) {
       projectList = projectCatcher.value;
-      task = { title, description, date, priority, projectList };
-      taskRepo.push(task);
-      console.log(taskRepo);
-      return;
-    }
-
-    if (projectCatcher.value == "") {
-      projectList = projectList;
       task = { title, description, date, priority, projectList };
       taskRepo.push(task);
       console.log(taskRepo);
