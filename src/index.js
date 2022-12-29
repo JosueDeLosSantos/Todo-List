@@ -68,10 +68,6 @@ function hideForm(e) {
   const priority = e.target.parentNode.children[8].value;
   let projectList = fieldset.children[10].value;
 
-  /* if (title.value === null || title.value === undefined || title.value === "") {
-    return;
-  } */
-
   let task = { title, description, date, priority, projectList };
   if (!services.onlyLettersAndNumbers(title) && !services.onlyLetters(title)) {
     return;

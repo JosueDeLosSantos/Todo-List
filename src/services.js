@@ -17,3 +17,8 @@ export function arrWordFinder(array, word) {
 export function containsAnyLetters(str) {
   return /[a-zA-Z]/.test(str);
 }
+
+// Array constructor
+export function arrayBuilder(newArray) {
+  return newArray;
+}

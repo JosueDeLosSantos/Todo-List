@@ -3,12 +3,20 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   mode: "development",
-  entry: { index: ["./src/index.js", "./src/services.js", "./src/DOM.js"] },
+  entry: {
+    index: ["./src/index.js", "./src/services.js", "./src/DOM.js"],
+    projects: ["./src/projectList/projects.js"],
+  },
   plugins: [
     new HtmlWebpackPlugin({
       filename: "index.html",
       template: "src/index.html",
       chunks: ["index"],
+    }),
+    new HtmlWebpackPlugin({
+      filename: "projects.html",
+      template: "src/projectList/projects.html",
+      chunks: ["projects"],
     }),
   ],
   devtool: "eval-source-map",
