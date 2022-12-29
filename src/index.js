@@ -59,6 +59,8 @@ const projectRepo = ["All"];
 function hideForm(e) {
   main.appendChild(centerDiv);
   main.removeChild(form);
+  projectCatcher.hidden = true;
+  addProjectLink.hidden = false;
 
   const title = e.target.parentNode.children[2].value;
   const description = e.target.parentNode.children[4].value;
@@ -66,10 +68,18 @@ function hideForm(e) {
   const priority = e.target.parentNode.children[8].value;
   let projectList = fieldset.children[10].value;
 
+  /* if (title.value === null || title.value === undefined || title.value === "") {
+    return;
+  } */
+
   let task = { title, description, date, priority, projectList };
+  if (!services.onlyLettersAndNumbers(title) && !services.onlyLetters(title)) {
+    return;
+  }
+
+  if (!services.containsAnyLetters(title)) return;
+
   console.log(projectList);
-  addProjectLink.hidden = false;
-  projectCatcher.hidden = true;
 
   if (projectCatcher.value === "") {
     task = { title, description, date, priority, projectList };
