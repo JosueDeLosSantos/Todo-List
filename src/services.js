@@ -27,3 +27,10 @@ export function containsNumbers(str) {
 export function arrayBuilder(newArray) {
   return newArray;
 }
+
+// localStorage iterator
+export function lSiterator(parameter) {
+  for (let i = 0; i <= parameter; i += 1) {
+    JSON.parse(localStorage.getItem(`${i}`));
+  }
+}

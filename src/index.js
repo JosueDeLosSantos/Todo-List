@@ -90,6 +90,16 @@ function hideForm(e) {
   if (projectCatcher.value === "") {
     taskRepo.push(task);
     console.log(taskRepo);
+
+    if (tracker == 0) {
+      counter += 1;
+      localStorage.setItem("counter", `${counter}`);
+      localStorage.setItem(`${counter}`, JSON.stringify(task));
+    } else {
+      tracker += 1;
+      localStorage.setItem("counter", `${tracker}`);
+      localStorage.setItem(`${tracker}`, JSON.stringify(task));
+    }
     return;
   }
 
@@ -107,6 +117,16 @@ function hideForm(e) {
       task = { title, description, date, priority, projectList };
       taskRepo.push(task);
       console.log(taskRepo);
+
+      if (tracker == 0) {
+        counter += 1;
+        localStorage.setItem("counter", `${counter}`);
+        localStorage.setItem(`${counter}`, JSON.stringify(task));
+      } else {
+        tracker += 1;
+        localStorage.setItem("counter", `${tracker}`);
+        localStorage.setItem(`${tracker}`, JSON.stringify(task));
+      }
       return;
     }
 
@@ -116,6 +136,16 @@ function hideForm(e) {
     taskRepo.push(task);
     DOM.appendOption(DOMprojectList, projectCatcher.value);
     console.log(taskRepo);
+
+    if (tracker == 0) {
+      counter += 1;
+      localStorage.setItem("counter", `${counter}`);
+      localStorage.setItem(`${counter}`, JSON.stringify(task));
+    } else {
+      tracker += 1;
+      localStorage.setItem("counter", `${tracker}`);
+      localStorage.setItem(`${tracker}`, JSON.stringify(task));
+    }
     return;
   }
 
@@ -134,7 +164,9 @@ function projectMaker(e) {
 window.projectMaker = projectMaker;
 addProject.addEventListener("click", projectMaker);
 
+let objectCatcher = [];
 for (let i = 0; i <= tracker; i += 1) {
-  console.log(JSON.parse(localStorage.getItem(`${i}`)));
+  objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
 }
-console.log(tracker);
+
+console.log(objectCatcher[1].title);
