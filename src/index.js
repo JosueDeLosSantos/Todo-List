@@ -55,6 +55,10 @@ spanCenter3.addEventListener("click", showForm);
 
 const taskRepo = [];
 const projectRepo = ["All"];
+let counter = 0;
+let tracker = localStorage.getItem("counter");
+tracker = +tracker;
+console.log(tracker);
 
 function hideForm(e) {
   main.appendChild(centerDiv);
@@ -69,18 +73,26 @@ function hideForm(e) {
   let projectList = fieldset.children[10].value;
 
   let task = { title, description, date, priority, projectList };
+
+  if (tracker == 0) {
+    counter += 1;
+    localStorage.setItem("counter", `${counter}`);
+    localStorage.setItem(`${counter}`, JSON.stringify(task));
+  } else {
+    tracker += 1;
+    localStorage.setItem("counter", `${tracker}`);
+    localStorage.setItem(`${tracker}`, JSON.stringify(task));
+  }
+
   if (!services.onlyLettersAndNumbers(title) && !services.onlyLetters(title)) {
     return;
   }
 
   if (!services.containsAnyLetters(title)) return;
 
-  console.log(projectList);
-
   if (projectCatcher.value === "") {
     task = { title, description, date, priority, projectList };
     taskRepo.push(task);
-    console.log(taskRepo);
     return;
   }
 
@@ -96,7 +108,6 @@ function hideForm(e) {
       projectList = projectCatcher.value;
       task = { title, description, date, priority, projectList };
       taskRepo.push(task);
-      console.log(taskRepo);
       return;
     }
 
@@ -107,7 +118,6 @@ function hideForm(e) {
 
   task = { title, description, date, priority, projectList };
   taskRepo.push(task);
-  console.log(taskRepo);
 }
 window.hideForm = hideForm;
 button.addEventListener("click", hideForm);
