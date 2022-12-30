@@ -58,6 +58,9 @@ const projectRepo = ["All"];
 let counter = 0;
 let tracker = localStorage.getItem("counter");
 tracker = +tracker;
+for (let i = 0; i <= tracker; i += 1) {
+  console.log(localStorage.getItem(`${i}`));
+}
 console.log(tracker);
 
 function hideForm(e) {
