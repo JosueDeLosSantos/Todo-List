@@ -58,10 +58,6 @@ const projectRepo = ["All"];
 let counter = 0;
 let tracker = localStorage.getItem("counter");
 tracker = +tracker;
-for (let i = 0; i <= tracker; i += 1) {
-  console.log(localStorage.getItem(`${i}`));
-}
-console.log(tracker);
 
 function hideForm(e) {
   main.appendChild(centerDiv);
@@ -77,7 +73,7 @@ function hideForm(e) {
 
   let task = { title, description, date, priority, projectList };
 
-  if (tracker == 0) {
+  /* if (tracker == 0) {
     counter += 1;
     localStorage.setItem("counter", `${counter}`);
     localStorage.setItem(`${counter}`, JSON.stringify(task));
@@ -85,42 +81,46 @@ function hideForm(e) {
     tracker += 1;
     localStorage.setItem("counter", `${tracker}`);
     localStorage.setItem(`${tracker}`, JSON.stringify(task));
-  }
+  } */
 
-  if (!services.onlyLettersAndNumbers(title) && !services.onlyLetters(title)) {
+  if (!services.containsAnyLetters(title) && !services.containsNumbers(title)) {
     return;
   }
-
-  if (!services.containsAnyLetters(title)) return;
 
   if (projectCatcher.value === "") {
-    task = { title, description, date, priority, projectList };
     taskRepo.push(task);
+    console.log(taskRepo);
     return;
   }
 
+  // if projectCatcher.value contains only letters or only letters and numbers
   if (
     services.onlyLetters(projectCatcher.value) ||
     services.onlyLettersAndNumbers(projectCatcher.value)
   ) {
+    // if the projectCatcher.value has already been added to projectRepo.
     if (
-      // if the project has already been added to projectRepo.
       services.arrWordFinder(projectRepo, projectCatcher.value) ===
       projectCatcher.value
     ) {
       projectList = projectCatcher.value;
       task = { title, description, date, priority, projectList };
       taskRepo.push(task);
+      console.log(taskRepo);
       return;
     }
 
     projectRepo.push(projectCatcher.value);
     projectList = projectCatcher.value;
+    task = { title, description, date, priority, projectList };
+    taskRepo.push(task);
     DOM.appendOption(DOMprojectList, projectCatcher.value);
+    console.log(taskRepo);
+    return;
   }
 
-  task = { title, description, date, priority, projectList };
   taskRepo.push(task);
+  console.log(taskRepo);
 }
 window.hideForm = hideForm;
 button.addEventListener("click", hideForm);
@@ -133,3 +133,8 @@ function projectMaker(e) {
 }
 window.projectMaker = projectMaker;
 addProject.addEventListener("click", projectMaker);
+
+for (let i = 0; i <= tracker; i += 1) {
+  console.log(JSON.parse(localStorage.getItem(`${i}`)));
+}
+console.log(tracker);

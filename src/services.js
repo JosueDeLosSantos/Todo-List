@@ -18,6 +18,11 @@ export function containsAnyLetters(str) {
   return /[a-zA-Z]/.test(str);
 }
 
+// Ensures that str contains any numbers
+export function containsNumbers(str) {
+  return /\d/.test(str);
+}
+
 // Array constructor
 export function arrayBuilder(newArray) {
   return newArray;
