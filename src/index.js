@@ -27,7 +27,7 @@ main.appendChild(centerDiv);
 main.removeChild(form);
 
 const taskRepo = [];
-const projectRepo = [];
+const oldPR = [];
 let counter = 0;
 let tracker = localStorage.getItem("counter");
 tracker = +tracker;
@@ -37,14 +37,12 @@ for (let i = 1; i <= tracker; i += 1) {
   objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
 }
 
-// Adds options to the project list on the form when page loads
-objectCatcher.forEach((index) =>
-  DOM.appendOption(selectProjectList, `${index.projectList}`)
-);
+// Adds all projectList values to 'oldPR'
+objectCatcher.forEach((index) => oldPR.push(`${index.projectList}`));
+// Returns "oldPR" without duplicates.
+const projectRepo = services.noDupArray(oldPR);
 
 function showForm() {
-  objectCatcher.forEach((index) => projectRepo.push(index.projectList));
-
   main.removeChild(centerDiv);
   main.appendChild(form);
 
@@ -64,11 +62,6 @@ function showForm() {
   dateInput.value = "";
   priorityInput.value = "";
   projectCatcher.value = "";
-  if (tracker === 0) {
-    const optionalValue = document.createElement("option");
-    optionalValue.innerText = "All";
-    selectProjectList.appendChild(optionalValue);
-  }
 
   if (projectList.hidden === true) projectList.hidden = false;
 }
@@ -93,7 +86,10 @@ function hideForm(e) {
     return;
   }
 
-  if (projectCatcher.value === "") {
+  if (
+    !services.containsAnyLetters(projectCatcher.value) &&
+    !services.containsNumbers(projectCatcher.value)
+  ) {
     taskRepo.push(task);
     console.log(taskRepo);
 
@@ -109,10 +105,9 @@ function hideForm(e) {
     return;
   }
 
-  // if projectCatcher.value contains only letters or only letters and numbers
   if (
-    services.onlyLetters(projectCatcher.value) ||
-    services.onlyLettersAndNumbers(projectCatcher.value)
+    services.containsAnyLetters(projectCatcher.value) ||
+    services.containsNumbers(projectCatcher.value)
   ) {
     // if the projectCatcher.value has already been added to projectRepo.
     if (
@@ -152,9 +147,6 @@ function hideForm(e) {
     }
     return;
   }
-
-  taskRepo.push(task);
-  console.log(taskRepo);
 }
 window.hideForm = hideForm;
 button.addEventListener("click", hideForm);

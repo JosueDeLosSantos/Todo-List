@@ -22,3 +22,8 @@ export function containsAnyLetters(str) {
 export function containsNumbers(str) {
   return /\d/.test(str);
 }
+
+// Returns an array without duplicates
+export function noDupArray(array) {
+  return Array.from(new Set(array));
+}
