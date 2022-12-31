@@ -21,12 +21,30 @@ const addProject = document.querySelector(".addProject");
 const fieldset = document.querySelector("fieldset");
 const projectCatcher = document.querySelector(".projectCatcher");
 const addProjectLink = document.querySelector(".addProjectLink");
-const DOMprojectList = document.querySelector(".DOMprojectList");
+const selectProjectList = document.querySelector(".selectProjectList");
 
 main.appendChild(centerDiv);
 main.removeChild(form);
 
+const taskRepo = [];
+const projectRepo = [];
+let counter = 0;
+let tracker = localStorage.getItem("counter");
+tracker = +tracker;
+
+const objectCatcher = [];
+for (let i = 1; i <= tracker; i += 1) {
+  objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
+}
+
+// Adds options to the project list on the form when page loads
+objectCatcher.forEach((index) =>
+  DOM.appendOption(selectProjectList, `${index.projectList}`)
+);
+
 function showForm() {
+  objectCatcher.forEach((index) => projectRepo.push(index.projectList));
+
   main.removeChild(centerDiv);
   main.appendChild(form);
 
@@ -46,18 +64,16 @@ function showForm() {
   dateInput.value = "";
   priorityInput.value = "";
   projectCatcher.value = "";
-  projectList.value = "All";
+  if (tracker === 0) {
+    const optionalValue = document.createElement("option");
+    optionalValue.innerText = "All";
+    selectProjectList.appendChild(optionalValue);
+  }
 
   if (projectList.hidden === true) projectList.hidden = false;
 }
 window.showForm = showForm;
 spanCenter3.addEventListener("click", showForm);
-
-const taskRepo = [];
-const projectRepo = ["All"];
-let counter = 0;
-let tracker = localStorage.getItem("counter");
-tracker = +tracker;
 
 function hideForm(e) {
   main.appendChild(centerDiv);
@@ -72,16 +88,6 @@ function hideForm(e) {
   let projectList = fieldset.children[10].value;
 
   let task = { title, description, date, priority, projectList };
-
-  /* if (tracker == 0) {
-    counter += 1;
-    localStorage.setItem("counter", `${counter}`);
-    localStorage.setItem(`${counter}`, JSON.stringify(task));
-  } else {
-    tracker += 1;
-    localStorage.setItem("counter", `${tracker}`);
-    localStorage.setItem(`${tracker}`, JSON.stringify(task));
-  } */
 
   if (!services.containsAnyLetters(title) && !services.containsNumbers(title)) {
     return;
@@ -130,11 +136,9 @@ function hideForm(e) {
       return;
     }
 
-    projectRepo.push(projectCatcher.value);
     projectList = projectCatcher.value;
     task = { title, description, date, priority, projectList };
     taskRepo.push(task);
-    DOM.appendOption(DOMprojectList, projectCatcher.value);
     console.log(taskRepo);
 
     if (tracker == 0) {
@@ -163,10 +167,3 @@ function projectMaker(e) {
 }
 window.projectMaker = projectMaker;
 addProject.addEventListener("click", projectMaker);
-
-let objectCatcher = [];
-for (let i = 0; i <= tracker; i += 1) {
-  objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
-}
-
-console.log(objectCatcher[1].title);
