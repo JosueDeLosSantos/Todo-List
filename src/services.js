@@ -8,9 +8,19 @@ export function onlyLetters(str) {
   return /^[a-zA-Z]+$/.test(str);
 }
 
-// find word on array
-export function arrWordFinder(array, word) {
-  return array.find((element) => element === `${word}`);
+// find element on array
+export function arrElementFinder(array, element) {
+  return array.find((index) => index === `${element}`);
+}
+
+// find element on array and return new array without such element
+export function arrElementKiller(array, element) {
+  array.forEach((index) => {
+    if (array[index] === element) {
+      array.splice(index, 1);
+    }
+  });
+  return array;
 }
 
 // Ensures that str contains any letters

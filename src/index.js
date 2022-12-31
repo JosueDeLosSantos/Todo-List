@@ -26,21 +26,49 @@ const selectProjectList = document.querySelector(".selectProjectList");
 main.appendChild(centerDiv);
 main.removeChild(form);
 
-const taskRepo = [];
 const oldPR = [];
 let counter = 0;
 let tracker = localStorage.getItem("counter");
 tracker = +tracker;
 
 const objectCatcher = [];
+
 for (let i = 1; i <= tracker; i += 1) {
+  // JSON.parse() converts localStorage JSON items into JS objects
+  // Appends each object to objectCatcher
   objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
 }
 
 // Adds all projectList values to 'oldPR'
 objectCatcher.forEach((index) => oldPR.push(`${index.projectList}`));
+
 // Returns "oldPR" without duplicates.
 const projectRepo = services.noDupArray(oldPR);
+
+// Appends an "All" default value to selectProjectList if projectRepo is empty
+if (projectRepo.length === 0) {
+  const optionalValue = document.createElement("option");
+  optionalValue.innerText = "All";
+  selectProjectList.appendChild(optionalValue);
+
+  // if projectRepo is not empty
+} else if (projectRepo.length > 0) {
+  // if the value "All" exists on projectRepo
+  if (services.arrElementFinder(projectRepo, "All")) {
+    // Returns a new array without the value "All"
+    const subPrepo = services.arrElementKiller(projectRepo, "All");
+
+    // Appends all elements of subPrepo to selectProjectList
+    subPrepo.forEach((index) => DOM.appendOption(selectProjectList, index));
+  } else {
+    const optionalValue = document.createElement("option");
+    optionalValue.innerText = "All";
+    selectProjectList.appendChild(optionalValue);
+
+    // Appends all elements of projectRepo to selectProjectList
+    projectRepo.forEach((index) => DOM.appendOption(selectProjectList, index));
+  }
+}
 
 function showForm() {
   main.removeChild(centerDiv);
@@ -68,6 +96,9 @@ function showForm() {
 window.showForm = showForm;
 spanCenter3.addEventListener("click", showForm);
 
+console.log(projectRepo);
+console.log(objectCatcher);
+
 function hideForm(e) {
   main.appendChild(centerDiv);
   main.removeChild(form);
@@ -83,6 +114,12 @@ function hideForm(e) {
   let task = { title, description, date, priority, projectList };
 
   if (!services.containsAnyLetters(title) && !services.containsNumbers(title)) {
+    if (
+      services.containsAnyLetters(projectCatcher.value) ||
+      services.containsNumbers(projectCatcher.value)
+    ) {
+      DOM.appendOption(selectProjectList, projectCatcher.value);
+    }
     return;
   }
 
@@ -90,9 +127,6 @@ function hideForm(e) {
     !services.containsAnyLetters(projectCatcher.value) &&
     !services.containsNumbers(projectCatcher.value)
   ) {
-    taskRepo.push(task);
-    console.log(taskRepo);
-
     if (tracker == 0) {
       counter += 1;
       localStorage.setItem("counter", `${counter}`);
@@ -111,13 +145,11 @@ function hideForm(e) {
   ) {
     // if the projectCatcher.value has already been added to projectRepo.
     if (
-      services.arrWordFinder(projectRepo, projectCatcher.value) ===
+      services.arrElementFinder(projectRepo, projectCatcher.value) ===
       projectCatcher.value
     ) {
       projectList = projectCatcher.value;
       task = { title, description, date, priority, projectList };
-      taskRepo.push(task);
-      console.log(taskRepo);
 
       if (tracker == 0) {
         counter += 1;
@@ -133,8 +165,6 @@ function hideForm(e) {
 
     projectList = projectCatcher.value;
     task = { title, description, date, priority, projectList };
-    taskRepo.push(task);
-    console.log(taskRepo);
 
     if (tracker == 0) {
       counter += 1;
@@ -145,7 +175,7 @@ function hideForm(e) {
       localStorage.setItem("counter", `${tracker}`);
       localStorage.setItem(`${tracker}`, JSON.stringify(task));
     }
-    return;
+    DOM.appendOption(selectProjectList, projectCatcher.value);
   }
 }
 window.hideForm = hideForm;
