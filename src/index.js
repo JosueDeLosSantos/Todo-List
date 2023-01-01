@@ -90,6 +90,7 @@ function showForm() {
   dateInput.value = "";
   priorityInput.value = "";
   projectCatcher.value = "";
+  projectList.value = "All";
 
   if (projectList.hidden === true) projectList.hidden = false;
 }
@@ -98,6 +99,8 @@ spanCenter3.addEventListener("click", showForm);
 
 console.log(projectRepo);
 console.log(objectCatcher);
+
+const PCchecker = [];
 
 function hideForm(e) {
   main.appendChild(centerDiv);
@@ -118,7 +121,12 @@ function hideForm(e) {
       services.containsAnyLetters(projectCatcher.value) ||
       services.containsNumbers(projectCatcher.value)
     ) {
-      DOM.appendOption(selectProjectList, projectCatcher.value);
+      // Avoids projectCatcher.value duplication
+      if (projectCatcher.value !== "All") {
+        if (services.arrElementFinder(PCchecker, projectCatcher.value)) return;
+        PCchecker.push(projectCatcher.value);
+        DOM.appendOption(selectProjectList, projectCatcher.value);
+      }
     }
     return;
   }
@@ -127,7 +135,7 @@ function hideForm(e) {
     !services.containsAnyLetters(projectCatcher.value) &&
     !services.containsNumbers(projectCatcher.value)
   ) {
-    if (tracker == 0) {
+    if (tracker === 0) {
       counter += 1;
       localStorage.setItem("counter", `${counter}`);
       localStorage.setItem(`${counter}`, JSON.stringify(task));
@@ -136,6 +144,7 @@ function hideForm(e) {
       localStorage.setItem("counter", `${tracker}`);
       localStorage.setItem(`${tracker}`, JSON.stringify(task));
     }
+    main.removeChild(centerDiv);
     return;
   }
 
@@ -151,7 +160,7 @@ function hideForm(e) {
       projectList = projectCatcher.value;
       task = { title, description, date, priority, projectList };
 
-      if (tracker == 0) {
+      if (tracker === 0) {
         counter += 1;
         localStorage.setItem("counter", `${counter}`);
         localStorage.setItem(`${counter}`, JSON.stringify(task));
@@ -160,13 +169,14 @@ function hideForm(e) {
         localStorage.setItem("counter", `${tracker}`);
         localStorage.setItem(`${tracker}`, JSON.stringify(task));
       }
+      main.removeChild(centerDiv);
       return;
     }
 
     projectList = projectCatcher.value;
     task = { title, description, date, priority, projectList };
 
-    if (tracker == 0) {
+    if (tracker === 0) {
       counter += 1;
       localStorage.setItem("counter", `${counter}`);
       localStorage.setItem(`${counter}`, JSON.stringify(task));
@@ -176,10 +186,15 @@ function hideForm(e) {
       localStorage.setItem(`${tracker}`, JSON.stringify(task));
     }
     DOM.appendOption(selectProjectList, projectCatcher.value);
+    main.removeChild(centerDiv);
   }
 }
 window.hideForm = hideForm;
 button.addEventListener("click", hideForm);
+
+/* button.addEventListener("click", () => {
+  main.removeChild(centerDiv);
+}); */
 
 function projectMaker(e) {
   const projectList = e.target.parentNode.parentNode.children[10];
