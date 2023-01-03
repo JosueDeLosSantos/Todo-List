@@ -18,16 +18,17 @@
 .cardSection {
     background-color: hsl(197, 53%, 90%);
     border: 1px solid gray;
+    border-radius: 5px;
     margin-bottom: var(--common-spacing);
     padding-left: var(--common-spacing);
     padding-right: var(--common-spacing);
+    padding-bottom: var(--common-spacing);
 }
 
 .card {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    margin-bottom: var(--common-spacing);
 }
 
 .cardTitle {
