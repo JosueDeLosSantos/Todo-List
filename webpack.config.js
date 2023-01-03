@@ -4,7 +4,12 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   mode: "development",
   entry: {
-    index: ["./src/index.js", "./src/services.js", "./src/DOM.js"],
+    index: [
+      "./src/index.js",
+      "./src/services.js",
+      "./src/DOM.js",
+      "./src/card-dispenser/card-dispenser.js",
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({

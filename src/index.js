@@ -1,5 +1,6 @@
 import * as services from "./services";
 import * as DOM from "./DOM";
+import * as dispenser from "./card-dispenser/card-dispenser";
 import "./index.css";
 import "./form.css";
 import pinIcon from "./icons/pin.png";
@@ -13,6 +14,7 @@ logoPinIcon2.src = pinIcon;
 logoIcon.appendChild(logoPinIcon);
 logoCenterIcon.appendChild(logoPinIcon2);
 const main = document.querySelector("main");
+export const allTasksCS = document.querySelector(".allTasksCS");
 const centerDiv = document.querySelector(".centerDiv");
 const form = document.querySelector("form");
 const button = document.querySelector("button");
@@ -97,8 +99,7 @@ function showForm() {
 window.showForm = showForm;
 spanCenter3.addEventListener("click", showForm);
 
-console.log(projectRepo);
-console.log(objectCatcher);
+console.log(localStorage);
 
 const PCchecker = [];
 
@@ -113,8 +114,9 @@ function hideForm(e) {
   const date = e.target.parentNode.children[6].value;
   const priority = e.target.parentNode.children[8].value;
   let projectList = fieldset.children[10].value;
+  const checked = false;
 
-  let task = { title, description, date, priority, projectList };
+  let task = { title, description, date, priority, projectList, checked };
 
   if (!services.containsAnyLetters(title) && !services.containsNumbers(title)) {
     if (
@@ -137,14 +139,19 @@ function hideForm(e) {
   ) {
     if (tracker === 0) {
       counter += 1;
+      const ID = counter;
+      task = { title, description, date, priority, projectList, checked, ID };
       localStorage.setItem("counter", `${counter}`);
       localStorage.setItem(`${counter}`, JSON.stringify(task));
     } else {
       tracker += 1;
+      const ID = tracker;
+      task = { title, description, date, priority, projectList, checked, ID };
       localStorage.setItem("counter", `${tracker}`);
       localStorage.setItem(`${tracker}`, JSON.stringify(task));
     }
     main.removeChild(centerDiv);
+    dispenser.showCard();
     return;
   }
 
@@ -158,43 +165,49 @@ function hideForm(e) {
       projectCatcher.value
     ) {
       projectList = projectCatcher.value;
-      task = { title, description, date, priority, projectList };
+      task = { title, description, date, priority, projectList, checked };
 
       if (tracker === 0) {
         counter += 1;
+        const ID = counter;
+        task = { title, description, date, priority, projectList, checked, ID };
         localStorage.setItem("counter", `${counter}`);
         localStorage.setItem(`${counter}`, JSON.stringify(task));
       } else {
         tracker += 1;
+        const ID = tracker;
+        task = { title, description, date, priority, projectList, checked, ID };
         localStorage.setItem("counter", `${tracker}`);
         localStorage.setItem(`${tracker}`, JSON.stringify(task));
       }
       main.removeChild(centerDiv);
+      dispenser.showCard();
       return;
     }
 
     projectList = projectCatcher.value;
-    task = { title, description, date, priority, projectList };
+    task = { title, description, date, priority, projectList, checked };
 
     if (tracker === 0) {
       counter += 1;
+      const ID = counter;
+      task = { title, description, date, priority, projectList, checked, ID };
       localStorage.setItem("counter", `${counter}`);
       localStorage.setItem(`${counter}`, JSON.stringify(task));
     } else {
       tracker += 1;
+      const ID = tracker;
+      task = { title, description, date, priority, projectList, checked, ID };
       localStorage.setItem("counter", `${tracker}`);
       localStorage.setItem(`${tracker}`, JSON.stringify(task));
     }
     DOM.appendOption(selectProjectList, projectCatcher.value);
     main.removeChild(centerDiv);
+    dispenser.showCard();
   }
 }
 window.hideForm = hideForm;
 button.addEventListener("click", hideForm);
-
-/* button.addEventListener("click", () => {
-  main.removeChild(centerDiv);
-}); */
 
 function projectMaker(e) {
   const projectList = e.target.parentNode.parentNode.children[10];
@@ -204,3 +217,11 @@ function projectMaker(e) {
 }
 window.projectMaker = projectMaker;
 addProject.addEventListener("click", projectMaker);
+
+function showTasks() {
+  main.removeChild(centerDiv);
+
+  dispenser.showCard();
+}
+window.showTasks = showTasks;
+allTasksCS.addEventListener("click", showTasks);

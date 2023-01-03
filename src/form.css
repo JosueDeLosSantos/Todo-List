@@ -1,13 +1,17 @@
 :root {
     --gray-border:hsl(0, 0%, 30%);
+    --form-background: hsl(200, 100%, 94%);
+    --select-background: hsl(0, 0%, 95%);
+    --addProject-color: hwb(240 20% 0%);
 }
 
 form {
-    background-color: hsl(200, 100%, 94%);
+    background-color: var(--form-background);
     padding: 15px;
     border-radius: 10px;
     border: 1px solid var(--gray-border);
     color: var(--gray-border);
+    margin-top: 30px;
 }
 
 input, select {
@@ -35,7 +39,7 @@ textarea:focus-visible {
 select {
     border: none;
     outline: none;
-    background-color: hsl(0, 0%, 95%);
+    background-color: var(--select-background);
     border: 1px solid var(--gray-border);
     width: 100%;
     color: inherit;
@@ -69,7 +73,7 @@ button {
     width: 98%;
     font-family:Arial, Helvetica, sans-serif;
     font-size: 14px;
-    color: hwb(240 20% 0%);
+    color: var(--addProject-color);
     text-decoration: underline;
     cursor: pointer;
 }

@@ -1,0 +1,63 @@
+
+:root {
+    --common-spacing: 15px;
+}
+
+.taskPresenter{
+    width: 100%;
+    height: 100%;
+}
+
+.cardList {
+    border-radius: 8px;
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cardSection {
+    background-color: hsl(197, 53%, 90%);
+    border: 1px solid gray;
+    margin-bottom: var(--common-spacing);
+    padding-left: var(--common-spacing);
+    padding-right: var(--common-spacing);
+}
+
+.card {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--common-spacing);
+}
+
+.cardTitle {
+    padding-right: var(--common-spacing);
+}
+
+.cardDate {
+    padding-right: var(--common-spacing);
+}
+
+.checkbox {
+    margin-top: 9px;
+    padding-right: var(--common-spacing);
+}
+
+.chevronDown {
+    width: 30px;
+    margin-top: 10px;
+}
+
+.tPtitle {
+    text-align: center;
+}
+
+.description {
+    text-align: center;
+}
+
+.edition {
+    display: flex;
+    justify-content: center;
+    gap: var(--common-spacing);
+}
