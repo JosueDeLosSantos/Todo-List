@@ -11,16 +11,6 @@ h1Alltasks.innerText = "All tasks";
 const cardList = document.createElement("div");
 cardList.classList.add("cardList");
 
-/* const objectCatcher = [];
-let tracker = localStorage.getItem("counter");
-tracker = +tracker;
-
-for (let i = 1; i <= tracker; i += 1) {
-  // JSON.parse() converts localStorage JSON items into JS objects
-  // Appends each object to objectCatcher
-  objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
-} */
-
 export function showCard(objectCatcher) {
   main.appendChild(taskPresenter);
   taskPresenter.appendChild(tPtitle);
@@ -99,14 +89,6 @@ export function showCard(objectCatcher) {
         edition.hidden = true;
       }
     }
-    /* window.expander = expander; */
     expandButton.addEventListener("click", expander);
   });
 }
-
-/* function refresh() {
-  main.reload();
-}
-window.refresh = refresh;
-
-allTasksCS.addEventListener("click", refresh); */

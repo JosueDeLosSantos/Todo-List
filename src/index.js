@@ -5,27 +5,74 @@ import "./index.css";
 import "./form.css";
 import pinIcon from "./icons/pin.png";
 
-const logoIcon = document.querySelector(".logoIcon");
-const logoCenterIcon = document.querySelector(".logoCenterIcon");
+const nav = document.querySelector("nav");
+const logo = document.createElement("div");
+logo.classList.add("logo");
+const logoText = document.createElement("span");
+logoText.classList.add("logoText");
+logoText.innerText = "Do i";
+const logoIcon = document.createElement("span");
+logoIcon.classList.add("logoIcon");
 const logoPinIcon = new Image();
-const logoPinIcon2 = new Image();
 logoPinIcon.src = pinIcon;
-logoPinIcon2.src = pinIcon;
+nav.appendChild(logo);
+logo.appendChild(logoText);
+logo.appendChild(logoIcon);
 logoIcon.appendChild(logoPinIcon);
-logoCenterIcon.appendChild(logoPinIcon2);
+
+const ul = document.createElement("ul");
+const allTasks = document.createElement("li");
+allTasks.classList.add("allTasks");
+allTasks.innerText = "All tasks";
+const projects = document.createElement("li");
+projects.classList.add("projects");
+projects.innerText = "Projects";
+const priorityCSS = document.createElement("li");
+priorityCSS.classList.add("priorityCSS");
+priorityCSS.innerText = "Priority";
+nav.appendChild(ul);
+ul.appendChild(allTasks);
+ul.appendChild(projects);
+ul.appendChild(priorityCSS);
+
 const main = document.querySelector("main");
-export const allTasksCS = document.querySelector(".allTasksCS");
-const centerDiv = document.querySelector(".centerDiv");
+
+const centerDiv = document.createElement("div");
+centerDiv.classList.add("centerDiv");
+const centerDivT = document.createElement("div");
+centerDivT.classList.add("centerDivT");
+centerDivT.innerText = "Organize your life with";
+const logoCenter = document.createElement("div");
+logoCenter.classList.add("logoCenter");
+centerDiv.appendChild(centerDivT);
+centerDiv.appendChild(logoCenter);
+const logoCenterLetters = document.createElement("span");
+logoCenterLetters.innerText = "Do i";
+logoCenter.appendChild(logoCenterLetters);
+const logoCenterIcon = document.createElement("span");
+logoCenterIcon.classList.add("logoCenterIcon");
+logoCenter.appendChild(logoCenterIcon);
+const logoPinIcon2 = new Image();
+logoPinIcon2.src = pinIcon;
+logoPinIcon2.classList.add("centerPin");
+logoCenterIcon.appendChild(logoPinIcon2);
+const spanCenter3 = document.createElement("div");
+spanCenter3.classList.add("spanCenter3");
+const spanCenter3B = document.createElement("button");
+spanCenter3B.classList.add("spanCenter3B");
+spanCenter3B.innerText = "Add task";
+spanCenter3.appendChild(spanCenter3B);
+centerDiv.appendChild(spanCenter3);
+main.appendChild(centerDiv);
+
 const form = document.querySelector("form");
 const button = document.querySelector("button");
-const spanCenter3 = document.querySelector(".spanCenter3");
 const addProject = document.querySelector(".addProject");
 const fieldset = document.querySelector("fieldset");
 const projectCatcher = document.querySelector(".projectCatcher");
 const addProjectLink = document.querySelector(".addProjectLink");
 const selectProjectList = document.querySelector(".selectProjectList");
 
-/* main.appendChild(centerDiv); */
 main.removeChild(form);
 
 const oldPR = [];
@@ -74,6 +121,7 @@ if (projectRepo.length === 0) {
 
 function showForm() {
   main.removeChild(centerDiv);
+  form.hidden = false;
   main.appendChild(form);
 
   const titleInput =
@@ -105,6 +153,7 @@ const PCchecker = [];
 
 function hideForm(e) {
   main.appendChild(centerDiv);
+  form.hidden = true;
   main.removeChild(form);
   projectCatcher.hidden = true;
   addProjectLink.hidden = false;
@@ -241,7 +290,7 @@ function projectMaker(e) {
 window.projectMaker = projectMaker;
 addProject.addEventListener("click", projectMaker);
 
-function showTasks(e) {
+function showTasks() {
   if (main.children[0].classList.contains("centerDiv")) {
     main.removeChild(centerDiv);
     tracker = localStorage.getItem("counter");
@@ -255,4 +304,8 @@ function showTasks(e) {
   }
 }
 window.showTasks = showTasks;
-allTasksCS.addEventListener("click", showTasks);
+allTasks.addEventListener("click", showTasks);
+
+logo.addEventListener("click", () => {
+  window.location.reload();
+});
