@@ -1,8 +1,5 @@
-import * as mainIndex from "../index";
 import chevronIcon from "../icons/chevron.svg";
 import "./card-dispenser.css";
-
-const allTasksCS = document.querySelector(".allTasksCS");
 
 const main = document.querySelector("main");
 const taskPresenter = document.createElement("div");
@@ -14,7 +11,7 @@ h1Alltasks.innerText = "All tasks";
 const cardList = document.createElement("div");
 cardList.classList.add("cardList");
 
-const objectCatcher = [];
+/* const objectCatcher = [];
 let tracker = localStorage.getItem("counter");
 tracker = +tracker;
 
@@ -22,9 +19,9 @@ for (let i = 1; i <= tracker; i += 1) {
   // JSON.parse() converts localStorage JSON items into JS objects
   // Appends each object to objectCatcher
   objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
-}
+} */
 
-export function showCard() {
+export function showCard(objectCatcher) {
   main.appendChild(taskPresenter);
   taskPresenter.appendChild(tPtitle);
   tPtitle.appendChild(h1Alltasks);
@@ -102,7 +99,7 @@ export function showCard() {
         edition.hidden = true;
       }
     }
-    window.expander = expander;
+    /* window.expander = expander; */
     expandButton.addEventListener("click", expander);
   });
 }

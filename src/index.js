@@ -25,7 +25,7 @@ const projectCatcher = document.querySelector(".projectCatcher");
 const addProjectLink = document.querySelector(".addProjectLink");
 const selectProjectList = document.querySelector(".selectProjectList");
 
-main.appendChild(centerDiv);
+/* main.appendChild(centerDiv); */
 main.removeChild(form);
 
 const oldPR = [];
@@ -33,7 +33,7 @@ let counter = 0;
 let tracker = localStorage.getItem("counter");
 tracker = +tracker;
 
-const objectCatcher = [];
+let objectCatcher = [];
 
 for (let i = 1; i <= tracker; i += 1) {
   // JSON.parse() converts localStorage JSON items into JS objects
@@ -151,7 +151,16 @@ function hideForm(e) {
       localStorage.setItem(`${tracker}`, JSON.stringify(task));
     }
     main.removeChild(centerDiv);
-    dispenser.showCard();
+    // Update tracker
+    tracker = localStorage.getItem("counter");
+    tracker = +tracker;
+    // Update objectCatcher
+    objectCatcher = [];
+
+    for (let i = 1; i <= tracker; i += 1) {
+      objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
+    }
+    dispenser.showCard(objectCatcher);
     return;
   }
 
@@ -181,7 +190,14 @@ function hideForm(e) {
         localStorage.setItem(`${tracker}`, JSON.stringify(task));
       }
       main.removeChild(centerDiv);
-      dispenser.showCard();
+      tracker = localStorage.getItem("counter");
+      tracker = +tracker;
+      objectCatcher = [];
+
+      for (let i = 1; i <= tracker; i += 1) {
+        objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
+      }
+      dispenser.showCard(objectCatcher);
       return;
     }
 
@@ -203,7 +219,14 @@ function hideForm(e) {
     }
     DOM.appendOption(selectProjectList, projectCatcher.value);
     main.removeChild(centerDiv);
-    dispenser.showCard();
+    tracker = localStorage.getItem("counter");
+    tracker = +tracker;
+    objectCatcher = [];
+
+    for (let i = 1; i <= tracker; i += 1) {
+      objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
+    }
+    dispenser.showCard(objectCatcher);
   }
 }
 window.hideForm = hideForm;
@@ -218,10 +241,18 @@ function projectMaker(e) {
 window.projectMaker = projectMaker;
 addProject.addEventListener("click", projectMaker);
 
-function showTasks() {
-  main.removeChild(centerDiv);
+function showTasks(e) {
+  if (main.children[0].classList.contains("centerDiv")) {
+    main.removeChild(centerDiv);
+    tracker = localStorage.getItem("counter");
+    tracker = +tracker;
+    objectCatcher = [];
 
-  dispenser.showCard();
+    for (let i = 1; i <= tracker; i += 1) {
+      objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
+    }
+    dispenser.showCard(objectCatcher);
+  }
 }
 window.showTasks = showTasks;
 allTasksCS.addEventListener("click", showTasks);
