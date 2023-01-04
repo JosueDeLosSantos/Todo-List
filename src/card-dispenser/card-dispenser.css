@@ -10,13 +10,13 @@
 
 .cardList {
     border-radius: 8px;
-    width: 40%;
+    width: 50%;
     margin-left: auto;
     margin-right: auto;
 }
 
 .cardSection {
-    background-color: hsl(197, 53%, 90%);
+    background-color: aliceblue;
     border: 1px solid gray;
     border-radius: 5px;
     margin-bottom: var(--common-spacing);
@@ -28,11 +28,11 @@
 .card {
     width: 100%;
     display: flex;
-    justify-content: space-between;
 }
 
 .cardTitle {
-    padding-right: var(--common-spacing);
+    padding-right: 30px;
+    flex: 2;
 }
 
 .cardDate {
@@ -57,8 +57,21 @@
     text-align: center;
 }
 
+.descriptionT {
+
+}
+
+.descriptionB {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: var(--common-spacing);
+}
+
+
 .edition {
     display: flex;
     justify-content: center;
     gap: var(--common-spacing);
+    margin-top: var(--common-spacing);
 }

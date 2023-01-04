@@ -302,6 +302,18 @@ function showTasks() {
     }
     dispenser.showCard(objectCatcher);
   }
+
+  if (main.contains(form)) {
+    main.removeChild(form);
+    tracker = localStorage.getItem("counter");
+    tracker = +tracker;
+    objectCatcher = [];
+
+    for (let i = 1; i <= tracker; i += 1) {
+      objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
+    }
+    dispenser.showCard(objectCatcher);
+  }
 }
 window.showTasks = showTasks;
 allTasks.addEventListener("click", showTasks);
