@@ -4,12 +4,9 @@ import "./card-dispenser.css";
 function checkboxAction(e) {
   const targetNode = e.target.parentNode.parentNode.parentNode.dataset;
 
-  let tracker = localStorage.getItem("counter");
-  tracker = +tracker;
-
   const objectCatcher = [];
 
-  for (let i = 1; i <= tracker; i += 1) {
+  for (let i = 0; i <= localStorage.length - 1; i += 1) {
     // JSON.parse() converts localStorage JSON items into JS objects
     // Appends each object to objectCatcher
     objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
@@ -43,18 +40,17 @@ const cardList = document.createElement("div");
 cardList.classList.add("cardList");
 
 export function showCard(objectCatcher) {
+  console.log(objectCatcher);
   main.appendChild(taskPresenter);
   taskPresenter.appendChild(tPtitle);
   tPtitle.appendChild(h1Alltasks);
   taskPresenter.appendChild(cardList);
-  let counter = -1;
 
   objectCatcher.forEach((index) => {
-    counter += 1;
     const cardSection = document.createElement("div");
     cardSection.classList.add("cardSection");
-    cardSection.dataset.Id = objectCatcher[counter].ID;
-    cardSection.dataset.checked = objectCatcher[counter].checked;
+    cardSection.dataset.Id = index;
+    cardSection.dataset.checked = index.checked;
     cardList.appendChild(cardSection);
 
     const card = document.createElement("div");
@@ -67,7 +63,7 @@ export function showCard(objectCatcher) {
     checkboxInput.setAttribute("type", "checkbox");
     checkboxInput.setAttribute("name", "checkbox");
     checkboxInput.checked = false;
-    if (objectCatcher[counter].checked === true) checkboxInput.checked = true;
+    if (index.checked === true) checkboxInput.checked = true;
     card.appendChild(checkbox);
 
     const cardTitle = document.createElement("div");
@@ -134,22 +130,18 @@ export function showCard(objectCatcher) {
     function deleteAction(e) {
       const targetNode = e.target.parentNode.parentNode.dataset;
 
-      let tracker = localStorage.getItem("counter");
-      tracker = +tracker;
-
       const objectCatcherTemp = [];
       // Read local storage
-      for (let i = 1; i <= tracker; i += 1) {
+      for (let i = 0; i <= localStorage.length - 1; i += 1) {
         objectCatcherTemp.push(JSON.parse(localStorage.getItem(`${i}`)));
       }
       // Update objectCatcherTemp
       objectCatcherTemp.splice(targetNode.Id - 1, 1);
       // Update local storage
       localStorage.clear();
-      for (let i = 1; i <= objectCatcherTemp.length + 1; i += 1) {
+      for (let i = 0; i <= objectCatcherTemp.length; i += 1) {
         localStorage.setItem(`${i}`, `${objectCatcherTemp[i]}`);
       }
-      localStorage.setItem("counter", `${objectCatcherTemp.length}`);
 
       console.log(localStorage);
     }

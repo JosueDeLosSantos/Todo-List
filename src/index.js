@@ -76,21 +76,25 @@ const selectProjectList = document.querySelector(".selectProjectList");
 main.removeChild(form);
 
 const oldPR = [];
-let counter = 0;
-let tracker = localStorage.getItem("counter");
-tracker = +tracker;
 
 let objectCatcher = [];
 /* localStorage.clear(); */
+console.log(localStorage.length);
 
-for (let i = 1; i <= tracker; i += 1) {
-  // JSON.parse() converts localStorage JSON items into JS objects
-  // Appends each object to objectCatcher
-  objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
+if (objectCatcher !== []) {
+  for (let i = 0; i <= localStorage.length - 1; i += 1) {
+    // JSON.parse() converts localStorage JSON items into JS objects
+    // Appends each object to objectCatcher
+    objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
+  }
+
+  /* // Adds all projectList values to 'oldPR'
+  objectCatcher.forEach((index) => {
+    if (index.projectList !== null) {
+      oldPR.push(`${index.projectList}`);
+    }
+  }); */
 }
-
-// Adds all projectList values to 'oldPR'
-objectCatcher.forEach((index) => oldPR.push(`${index.projectList}`));
 
 // Returns "oldPR" without duplicates.
 const projectRepo = services.noDupArray(oldPR);
@@ -185,27 +189,21 @@ function hideForm(e) {
     !services.containsAnyLetters(projectCatcher.value) &&
     !services.containsNumbers(projectCatcher.value)
   ) {
-    if (tracker === 0) {
-      counter += 1;
-      const ID = counter;
+    if (localStorage.length === 0) {
+      const ID = localStorage.length;
       task = { title, description, date, priority, projectList, checked, ID };
-      localStorage.setItem("counter", `${counter}`);
-      localStorage.setItem(`${counter}`, JSON.stringify(task));
+      localStorage.setItem(`${localStorage.length}`, JSON.stringify(task));
     } else {
-      tracker += 1;
-      const ID = tracker;
+      const ID = localStorage.length;
       task = { title, description, date, priority, projectList, checked, ID };
-      localStorage.setItem("counter", `${tracker}`);
-      localStorage.setItem(`${tracker}`, JSON.stringify(task));
+      localStorage.setItem(`${localStorage.length}`, JSON.stringify(task));
     }
     main.removeChild(centerDiv);
-    // Update tracker
-    tracker = localStorage.getItem("counter");
-    tracker = +tracker;
+
     // Update objectCatcher
     objectCatcher = [];
 
-    for (let i = 1; i <= tracker; i += 1) {
+    for (let i = 0; i <= localStorage.length - 1; i += 1) {
       objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
     }
     dispenser.showCard(objectCatcher);
@@ -224,25 +222,19 @@ function hideForm(e) {
       projectList = projectCatcher.value;
       task = { title, description, date, priority, projectList, checked };
 
-      if (tracker === 0) {
-        counter += 1;
-        const ID = counter;
+      if (localStorage.length === 0) {
+        const ID = localStorage.length;
         task = { title, description, date, priority, projectList, checked, ID };
-        localStorage.setItem("counter", `${counter}`);
-        localStorage.setItem(`${counter}`, JSON.stringify(task));
+        localStorage.setItem(`${localStorage.length}`, JSON.stringify(task));
       } else {
-        tracker += 1;
-        const ID = tracker;
+        const ID = localStorage.length;
         task = { title, description, date, priority, projectList, checked, ID };
-        localStorage.setItem("counter", `${tracker}`);
-        localStorage.setItem(`${tracker}`, JSON.stringify(task));
+        localStorage.setItem(`${localStorage.length}`, JSON.stringify(task));
       }
       main.removeChild(centerDiv);
-      tracker = localStorage.getItem("counter");
-      tracker = +tracker;
       objectCatcher = [];
 
-      for (let i = 1; i <= tracker; i += 1) {
+      for (let i = 0; i <= localStorage.length - 1; i += 1) {
         objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
       }
       dispenser.showCard(objectCatcher);
@@ -252,26 +244,20 @@ function hideForm(e) {
     projectList = projectCatcher.value;
     task = { title, description, date, priority, projectList, checked };
 
-    if (tracker === 0) {
-      counter += 1;
-      const ID = counter;
+    if (localStorage.length === 0) {
+      const ID = localStorage.length;
       task = { title, description, date, priority, projectList, checked, ID };
-      localStorage.setItem("counter", `${counter}`);
-      localStorage.setItem(`${counter}`, JSON.stringify(task));
+      localStorage.setItem(`${localStorage.length}`, JSON.stringify(task));
     } else {
-      tracker += 1;
-      const ID = tracker;
+      const ID = localStorage.length;
       task = { title, description, date, priority, projectList, checked, ID };
-      localStorage.setItem("counter", `${tracker}`);
-      localStorage.setItem(`${tracker}`, JSON.stringify(task));
+      localStorage.setItem(`${localStorage.length}`, JSON.stringify(task));
     }
     DOM.appendOption(selectProjectList, projectCatcher.value);
     main.removeChild(centerDiv);
-    tracker = localStorage.getItem("counter");
-    tracker = +tracker;
     objectCatcher = [];
 
-    for (let i = 1; i <= tracker; i += 1) {
+    for (let i = 0; i <= localStorage.length - 1; i += 1) {
       objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
     }
     dispenser.showCard(objectCatcher);
@@ -292,11 +278,9 @@ addProject.addEventListener("click", projectMaker);
 function showTasks() {
   if (main.children[0].classList.contains("centerDiv")) {
     main.removeChild(centerDiv);
-    tracker = localStorage.getItem("counter");
-    tracker = +tracker;
     objectCatcher = [];
 
-    for (let i = 1; i <= tracker; i += 1) {
+    for (let i = 0; i <= localStorage.length - 1; i += 1) {
       objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
     }
     dispenser.showCard(objectCatcher);
@@ -304,11 +288,9 @@ function showTasks() {
 
   if (main.contains(form)) {
     main.removeChild(form);
-    tracker = localStorage.getItem("counter");
-    tracker = +tracker;
     objectCatcher = [];
 
-    for (let i = 1; i <= tracker; i += 1) {
+    for (let i = 0; i <= localStorage.length - 1; i += 1) {
       objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
     }
     dispenser.showCard(objectCatcher);
