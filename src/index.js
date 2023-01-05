@@ -81,6 +81,7 @@ let tracker = localStorage.getItem("counter");
 tracker = +tracker;
 
 let objectCatcher = [];
+/* localStorage.clear(); */
 
 for (let i = 1; i <= tracker; i += 1) {
   // JSON.parse() converts localStorage JSON items into JS objects

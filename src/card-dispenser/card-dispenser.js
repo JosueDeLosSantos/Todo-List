@@ -111,6 +111,7 @@ export function showCard(objectCatcher) {
     const editButton = document.createElement("button");
     editButton.innerText = "edit";
     const deleteButton = document.createElement("button");
+    deleteButton.classList.add("deleteButton");
     deleteButton.innerText = "delete";
     cardSection.appendChild(edition);
     edition.appendChild(editButton);
@@ -128,7 +129,30 @@ export function showCard(objectCatcher) {
       }
     }
     expandButton.addEventListener("click", expander);
-
     checkboxInput.onchange = checkboxAction;
+
+    function deleteAction(e) {
+      const targetNode = e.target.parentNode.parentNode.dataset;
+
+      let tracker = localStorage.getItem("counter");
+      tracker = +tracker;
+
+      const objectCatcherTemp = [];
+      // Read local storage
+      for (let i = 1; i <= tracker; i += 1) {
+        objectCatcherTemp.push(JSON.parse(localStorage.getItem(`${i}`)));
+      }
+      // Update objectCatcherTemp
+      objectCatcherTemp.splice(targetNode.Id - 1, 1);
+      // Update local storage
+      localStorage.clear();
+      for (let i = 1; i <= objectCatcherTemp.length + 1; i += 1) {
+        localStorage.setItem(`${i}`, `${objectCatcherTemp[i]}`);
+      }
+      localStorage.setItem("counter", `${objectCatcherTemp.length}`);
+
+      console.log(localStorage);
+    }
+    deleteButton.addEventListener("click", deleteAction);
   });
 }
