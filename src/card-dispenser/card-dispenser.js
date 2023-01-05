@@ -1,6 +1,37 @@
 import chevronIcon from "../icons/chevron.svg";
 import "./card-dispenser.css";
 
+function checkboxAction(e) {
+  const targetNode = e.target.parentNode.parentNode.parentNode.dataset;
+
+  let tracker = localStorage.getItem("counter");
+  tracker = +tracker;
+
+  const objectCatcher = [];
+
+  for (let i = 1; i <= tracker; i += 1) {
+    // JSON.parse() converts localStorage JSON items into JS objects
+    // Appends each object to objectCatcher
+    objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
+  }
+
+  if (objectCatcher[targetNode.Id - 1].checked === false) {
+    objectCatcher[targetNode.Id - 1].checked = true;
+    // update localStorage
+    localStorage.setItem(
+      `${targetNode.Id}`,
+      JSON.stringify(objectCatcher[targetNode.Id - 1])
+    );
+  } else if (objectCatcher[targetNode.Id - 1].checked === true) {
+    objectCatcher[targetNode.Id - 1].checked = false;
+    // update localStorage
+    localStorage.setItem(
+      `${targetNode.Id}`,
+      JSON.stringify(objectCatcher[targetNode.Id - 1])
+    );
+  }
+}
+
 const main = document.querySelector("main");
 const taskPresenter = document.createElement("div");
 taskPresenter.classList.add("taskPresenter");
@@ -16,10 +47,14 @@ export function showCard(objectCatcher) {
   taskPresenter.appendChild(tPtitle);
   tPtitle.appendChild(h1Alltasks);
   taskPresenter.appendChild(cardList);
+  let counter = -1;
 
   objectCatcher.forEach((index) => {
+    counter += 1;
     const cardSection = document.createElement("div");
     cardSection.classList.add("cardSection");
+    cardSection.dataset.Id = objectCatcher[counter].ID;
+    cardSection.dataset.checked = objectCatcher[counter].checked;
     cardList.appendChild(cardSection);
 
     const card = document.createElement("div");
@@ -32,6 +67,7 @@ export function showCard(objectCatcher) {
     checkboxInput.setAttribute("type", "checkbox");
     checkboxInput.setAttribute("name", "checkbox");
     checkboxInput.checked = false;
+    if (objectCatcher[counter].checked === true) checkboxInput.checked = true;
     card.appendChild(checkbox);
 
     const cardTitle = document.createElement("div");
@@ -92,5 +128,7 @@ export function showCard(objectCatcher) {
       }
     }
     expandButton.addEventListener("click", expander);
+
+    checkboxInput.onchange = checkboxAction;
   });
 }

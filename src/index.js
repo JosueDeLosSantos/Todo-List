@@ -147,8 +147,6 @@ function showForm() {
 window.showForm = showForm;
 spanCenter3.addEventListener("click", showForm);
 
-console.log(localStorage);
-
 const PCchecker = [];
 
 function hideForm(e) {
