@@ -81,19 +81,15 @@ let objectCatcher = [];
 /* localStorage.clear(); */
 console.log(localStorage.length);
 
-if (objectCatcher !== []) {
-  for (let i = 0; i <= localStorage.length - 1; i += 1) {
-    // JSON.parse() converts localStorage JSON items into JS objects
-    // Appends each object to objectCatcher
-    objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
-  }
+for (let i = 0; i <= localStorage.length - 1; i += 1) {
+  // JSON.parse() converts localStorage JSON items into JS objects
+  // Appends each object to objectCatcher
+  objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
+}
 
-  /* // Adds all projectList values to 'oldPR'
-  objectCatcher.forEach((index) => {
-    if (index.projectList !== null) {
-      oldPR.push(`${index.projectList}`);
-    }
-  }); */
+// Adds all projectList values to 'oldPR'
+for (let i = 0; i <= objectCatcher.length - 1; i += 1) {
+  oldPR.push(`${objectCatcher[i].projectList}`);
 }
 
 // Returns "oldPR" without duplicates.
@@ -177,6 +173,10 @@ function hideForm(e) {
     ) {
       // Avoids projectCatcher.value duplication
       if (projectCatcher.value !== "All") {
+        /* Saves new added projects into a temporal array called "PCchecker", then
+        the project list will be updated temporarily and added to the form,
+        when the page reloads "PCchecker" will be cleared but the project list will
+        be refilled with the information contained in the "projectRepo" array */
         if (services.arrElementFinder(PCchecker, projectCatcher.value)) return;
         PCchecker.push(projectCatcher.value);
         DOM.appendOption(selectProjectList, projectCatcher.value);
