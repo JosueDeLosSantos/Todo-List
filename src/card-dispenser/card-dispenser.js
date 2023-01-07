@@ -38,10 +38,14 @@ const h1Alltasks = document.createElement("h1");
 h1Alltasks.innerText = "All tasks";
 const cardList = document.createElement("div");
 cardList.classList.add("cardList");
-const addButton = document.querySelector(".addButton");
+const addButton = document.createElement("div");
+addButton.classList.add("addButton");
+addButton.innerText = "+";
+addButton.setAttribute("title", "Add new task");
 
 export function showCard(objectCatcher) {
   main.appendChild(taskPresenter);
+  main.appendChild(addButton);
   taskPresenter.appendChild(tPtitle);
   taskPresenter.hidden = false;
   tPtitle.appendChild(h1Alltasks);
@@ -128,5 +132,15 @@ export function showCard(objectCatcher) {
     }
     expandButton.addEventListener("click", expander);
     checkboxInput.onchange = checkboxAction;
+
+    function addButtonAction() {
+      /* console.log(main.contains(main.children[0]));
+      console.log(main.children); */
+      /*  main.removeChild(main.children[0]);
+      main.removeChild(main.children[0]); */
+      showForm();
+    }
+    window.addButtonAction = addButtonAction;
+    addButton.addEventListener("click", addButtonAction);
   });
 }

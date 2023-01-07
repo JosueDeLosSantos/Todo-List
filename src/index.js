@@ -72,7 +72,6 @@ const fieldset = document.querySelector("fieldset");
 const projectCatcher = document.querySelector(".projectCatcher");
 const addProjectLink = document.querySelector(".addProjectLink");
 const selectProjectList = document.querySelector(".selectProjectList");
-const addButton = document.querySelector(".addButton");
 
 main.removeChild(form);
 
@@ -123,11 +122,31 @@ if (projectRepo.length === 0) {
 
 function showForm() {
   if (main.contains(centerDiv)) {
-    main.removeChild(centerDiv);
+    main.children[0].replaceWith(form);
   }
 
-  form.hidden = false;
-  main.appendChild(form);
+  if (main.children[0]) {
+    main.children[0].replaceWith(form);
+    form.hidden = false;
+
+    const titleInput =
+      document.body.children[1].children[0].children[0].children[2];
+    const descriptionInput =
+      document.body.children[1].children[0].children[0].children[4];
+    const dateInput =
+      document.body.children[1].children[0].children[0].children[6];
+    const priorityInput =
+      document.body.children[1].children[0].children[0].children[8];
+    titleInput.value = "";
+    descriptionInput.value = "";
+    dateInput.value = "";
+    priorityInput.value = "";
+    projectCatcher.value = "";
+  }
+  if (main.children[1]) {
+    main.removeChild(main.children[1]);
+  }
+
   if (localStorage.length > 0) {
     const titleInput =
       document.body.children[1].children[0].children[0].children[2];
@@ -158,7 +177,9 @@ spanCenter3.addEventListener("click", showForm);
 const PCchecker = [];
 
 function hideForm(e) {
-  main.appendChild(centerDiv);
+  if (localStorage.length === 0) {
+    main.appendChild(centerDiv);
+  }
   form.hidden = true;
   main.removeChild(form);
   projectCatcher.hidden = true;
@@ -309,13 +330,3 @@ allTasks.addEventListener("click", showTasks);
 logo.addEventListener("click", () => {
   window.location.reload();
 });
-
-function addButtonAction() {
-  console.log(main.contains(main.children[0]));
-  console.log(main.children);
-  main.removeChild(main.children[0]);
-  main.removeChild(main.children[0]);
-  showForm();
-}
-window.addButtonAction = addButtonAction;
-addButton.addEventListener("click", addButtonAction);
