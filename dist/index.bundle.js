@@ -9,10 +9,10 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/home.js":
-/*!*********************!*\
-  !*** ./src/home.js ***!
-  \*********************/
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
 /***/ (() => {
 
 
@@ -161,7 +161,7 @@
 /******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
-/******/ 			"home": 0
+/******/ 			"index": 0
 /******/ 		};
 /******/ 		
 /******/ 		// no chunk on demand loading
@@ -216,7 +216,7 @@
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["src_DOM_js-src_card-dispenser_card-dispenser_js-src_services_js"], () => (__webpack_require__("./src/home.js")))
+/******/ 	__webpack_require__.O(undefined, ["src_DOM_js-src_card-dispenser_card-dispenser_js-src_services_js"], () => (__webpack_require__("./src/index.js")))
 /******/ 	__webpack_require__.O(undefined, ["src_DOM_js-src_card-dispenser_card-dispenser_js-src_services_js"], () => (__webpack_require__("./src/services.js")))
 /******/ 	__webpack_require__.O(undefined, ["src_DOM_js-src_card-dispenser_card-dispenser_js-src_services_js"], () => (__webpack_require__("./src/DOM.js")))
 /******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["src_DOM_js-src_card-dispenser_card-dispenser_js-src_services_js"], () => (__webpack_require__("./src/card-dispenser/card-dispenser.js")))

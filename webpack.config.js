@@ -4,8 +4,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   mode: "development",
   entry: {
-    home: [
-      "./src/home.js",
+    index: [
+      "./src/index.js",
       "./src/services.js",
       "./src/DOM.js",
       "./src/card-dispenser/card-dispenser.js",
@@ -18,9 +18,9 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      filename: "home.html",
+      filename: "index.html",
       title: "Home",
-      chunks: ["home"],
+      chunks: ["index"],
     }),
     new HtmlWebpackPlugin({
       filename: "allTasks.html",
