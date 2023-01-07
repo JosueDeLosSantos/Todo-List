@@ -450,3 +450,17 @@ main {
   background-color: aliceblue;
 }
 
+.addButton {
+  background-color: blue;
+  font-size: 6rem;
+  color: white;
+  width: 100px;
+  height: 100px;
+  position: fixed;
+  bottom: 35px;
+  right: 35px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

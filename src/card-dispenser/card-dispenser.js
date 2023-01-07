@@ -12,19 +12,19 @@ function checkboxAction(e) {
     objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
   }
 
-  if (objectCatcher[targetNode.Id - 1].checked === false) {
-    objectCatcher[targetNode.Id - 1].checked = true;
+  if (objectCatcher[targetNode.Id].checked === false) {
+    objectCatcher[targetNode.Id].checked = true;
     // update localStorage
     localStorage.setItem(
       `${targetNode.Id}`,
-      JSON.stringify(objectCatcher[targetNode.Id - 1])
+      JSON.stringify(objectCatcher[targetNode.Id])
     );
-  } else if (objectCatcher[targetNode.Id - 1].checked === true) {
-    objectCatcher[targetNode.Id - 1].checked = false;
+  } else if (objectCatcher[targetNode.Id].checked === true) {
+    objectCatcher[targetNode.Id].checked = false;
     // update localStorage
     localStorage.setItem(
       `${targetNode.Id}`,
-      JSON.stringify(objectCatcher[targetNode.Id - 1])
+      JSON.stringify(objectCatcher[targetNode.Id])
     );
   }
 }
@@ -38,18 +38,20 @@ const h1Alltasks = document.createElement("h1");
 h1Alltasks.innerText = "All tasks";
 const cardList = document.createElement("div");
 cardList.classList.add("cardList");
+const addButton = document.querySelector(".addButton");
 
 export function showCard(objectCatcher) {
-  console.log(objectCatcher);
   main.appendChild(taskPresenter);
   taskPresenter.appendChild(tPtitle);
+  taskPresenter.hidden = false;
   tPtitle.appendChild(h1Alltasks);
   taskPresenter.appendChild(cardList);
+  main.appendChild(addButton);
 
   objectCatcher.forEach((index) => {
     const cardSection = document.createElement("div");
     cardSection.classList.add("cardSection");
-    cardSection.dataset.Id = index;
+    cardSection.dataset.Id = index.ID;
     cardSection.dataset.checked = index.checked;
     cardList.appendChild(cardSection);
 
@@ -126,25 +128,5 @@ export function showCard(objectCatcher) {
     }
     expandButton.addEventListener("click", expander);
     checkboxInput.onchange = checkboxAction;
-
-    function deleteAction(e) {
-      const targetNode = e.target.parentNode.parentNode.dataset;
-
-      const objectCatcherTemp = [];
-      // Read local storage
-      for (let i = 0; i <= localStorage.length - 1; i += 1) {
-        objectCatcherTemp.push(JSON.parse(localStorage.getItem(`${i}`)));
-      }
-      // Update objectCatcherTemp
-      objectCatcherTemp.splice(targetNode.Id - 1, 1);
-      // Update local storage
-      localStorage.clear();
-      for (let i = 0; i <= objectCatcherTemp.length; i += 1) {
-        localStorage.setItem(`${i}`, `${objectCatcherTemp[i]}`);
-      }
-
-      console.log(localStorage);
-    }
-    deleteButton.addEventListener("click", deleteAction);
   });
 }
