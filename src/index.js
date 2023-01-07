@@ -44,29 +44,26 @@ centerDivT.classList.add("centerDivT");
 centerDivT.innerText = "Organize your life with";
 const logoCenter = document.createElement("div");
 logoCenter.classList.add("logoCenter");
-
+centerDiv.appendChild(centerDivT);
+centerDiv.appendChild(logoCenter);
 const logoCenterLetters = document.createElement("span");
 logoCenterLetters.innerText = "Do i";
+logoCenter.appendChild(logoCenterLetters);
 const logoCenterIcon = document.createElement("span");
 logoCenterIcon.classList.add("logoCenterIcon");
+logoCenter.appendChild(logoCenterIcon);
 const logoPinIcon2 = new Image();
 logoPinIcon2.src = pinIcon;
 logoPinIcon2.classList.add("centerPin");
+logoCenterIcon.appendChild(logoPinIcon2);
 const spanCenter3 = document.createElement("div");
 spanCenter3.classList.add("spanCenter3");
 const spanCenter3B = document.createElement("button");
 spanCenter3B.classList.add("spanCenter3B");
 spanCenter3B.innerText = "Add task";
-centerDiv.appendChild(centerDivT);
-centerDiv.appendChild(logoCenter);
-logoCenter.appendChild(logoCenterLetters);
-logoCenter.appendChild(logoCenterIcon);
-logoCenterIcon.appendChild(logoPinIcon2);
 spanCenter3.appendChild(spanCenter3B);
 centerDiv.appendChild(spanCenter3);
-if (localStorage.length === 0) {
-  main.appendChild(centerDiv);
-}
+main.appendChild(centerDiv);
 
 const form = document.querySelector("form");
 const button = document.querySelector("button");
@@ -76,16 +73,14 @@ const projectCatcher = document.querySelector(".projectCatcher");
 const addProjectLink = document.querySelector(".addProjectLink");
 const selectProjectList = document.querySelector(".selectProjectList");
 const addButton = document.querySelector(".addButton");
-main.removeChild(addButton);
-addButton.hidden = true;
 
-const taskPresenter = document.querySelector(".taskPresenter");
+main.removeChild(form);
 
 const oldPR = [];
 
 let objectCatcher = [];
-
-console.log(addButton.hidden === true);
+/* localStorage.clear(); */
+console.log(localStorage.length);
 
 for (let i = 0; i <= localStorage.length - 1; i += 1) {
   // JSON.parse() converts localStorage JSON items into JS objects
@@ -130,28 +125,29 @@ function showForm() {
   if (main.contains(centerDiv)) {
     main.removeChild(centerDiv);
   }
-  if (main.contains(taskPresenter)) {
-    main.removeChild(taskPresenter);
-  }
+
   form.hidden = false;
   main.appendChild(form);
+  if (localStorage.length > 0) {
+    const titleInput =
+      document.body.children[1].children[0].children[0].children[2];
+    const descriptionInput =
+      document.body.children[1].children[0].children[0].children[4];
+    const dateInput =
+      document.body.children[1].children[0].children[0].children[6];
+    const priorityInput =
+      document.body.children[1].children[0].children[0].children[8];
+    titleInput.value = "";
+    descriptionInput.value = "";
+    dateInput.value = "";
+    priorityInput.value = "";
+    projectCatcher.value = "";
+  }
 
-  const titleInput =
-    document.body.children[1].children[0].children[0].children[2];
-  const descriptionInput =
-    document.body.children[1].children[0].children[0].children[4];
-  const dateInput =
-    document.body.children[1].children[0].children[0].children[6];
-  const priorityInput =
-    document.body.children[1].children[0].children[0].children[8];
   const projectList = fieldset.children[10];
 
   // Cleans all the inputs value
-  titleInput.value = "";
-  descriptionInput.value = "";
-  dateInput.value = "";
-  priorityInput.value = "";
-  projectCatcher.value = "";
+
   projectList.value = "All";
 
   if (projectList.hidden === true) projectList.hidden = false;
@@ -162,6 +158,7 @@ spanCenter3.addEventListener("click", showForm);
 const PCchecker = [];
 
 function hideForm(e) {
+  main.appendChild(centerDiv);
   form.hidden = true;
   main.removeChild(form);
   projectCatcher.hidden = true;
@@ -208,9 +205,7 @@ function hideForm(e) {
       task = { title, description, date, priority, projectList, checked, ID };
       localStorage.setItem(`${localStorage.length}`, JSON.stringify(task));
     }
-    if (localStorage.length === 0) {
-      main.removeChild(centerDiv);
-    }
+    main.removeChild(centerDiv);
 
     // Update objectCatcher
     objectCatcher = [];
@@ -243,9 +238,7 @@ function hideForm(e) {
         task = { title, description, date, priority, projectList, checked, ID };
         localStorage.setItem(`${localStorage.length}`, JSON.stringify(task));
       }
-      if (localStorage.length === 0) {
-        main.removeChild(centerDiv);
-      }
+      main.removeChild(centerDiv);
       objectCatcher = [];
 
       for (let i = 0; i <= localStorage.length - 1; i += 1) {
@@ -268,9 +261,7 @@ function hideForm(e) {
       localStorage.setItem(`${localStorage.length}`, JSON.stringify(task));
     }
     DOM.appendOption(selectProjectList, projectCatcher.value);
-    if (localStorage.length === 0) {
-      main.appendChild(centerDiv);
-    }
+    main.removeChild(centerDiv);
     objectCatcher = [];
 
     for (let i = 0; i <= localStorage.length - 1; i += 1) {
@@ -292,12 +283,8 @@ window.projectMaker = projectMaker;
 addProject.addEventListener("click", projectMaker);
 
 function showTasks() {
-  if (localStorage.length === 0) {
-    return;
-  }
-
-  if (main.contains(centerDiv)) {
-    main.remove(centerDiv);
+  if (main.children[0].classList.contains("centerDiv")) {
+    main.removeChild(centerDiv);
     objectCatcher = [];
 
     for (let i = 0; i <= localStorage.length - 1; i += 1) {
@@ -315,69 +302,13 @@ function showTasks() {
     }
     dispenser.showCard(objectCatcher);
   }
-
-  if (main.contains(taskPresenter)) {
-    main.removeChild(taskPresenter);
-    objectCatcher = [];
-
-    for (let i = 0; i <= localStorage.length - 1; i += 1) {
-      objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
-    }
-    dispenser.showCard(objectCatcher);
-  }
 }
 window.showTasks = showTasks;
 allTasks.addEventListener("click", showTasks);
 
-function refiller() {
-  const objectCatcherTemp = [];
-
-  // Read local storage
-  for (let i = 0; i <= localStorage.length - 1; i += 1) {
-    objectCatcherTemp.push(JSON.parse(localStorage.getItem(`${i}`)));
-  }
-  // Refill "All tasks" section
-  dispenser.showCard(objectCatcherTemp);
-}
-window.refiller = refiller;
-
-function logoAction() {
-  if (main.contains(centerDiv)) {
-    return;
-  }
-
-  if (main.contains(form) || main.contains(taskPresenter)) {
-    window.location.reload();
-  }
-}
-logo.addEventListener("click", logoAction);
-
-function findClick(e) {
-  if (e.target.classList.contains("deleteButton")) {
-    const targetNode = e.target.parentNode.parentNode.dataset.Id;
-
-    const objectCatcherTemp = [];
-
-    // Read local storage
-    for (let i = 0; i <= localStorage.length - 1; i += 1) {
-      objectCatcherTemp.push(JSON.parse(localStorage.getItem(`${i}`)));
-    }
-
-    // Update objectCatcherTemp
-    objectCatcherTemp.splice(targetNode, 1);
-    for (let i = 0; i <= objectCatcherTemp.length - 1; i += 1) {
-      objectCatcherTemp[i].ID = i;
-    }
-    // Update local storage
-    localStorage.clear();
-    for (let i = 0; i <= objectCatcherTemp.length - 1; i += 1) {
-      localStorage.setItem(`${i}`, `${JSON.stringify(objectCatcherTemp[i])}`);
-    }
-    window.location.reload();
-  }
-}
-window.findClick = findClick;
-main.addEventListener("click", findClick);
+logo.addEventListener("click", () => {
+  window.location.reload();
+});
 
 function addButtonAction() {
   console.log(main.contains(main.children[0]));
