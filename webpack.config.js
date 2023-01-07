@@ -4,8 +4,13 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   mode: "development",
   entry: {
-    index: [
-      "./src/index.js",
+    home: [
+      "./src/home.js",
+      "./src/services.js",
+      "./src/DOM.js",
+      "./src/card-dispenser/card-dispenser.js",
+    ],
+    allTasks: [
       "./src/services.js",
       "./src/DOM.js",
       "./src/card-dispenser/card-dispenser.js",
@@ -13,9 +18,14 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      filename: "index.html",
-      template: "src/index.html",
-      chunks: ["index"],
+      filename: "home.html",
+      title: "Home",
+      chunks: ["home"],
+    }),
+    new HtmlWebpackPlugin({
+      filename: "allTasks.html",
+      title: "All Tasks",
+      chunks: ["allTasks"],
     }),
   ],
   devtool: "eval-source-map",

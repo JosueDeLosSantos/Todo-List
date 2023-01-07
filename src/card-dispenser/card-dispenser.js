@@ -51,7 +51,15 @@ export function showCard(objectCatcher) {
   tPtitle.appendChild(h1Alltasks);
   taskPresenter.appendChild(cardList);
   main.appendChild(addButton);
-
+  function addButtonAction() {
+    /* console.log(main.contains(main.children[0]));
+    console.log(main.children); */
+    /*  main.removeChild(main.children[0]);
+    main.removeChild(main.children[0]); */
+    /* showForm(); */
+  }
+  window.addButtonAction = addButtonAction;
+  addButton.addEventListener("click", addButtonAction);
   objectCatcher.forEach((index) => {
     const cardSection = document.createElement("div");
     cardSection.classList.add("cardSection");
@@ -132,15 +140,5 @@ export function showCard(objectCatcher) {
     }
     expandButton.addEventListener("click", expander);
     checkboxInput.onchange = checkboxAction;
-
-    function addButtonAction() {
-      /* console.log(main.contains(main.children[0]));
-      console.log(main.children); */
-      /*  main.removeChild(main.children[0]);
-      main.removeChild(main.children[0]); */
-      showForm();
-    }
-    window.addButtonAction = addButtonAction;
-    addButton.addEventListener("click", addButtonAction);
   });
 }
