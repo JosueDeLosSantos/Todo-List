@@ -80,10 +80,9 @@ const projectCatcher = document.querySelector(".projectCatcher");
 const addProjectLink = document.querySelector(".addProjectLink");
 const selectProjectList = document.querySelector(".selectProjectList");
 
-console.log(localStorage);
-
 const oldPR = [];
-export const objectCatcher = [];
+const objectCatcher = [];
+console.log(objectCatcher);
 
 // Loops through "localStorage"
 for (let i = 0; i <= localStorage.length - 1; i += 1) {
