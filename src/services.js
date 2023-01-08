@@ -15,16 +15,17 @@ export function arrElementFinder(array, element) {
 
 // find element on array and return new array without such element
 export function arrElementKiller(array, element) {
-  array.forEach((index) => {
-    if (array[index] === element) {
-      array.splice(index, 1);
+  const newArray = array;
+  for (let i = 0; i <= newArray.length - 1; i += 1) {
+    if (newArray[i] === element) {
+      newArray.splice(i, 1);
     }
-  });
-  return array;
+  }
+  return newArray;
 }
 
 // Ensures that str contains any letters
-export function containsAnyLetters(str) {
+export function containsLetters(str) {
   return /[a-zA-Z]/.test(str);
 }
 

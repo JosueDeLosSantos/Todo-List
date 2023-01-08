@@ -42,7 +42,7 @@ ul.appendChild(allTasks);
 ul.appendChild(projects);
 ul.appendChild(priorityCSS);
 
-export const centerDiv = document.createElement("div");
+const centerDiv = document.createElement("div");
 centerDiv.classList.add("centerDiv");
 const centerDivT = document.createElement("div");
 centerDivT.classList.add("centerDivT");
@@ -69,12 +69,104 @@ spanCenter3B.innerText = "Add task";
 spanCenter3.appendChild(spanCenter3B);
 centerDiv.appendChild(spanCenter3);
 
-export const main = document.querySelector("main");
-const form = document.querySelector("form");
+const main = document.querySelector("main");
 main.appendChild(centerDiv);
+
+const form = document.querySelector("form");
+const formButton = document.querySelector(".formButton");
+const addProject = document.querySelector(".addProject");
+const fieldset = document.querySelector("fieldset");
+const projectCatcher = document.querySelector(".projectCatcher");
+const addProjectLink = document.querySelector(".addProjectLink");
+const selectProjectList = document.querySelector(".selectProjectList");
+
+console.log(localStorage);
+
+const oldPR = [];
+const objectCatcher = [];
+
+// Loops through "localStorage"
+for (let i = 0; i <= localStorage.length - 1; i += 1) {
+  // JSON.parse() converts localStorage JSON items into JS objects
+  // Appends each object to objectCatcher
+  objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
+}
+
+// Adds all projectList values to 'oldPR'
+for (let i = 0; i <= objectCatcher.length - 1; i += 1) {
+  oldPR.push(`${objectCatcher[i].projectList}`);
+}
+
+// noDupArray() returns "oldPR" without duplicates.
+const projectRepo = services.noDupArray(oldPR);
+
+if (projectRepo.length > 0) {
+  // arrElementKiller() returns a new array without the value "All"
+  const subPrepo = services.arrElementKiller(projectRepo, "All");
+  // Appends all elements of subPrepo to selectProjectList
+  subPrepo.forEach((index) => DOM.appendOption(selectProjectList, index));
+}
+
+function taskCreator(e) {
+  const title = e.target.parentNode.children[2].value;
+  const description = e.target.parentNode.children[4].value;
+  const date = e.target.parentNode.children[6].value;
+  const priority = e.target.parentNode.children[8].value;
+  let projectList = fieldset.children[10].value;
+  const checked = false;
+
+  // Makes sure that tasks title contains any letter or number
+  if (services.containsLetters(title) || services.containsNumbers(title)) {
+    // Makes sure that projectCatcher contains letters or numbers
+    if (
+      services.containsLetters(projectCatcher.value) ||
+      services.containsNumbers(projectCatcher.value)
+    ) {
+      projectList = projectCatcher.value;
+      let task = { title, description, date, priority, projectList, checked };
+      const ID = localStorage.length;
+      // Adds new projects to 'localStorage'.
+      task = { title, description, date, priority, projectList, checked, ID };
+      localStorage.setItem(`${localStorage.length}`, JSON.stringify(task));
+      return;
+    }
+    // Makes sure that projectCatcher does not contain letters or numbers
+    if (
+      !services.containsLetters(projectCatcher.value) ||
+      !services.containsNumbers(projectCatcher.value)
+    ) {
+      let task = { title, description, date, priority, projectList, checked };
+      const ID = localStorage.length;
+      task = { title, description, date, priority, projectList, checked, ID };
+      localStorage.setItem(`${localStorage.length}`, JSON.stringify(task));
+      e.stopPropagation();
+    }
+  }
+}
+formButton.addEventListener("click", taskCreator);
+
+// Uncovers a new input inside the form to add new projects
+function projectMaker(e) {
+  const projectList = e.target.parentNode.parentNode.children[10];
+  addProjectLink.hidden = true;
+  projectList.value = "";
+  projectCatcher.hidden = false;
+}
+window.projectMaker = projectMaker;
+addProject.addEventListener("click", projectMaker);
+/* Hides the "add project" option of the form when a project from 
+the project list is selected. */
+function hideProjectMaker() {
+  addProjectLink.hidden = false;
+  projectCatcher.hidden = true;
+  projectCatcher.value = "";
+}
+selectProjectList.addEventListener("click", hideProjectMaker);
 
 function showForm() {
   if (main.contains(centerDiv)) {
+    const priority = document.querySelector("#priority");
+    priority.value = "";
     main.removeChild(centerDiv);
     form.hidden = false;
   }

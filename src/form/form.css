@@ -19,12 +19,19 @@ input, select {
     padding: 0 10px 0 10px;
 }
 
-input,
-textarea, .projectCatcher {
+input, textarea, .projectCatcher {
     border: 1px solid var(--gray-border);
     border-radius: 5px;
-    width: 95%;
+    width: 93%;
     color: inherit;
+}
+
+.projectCatcher {
+    margin-top: 10px;
+}
+
+.projectCatcher:focus-visible {
+    outline: none;
 }
 
 textarea {
