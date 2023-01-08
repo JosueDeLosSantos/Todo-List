@@ -83,7 +83,7 @@ const selectProjectList = document.querySelector(".selectProjectList");
 console.log(localStorage);
 
 const oldPR = [];
-const objectCatcher = [];
+export const objectCatcher = [];
 
 // Loops through "localStorage"
 for (let i = 0; i <= localStorage.length - 1; i += 1) {

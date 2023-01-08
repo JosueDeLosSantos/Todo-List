@@ -1,11 +1,45 @@
-import * as services from "../services";
-import * as DOM from "../DOM";
 import "../index.css";
-import "../form/form.css";
 import pinIcon from "../icons/pin.png";
+import "../form/form.css";
 import chevronIcon from "../icons/chevron.svg";
 import "./allTasks.css";
-import * as index from "../index";
+
+const nav = document.querySelector("nav");
+const logoA = document.createElement("a");
+logoA.setAttribute("href", "index.html");
+const logo = document.createElement("div");
+logoA.appendChild(logo);
+logo.classList.add("logo");
+const logoText = document.createElement("span");
+logoText.classList.add("logoText");
+logoText.innerText = "Do i";
+const logoIcon = document.createElement("span");
+logoIcon.classList.add("logoIcon");
+const logoPinIcon = new Image();
+logoPinIcon.src = pinIcon;
+
+logo.appendChild(logoText);
+logo.appendChild(logoIcon);
+logoIcon.appendChild(logoPinIcon);
+nav.appendChild(logoA);
+
+const ul = document.createElement("ul");
+const allTasks = document.createElement("li");
+allTasks.classList.add("allTasks");
+const allTasksA = document.createElement("a");
+allTasksA.setAttribute("href", "allTasks.html");
+allTasksA.innerText = "All tasks";
+allTasks.appendChild(allTasksA);
+const projects = document.createElement("li");
+projects.classList.add("projects");
+projects.innerText = "Projects";
+const priorityCSS = document.createElement("li");
+priorityCSS.classList.add("priorityCSS");
+priorityCSS.innerText = "Priority";
+nav.appendChild(ul);
+ul.appendChild(allTasks);
+ul.appendChild(projects);
+ul.appendChild(priorityCSS);
 
 const body = document.querySelector("body");
 const form = document.querySelector("form");
@@ -23,8 +57,9 @@ addButton.classList.add("addButton");
 addButton.innerText = "+";
 addButton.setAttribute("title", "Add new task");
 
-if (body.children[1].children[1].className === "centerDiv") {
-  main.removeChild(body.children[1].children[1]);
+if (body.children[1].children[0]) {
+  console.log(body.children[1]);
+  main.removeChild(body.children[1].children[0]);
   main.appendChild(taskPresenter);
   main.appendChild(addButton);
   taskPresenter.appendChild(tPtitle);
@@ -68,12 +103,25 @@ function checkboxAction(e) {
   }
 }
 
-export function showCard(objectCatcher) {
-  objectCatcher.forEach((index) => {
+/* const description = document.querySelector(".description");
+const edition = document.querySelector(".edition");
+const expandButton = document.querySelector(".expandButton");
+const checkboxInput = document.querySelector(".checkboxInput"); */
+
+const objectCatcher = [];
+
+for (let i = 0; i <= localStorage.length - 1; i += 1) {
+  // JSON.parse() converts localStorage JSON items into JS objects
+  // Appends each object to objectCatcher
+  objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
+}
+
+(function showCard() {
+  for (let i = 0; i <= objectCatcher.length - 1; i += 1) {
     const cardSection = document.createElement("div");
     cardSection.classList.add("cardSection");
-    cardSection.dataset.Id = index.ID;
-    cardSection.dataset.checked = index.checked;
+    cardSection.dataset.Id = objectCatcher[i].ID;
+    cardSection.dataset.checked = objectCatcher[i].checked;
     cardList.appendChild(cardSection);
 
     const card = document.createElement("div");
@@ -83,10 +131,11 @@ export function showCard(objectCatcher) {
     const checkbox = document.createElement("div");
     checkbox.classList.add("checkbox");
     const checkboxInput = document.createElement("input");
+    checkboxInput.classList.add("checkboxInput");
     checkboxInput.setAttribute("type", "checkbox");
     checkboxInput.setAttribute("name", "checkbox");
     checkboxInput.checked = false;
-    if (index.checked === true) checkboxInput.checked = true;
+    if (objectCatcher[i].checked === true) checkboxInput.checked = true;
     card.appendChild(checkbox);
 
     const cardTitle = document.createElement("div");
@@ -95,7 +144,7 @@ export function showCard(objectCatcher) {
     card.appendChild(cardTitle);
     checkbox.appendChild(checkboxInput);
     cardTitle.appendChild(cardTitleP);
-    cardTitleP.innerText = `${index.title}`;
+    cardTitleP.innerText = `${objectCatcher[i].title}`;
 
     const cardDate = document.createElement("div");
     cardDate.classList.add("cardDate");
@@ -122,32 +171,38 @@ export function showCard(objectCatcher) {
     cardSection.appendChild(description);
     description.appendChild(descriptionT);
     description.appendChild(descriptionB);
-    descriptionB.innerText = `${index.description}`;
+    descriptionB.innerText = `${objectCatcher[i].description}`;
 
     const edition = document.createElement("div");
     edition.classList.add("edition");
     edition.hidden = true;
     const editButton = document.createElement("button");
+    editButton.hidden = true;
     editButton.innerText = "edit";
     const deleteButton = document.createElement("button");
     deleteButton.classList.add("deleteButton");
+    deleteButton.hidden = true;
     deleteButton.innerText = "delete";
     cardSection.appendChild(edition);
     edition.appendChild(editButton);
     edition.appendChild(deleteButton);
     cardDate.appendChild(cardDateP);
-    cardDateP.innerText = `${index.date}`;
+    cardDateP.innerText = `${objectCatcher[i].date}`;
 
-    function expander() {
+    const expander = () => {
       if (description.hidden && edition.hidden) {
         description.hidden = false;
         edition.hidden = false;
+        editButton.hidden = false;
+        deleteButton.hidden = false;
       } else {
         description.hidden = true;
         edition.hidden = true;
+        editButton.hidden = true;
+        deleteButton.hidden = true;
       }
-    }
+    };
     expandButton.addEventListener("click", expander);
     checkboxInput.onchange = checkboxAction;
-  });
-}
+  }
+})();
