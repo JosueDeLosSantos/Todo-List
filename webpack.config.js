@@ -4,27 +4,18 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   mode: "development",
   entry: {
-    index: [
-      "./src/index.js",
-      "./src/services.js",
-      "./src/DOM.js",
-      "./src/card-dispenser/card-dispenser.js",
-    ],
-    allTasks: [
-      "./src/services.js",
-      "./src/DOM.js",
-      "./src/card-dispenser/card-dispenser.js",
-    ],
+    index: ["./src/index.js", "./src/services.js", "./src/DOM.js"],
+    allTasks: ["./src/all-tasks/allTasks.js"],
   },
   plugins: [
     new HtmlWebpackPlugin({
       filename: "index.html",
-      title: "Home",
+      template: "src/index.html",
       chunks: ["index"],
     }),
     new HtmlWebpackPlugin({
       filename: "allTasks.html",
-      title: "All Tasks",
+      template: "src/all-tasks/allTasks.html",
       chunks: ["allTasks"],
     }),
   ],

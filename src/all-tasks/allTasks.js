@@ -1,5 +1,44 @@
+import * as services from "../services";
+import * as DOM from "../DOM";
+import "../index.css";
+import "../form/form.css";
+import pinIcon from "../icons/pin.png";
 import chevronIcon from "../icons/chevron.svg";
-import "./card-dispenser.css";
+import "./allTasks.css";
+import * as index from "../index";
+
+const body = document.querySelector("body");
+const form = document.querySelector("form");
+const main = document.querySelector("main");
+const taskPresenter = document.createElement("div");
+taskPresenter.classList.add("taskPresenter");
+const tPtitle = document.createElement("div");
+tPtitle.classList.add("tPtitle");
+const h1Alltasks = document.createElement("h1");
+h1Alltasks.innerText = "All tasks";
+const cardList = document.createElement("div");
+cardList.classList.add("cardList");
+const addButton = document.createElement("div");
+addButton.classList.add("addButton");
+addButton.innerText = "+";
+addButton.setAttribute("title", "Add new task");
+
+if (body.children[1].children[1].className === "centerDiv") {
+  main.removeChild(body.children[1].children[1]);
+  main.appendChild(taskPresenter);
+  main.appendChild(addButton);
+  taskPresenter.appendChild(tPtitle);
+  taskPresenter.hidden = false;
+  tPtitle.appendChild(h1Alltasks);
+  taskPresenter.appendChild(cardList);
+}
+
+function addButtonAction() {
+  main.removeChild(main.children[1]);
+  main.removeChild(main.children[1]);
+  form.hidden = false;
+}
+addButton.addEventListener("click", addButtonAction);
 
 function checkboxAction(e) {
   const targetNode = e.target.parentNode.parentNode.parentNode.dataset;
@@ -29,37 +68,7 @@ function checkboxAction(e) {
   }
 }
 
-const main = document.querySelector("main");
-const taskPresenter = document.createElement("div");
-taskPresenter.classList.add("taskPresenter");
-const tPtitle = document.createElement("div");
-tPtitle.classList.add("tPtitle");
-const h1Alltasks = document.createElement("h1");
-h1Alltasks.innerText = "All tasks";
-const cardList = document.createElement("div");
-cardList.classList.add("cardList");
-const addButton = document.createElement("div");
-addButton.classList.add("addButton");
-addButton.innerText = "+";
-addButton.setAttribute("title", "Add new task");
-
 export function showCard(objectCatcher) {
-  main.appendChild(taskPresenter);
-  main.appendChild(addButton);
-  taskPresenter.appendChild(tPtitle);
-  taskPresenter.hidden = false;
-  tPtitle.appendChild(h1Alltasks);
-  taskPresenter.appendChild(cardList);
-  main.appendChild(addButton);
-  function addButtonAction() {
-    /* console.log(main.contains(main.children[0]));
-    console.log(main.children); */
-    /*  main.removeChild(main.children[0]);
-    main.removeChild(main.children[0]); */
-    /* showForm(); */
-  }
-  window.addButtonAction = addButtonAction;
-  addButton.addEventListener("click", addButtonAction);
   objectCatcher.forEach((index) => {
     const cardSection = document.createElement("div");
     cardSection.classList.add("cardSection");
