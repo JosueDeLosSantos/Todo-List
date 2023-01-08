@@ -7,19 +7,8 @@
  * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
  */
 /******/ (() => { // webpackBootstrap
-/******/ 	var __webpack_modules__ = ({
-
-/***/ "./src/index.js":
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
-/***/ (() => {
-
-
-
-/***/ })
-
-/******/ 	});
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({});
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
@@ -216,10 +205,9 @@
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["src_DOM_js-src_card-dispenser_card-dispenser_js-src_services_js"], () => (__webpack_require__("./src/index.js")))
-/******/ 	__webpack_require__.O(undefined, ["src_DOM_js-src_card-dispenser_card-dispenser_js-src_services_js"], () => (__webpack_require__("./src/services.js")))
-/******/ 	__webpack_require__.O(undefined, ["src_DOM_js-src_card-dispenser_card-dispenser_js-src_services_js"], () => (__webpack_require__("./src/DOM.js")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["src_DOM_js-src_card-dispenser_card-dispenser_js-src_services_js"], () => (__webpack_require__("./src/card-dispenser/card-dispenser.js")))
+/******/ 	__webpack_require__.O(undefined, ["src_index_js"], () => (__webpack_require__("./src/index.js")))
+/******/ 	__webpack_require__.O(undefined, ["src_index_js"], () => (__webpack_require__("./src/services.js")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["src_index_js"], () => (__webpack_require__("./src/DOM.js")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
