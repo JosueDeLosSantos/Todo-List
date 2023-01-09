@@ -80,6 +80,7 @@ const addProjectLink = document.querySelector(".addProjectLink");
 const selectProjectList = document.querySelector(".selectProjectList");
 
 main.appendChild(centerDiv);
+/* localStorage.clear(); */
 
 const oldPR = [];
 const objectCatcher = [];

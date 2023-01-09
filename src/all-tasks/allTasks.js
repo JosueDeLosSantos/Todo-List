@@ -19,7 +19,9 @@ addButton.setAttribute("title", "Add new task");
 
 const centerDiv = document.querySelector(".centerDiv");
 const form = document.querySelector("form");
-
+const priority = document.querySelector("#priority");
+priority.value = "";
+// Update screen
 centerDiv.replaceWith(taskPresenter);
 main.appendChild(addButton);
 taskPresenter.appendChild(tPtitle);
@@ -34,14 +36,14 @@ function addButtonAction() {
 }
 addButton.addEventListener("click", addButtonAction);
 
+// Update objectCatcher
+const objectCatcher = [];
+for (let i = 0; i <= localStorage.length - 1; i += 1) {
+  objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
+}
+
 function checkboxAction(e) {
   const targetNode = e.target.parentNode.parentNode.parentNode.dataset;
-
-  const objectCatcher = [];
-  // Update objectCatcher
-  for (let i = 0; i <= localStorage.length - 1; i += 1) {
-    objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
-  }
 
   if (objectCatcher[targetNode.Id].checked === false) {
     objectCatcher[targetNode.Id].checked = true;
@@ -59,10 +61,23 @@ function checkboxAction(e) {
   }
 }
 
-const objectCatcher = [];
-
-for (let i = 0; i <= localStorage.length - 1; i += 1) {
-  objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
+function deletion(e) {
+  const targetNode = e.target.parentNode.parentNode.dataset.Id;
+  // remove targetNode immediately
+  cardList.removeChild(e.target.parentNode.parentNode);
+  // Update objectCatcher
+  objectCatcher.splice(+targetNode, 1);
+  // Update objects ID
+  for (let i = 0; i <= objectCatcher.length - 1; i += 1) {
+    objectCatcher[i].ID = `${i}`;
+  }
+  // Update localStorage
+  localStorage.clear();
+  for (let i = 0; i <= objectCatcher.length - 1; i += 1) {
+    localStorage.setItem(`${i}`, JSON.stringify(objectCatcher[i]));
+  }
+  // Reload page
+  window.location.reload();
 }
 
 (function showCard() {
@@ -153,5 +168,6 @@ for (let i = 0; i <= localStorage.length - 1; i += 1) {
     };
     expandButton.addEventListener("click", expander);
     checkboxInput.onchange = checkboxAction;
+    deleteButton.onclick = deletion;
   }
 })();
