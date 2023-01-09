@@ -70,7 +70,6 @@ spanCenter3.appendChild(spanCenter3B);
 centerDiv.appendChild(spanCenter3);
 
 const main = document.querySelector("main");
-main.appendChild(centerDiv);
 
 const form = document.querySelector("form");
 const formButton = document.querySelector(".formButton");
@@ -79,6 +78,8 @@ const fieldset = document.querySelector("fieldset");
 const projectCatcher = document.querySelector(".projectCatcher");
 const addProjectLink = document.querySelector(".addProjectLink");
 const selectProjectList = document.querySelector(".selectProjectList");
+
+main.appendChild(centerDiv);
 
 const oldPR = [];
 const objectCatcher = [];
@@ -163,10 +164,11 @@ selectProjectList.addEventListener("click", hideProjectMaker);
 
 function showForm() {
   if (main.contains(centerDiv)) {
+    main.removeChild(centerDiv);
+    main.appendChild(form);
+    form.hidden = false;
     const priority = document.querySelector("#priority");
     priority.value = "";
-    main.removeChild(centerDiv);
-    form.hidden = false;
   }
 }
 spanCenter3B.addEventListener("click", showForm);

@@ -5,7 +5,12 @@ module.exports = {
   mode: "development",
   entry: {
     index: ["./src/index.js", "./src/services.js", "./src/DOM.js"],
-    allTasks: ["./src/all-tasks/allTasks.js"],
+    allTasks: [
+      "./src/index.js",
+      "./src/services.js",
+      "./src/DOM.js",
+      "./src/all-tasks/allTasks.js",
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -15,7 +20,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       filename: "allTasks.html",
-      template: "src/all-tasks/allTasks.html",
+      template: "src/index.html",
       chunks: ["allTasks"],
     }),
   ],
