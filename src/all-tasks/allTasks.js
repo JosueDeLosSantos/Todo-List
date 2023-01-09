@@ -67,7 +67,7 @@ const addProjectLink = document.querySelector(".addProjectLink");
 const selectProjectList = document.querySelector(".selectProjectList");
 
 const oldPR = [];
-const objectCatcher = [];
+let objectCatcher = [];
 
 for (let i = 0; i <= localStorage.length - 1; i += 1) {
   // JSON.parse() converts localStorage JSON items into JS objects
@@ -146,16 +146,6 @@ function hideProjectMaker() {
 }
 selectProjectList.addEventListener("click", hideProjectMaker);
 
-/* function showForm() {
-  if (main.contains(centerDiv)) {
-    const priority = document.querySelector("#priority");
-    priority.value = "";
-    main.removeChild(centerDiv);
-    form.hidden = false;
-  }
-}
-spanCenter3B.addEventListener("click", showForm); */
-
 if (body.children[1].children[0]) {
   main.removeChild(body.children[1].children[0]);
   main.appendChild(taskPresenter);
@@ -176,7 +166,7 @@ addButton.addEventListener("click", addButtonAction);
 function checkboxAction(e) {
   const targetNode = e.target.parentNode.parentNode.parentNode.dataset;
 
-  const objectCatcher = [];
+  objectCatcher = [];
 
   for (let i = 0; i <= localStorage.length - 1; i += 1) {
     // JSON.parse() converts localStorage JSON items into JS objects
