@@ -94,3 +94,22 @@ main {
     justify-content: center;
     align-items: center;
   }
+
+.resetButton {
+    background-color: red;
+    font-size: 2rem;
+    color: white;
+    width: 100px;
+    height: 100px;
+    position: fixed;
+    bottom: 35px;
+    left: 35px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.renewImage {
+    width: 60px
+}

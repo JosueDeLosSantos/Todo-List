@@ -357,6 +357,7 @@ template {
 :root {
   --body-background: hsl(180, 100%, 100%);
   --nav-border: hsl(0, 0%, 90%);
+  --logo-color: black;
 }
 
 body {
@@ -384,8 +385,7 @@ nav {
 }
 
 .logoIcon > img {
-  height: 25px;
-  width: 25px;
+  width: 17px;
 }
 
 .logoIcon {
@@ -394,7 +394,7 @@ nav {
 
 .logoText {
   padding-bottom: 5px;
-  color: gray;
+  color: var(--logo-color);
   font-weight: bolder;
 }
 
@@ -428,13 +428,13 @@ main {
 
 .logoCenter {
   font-size: 2rem;
-  color: gray;
+  color: var(--logo-color);
   align-self: center;
   font-weight: bolder;
 }
 
 .centerPin {
-  width: 40px;
+  width: 24px;
 }
 
 .spanCenter3{

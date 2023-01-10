@@ -3,7 +3,7 @@ import * as services from "./services";
 import * as DOM from "./DOM";
 import "./index.css";
 import "./form/form.css";
-import pinIcon from "./icons/pin.png";
+import pinIcon from "./icons/pin.svg";
 
 const nav = document.querySelector("nav");
 const logoA = document.createElement("a");

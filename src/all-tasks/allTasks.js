@@ -1,6 +1,7 @@
 import "../index.css";
 import "../form/form.css";
 import chevronIcon from "../icons/chevron.svg";
+import renew from "../icons/autorenew.svg";
 import "./allTasks.css";
 import * as services from "../services";
 
@@ -17,6 +18,13 @@ const addButton = document.createElement("div");
 addButton.classList.add("addButton");
 addButton.innerText = "+";
 addButton.setAttribute("title", "Add new task");
+const resetButton = document.createElement("div");
+resetButton.classList.add("resetButton");
+const renewImage = new Image();
+renewImage.classList.add("renewImage");
+renewImage.src = renew;
+resetButton.appendChild(renewImage);
+resetButton.setAttribute("title", "clear all");
 
 const centerDiv = document.querySelector(".centerDiv");
 
@@ -30,6 +38,7 @@ const formButton = document.querySelector(".formButton");
 // Update screen
 centerDiv.replaceWith(taskPresenter);
 main.appendChild(addButton);
+main.appendChild(resetButton);
 taskPresenter.appendChild(tPtitle);
 taskPresenter.hidden = false;
 tPtitle.appendChild(h1Alltasks);
@@ -39,8 +48,15 @@ function addButtonAction() {
   taskPresenter.replaceWith(form);
   form.hidden = false;
   main.removeChild(addButton);
+  main.removeChild(resetButton);
 }
 addButton.addEventListener("click", addButtonAction);
+
+function resetButtonAction() {
+  localStorage.clear();
+  window.location.reload();
+}
+resetButton.addEventListener("click", resetButtonAction);
 
 // Update objectCatcher
 const objectCatcher = [];
@@ -90,15 +106,14 @@ function deletion(e) {
 
 function editAction(e) {
   const targetNode = e.target.parentNode.parentNode.dataset.Id;
-  console.log(objectCatcher[targetNode]);
   const check = e.target.parentNode.parentNode.dataset.checked;
   form.dataset.edit = true;
   form.dataset.id = targetNode;
   form.dataset.check = check;
-  console.log(form);
   taskPresenter.replaceWith(form);
   form.hidden = false;
   main.removeChild(addButton);
+  main.removeChild(resetButton);
   const title = form.children[0].children[2];
   const description = form.children[0].children[4];
   const date = form.children[0].children[6];
