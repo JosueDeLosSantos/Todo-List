@@ -108,39 +108,44 @@ if (projectRepo.length > 0) {
 }
 
 function taskCreator(e) {
-  const title = e.target.parentNode.children[2].value;
-  const description = e.target.parentNode.children[4].value;
-  const date = e.target.parentNode.children[6].value;
-  const priority = e.target.parentNode.children[8].value;
-  let projectList = fieldset.children[10].value;
-  const checked = false;
+  if (form.dataset.edit === false) {
+    const title = e.target.parentNode.children[2].value;
+    const description = e.target.parentNode.children[4].value;
+    const date = e.target.parentNode.children[6].value;
+    const priority = e.target.parentNode.children[8].value;
+    let projectList = fieldset.children[10].value;
+    const checked = false;
 
-  // Makes sure that tasks title contains any letter or number
-  if (services.containsLetters(title) || services.containsNumbers(title)) {
-    // Makes sure that projectCatcher contains letters or numbers
-    if (
-      services.containsLetters(projectCatcher.value) ||
-      services.containsNumbers(projectCatcher.value)
-    ) {
-      projectList = projectCatcher.value;
-      let task = { title, description, date, priority, projectList, checked };
-      const ID = localStorage.length;
-      // Adds new projects to 'localStorage'.
-      task = { title, description, date, priority, projectList, checked, ID };
-      localStorage.setItem(`${localStorage.length}`, JSON.stringify(task));
-      return;
+    // Makes sure that tasks title contains any letter or number
+    if (services.containsLetters(title) || services.containsNumbers(title)) {
+      // Makes sure that projectCatcher contains letters or numbers
+      if (
+        services.containsLetters(projectCatcher.value) ||
+        services.containsNumbers(projectCatcher.value)
+      ) {
+        projectList = projectCatcher.value;
+        let task = { title, description, date, priority, projectList, checked };
+        const ID = localStorage.length;
+        // Adds new projects to 'localStorage'.
+        task = { title, description, date, priority, projectList, checked, ID };
+        localStorage.setItem(`${localStorage.length}`, JSON.stringify(task));
+        return;
+      }
+      // Makes sure that projectCatcher does not contain letters or numbers
+      if (
+        !services.containsLetters(projectCatcher.value) ||
+        !services.containsNumbers(projectCatcher.value)
+      ) {
+        let task = { title, description, date, priority, projectList, checked };
+        const ID = localStorage.length;
+        task = { title, description, date, priority, projectList, checked, ID };
+        localStorage.setItem(`${localStorage.length}`, JSON.stringify(task));
+        e.stopPropagation();
+      }
     }
-    // Makes sure that projectCatcher does not contain letters or numbers
-    if (
-      !services.containsLetters(projectCatcher.value) ||
-      !services.containsNumbers(projectCatcher.value)
-    ) {
-      let task = { title, description, date, priority, projectList, checked };
-      const ID = localStorage.length;
-      task = { title, description, date, priority, projectList, checked, ID };
-      localStorage.setItem(`${localStorage.length}`, JSON.stringify(task));
-      e.stopPropagation();
-    }
+  }
+  if (form.dataset.edit === true) {
+    console.log("yes");
   }
 }
 formButton.addEventListener("click", taskCreator);
@@ -164,6 +169,7 @@ function hideProjectMaker() {
 selectProjectList.addEventListener("click", hideProjectMaker);
 
 function showForm() {
+  console.log(form);
   if (main.contains(centerDiv)) {
     main.removeChild(centerDiv);
     main.appendChild(form);

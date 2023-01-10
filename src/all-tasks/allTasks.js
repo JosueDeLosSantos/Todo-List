@@ -19,8 +19,11 @@ addButton.setAttribute("title", "Add new task");
 
 const centerDiv = document.querySelector(".centerDiv");
 const form = document.querySelector("form");
-const priority = document.querySelector("#priority");
-priority.value = "";
+
+const formPriority = document.querySelector("#priority");
+formPriority.value = "";
+const formButton = document.querySelector(".formButton");
+
 // Update screen
 centerDiv.replaceWith(taskPresenter);
 main.appendChild(addButton);
@@ -79,6 +82,35 @@ function deletion(e) {
   // Reload page
   window.location.reload();
 }
+
+function editAction(e) {
+  const targetNode = e.target.parentNode.parentNode.dataset.Id;
+  console.log(objectCatcher[targetNode]);
+  form.dataset.edit = true;
+  console.log(form);
+  taskPresenter.replaceWith(form);
+  form.hidden = false;
+  main.removeChild(addButton);
+  const title = form.children[0].children[2];
+  const description = form.children[0].children[4];
+  const date = form.children[0].children[6];
+  const priority = form.children[0].children[8];
+  const project = form.children[0].children[10];
+
+  title.value = objectCatcher[targetNode].title;
+  description.value = objectCatcher[targetNode].description;
+  date.value = objectCatcher[targetNode].date;
+  priority.value = objectCatcher[targetNode].priority;
+  project.value = objectCatcher[targetNode].projectList;
+}
+
+function taskCreator(e) {
+  if (e.target.parentNode.parentNode.dataset.edit === "true") {
+    console.log("yes");
+    e.preventDefault();
+  }
+}
+formButton.addEventListener("click", taskCreator);
 
 (function showCard() {
   for (let i = 0; i <= objectCatcher.length - 1; i += 1) {
@@ -169,5 +201,6 @@ function deletion(e) {
     expandButton.addEventListener("click", expander);
     checkboxInput.onchange = checkboxAction;
     deleteButton.onclick = deletion;
+    editButton.onclick = editAction;
   }
 })();
