@@ -2,6 +2,7 @@ import "../index.css";
 import "../form/form.css";
 import chevronIcon from "../icons/chevron.svg";
 import "./allTasks.css";
+import * as services from "../services";
 
 const main = document.querySelector("main");
 const taskPresenter = document.createElement("div");
@@ -18,10 +19,12 @@ addButton.innerText = "+";
 addButton.setAttribute("title", "Add new task");
 
 const centerDiv = document.querySelector(".centerDiv");
-const form = document.querySelector("form");
 
+const form = document.querySelector("form");
+const projectCatcher = document.querySelector(".projectCatcher");
 const formPriority = document.querySelector("#priority");
 formPriority.value = "";
+const fieldset = document.querySelector("fieldset");
 const formButton = document.querySelector(".formButton");
 
 // Update screen
@@ -86,7 +89,10 @@ function deletion(e) {
 function editAction(e) {
   const targetNode = e.target.parentNode.parentNode.dataset.Id;
   console.log(objectCatcher[targetNode]);
+  const check = e.target.parentNode.parentNode.dataset.checked;
   form.dataset.edit = true;
+  form.dataset.id = targetNode;
+  form.dataset.check = check;
   console.log(form);
   taskPresenter.replaceWith(form);
   form.hidden = false;
@@ -106,7 +112,60 @@ function editAction(e) {
 
 function taskCreator(e) {
   if (e.target.parentNode.parentNode.dataset.edit === "true") {
-    console.log("yes");
+    const title = e.target.parentNode.children[2].value;
+    const description = e.target.parentNode.children[4].value;
+    const date = e.target.parentNode.children[6].value;
+    const priority = e.target.parentNode.children[8].value;
+    let projectList = fieldset.children[10].value;
+    let checked = null;
+    // Change string value to boolean
+    if (e.target.parentNode.parentNode.dataset.check === "false") {
+      checked = false;
+    } else {
+      checked = true;
+    }
+
+    const ID = +e.target.parentNode.parentNode.dataset.id;
+    console.log(ID);
+
+    // Makes sure that tasks title contains any letter or number
+    if (services.containsLetters(title) || services.containsNumbers(title)) {
+      // Makes sure that projectCatcher contains letters or numbers
+      if (
+        services.containsLetters(projectCatcher.value) ||
+        services.containsNumbers(projectCatcher.value)
+      ) {
+        projectList = projectCatcher.value;
+        const task = {
+          title,
+          description,
+          date,
+          priority,
+          projectList,
+          checked,
+          ID,
+        };
+        console.log(task);
+        return;
+      }
+      // Makes sure that projectCatcher does not contain letters or numbers
+      if (
+        !services.containsLetters(projectCatcher.value) ||
+        !services.containsNumbers(projectCatcher.value)
+      ) {
+        const task = {
+          title,
+          description,
+          date,
+          priority,
+          projectList,
+          checked,
+          ID,
+        };
+        console.log(task);
+        e.stopPropagation();
+      }
+    }
     e.preventDefault();
   }
 }
