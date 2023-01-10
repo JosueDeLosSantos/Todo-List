@@ -58,12 +58,14 @@ function checkboxAction(e) {
       `${targetNode.Id}`,
       JSON.stringify(objectCatcher[targetNode.Id])
     );
+    targetNode.checked = true;
   } else if (objectCatcher[targetNode.Id].checked === true) {
     objectCatcher[targetNode.Id].checked = false;
     localStorage.setItem(
       `${targetNode.Id}`,
       JSON.stringify(objectCatcher[targetNode.Id])
     );
+    targetNode.checked = false;
   }
 }
 
@@ -126,7 +128,6 @@ function taskCreator(e) {
     }
 
     const ID = +e.target.parentNode.parentNode.dataset.id;
-    console.log(ID);
 
     // Makes sure that tasks title contains any letter or number
     if (services.containsLetters(title) || services.containsNumbers(title)) {
@@ -145,8 +146,15 @@ function taskCreator(e) {
           checked,
           ID,
         };
-        console.log(task);
-        return;
+        // Update objectCatcher
+        objectCatcher.splice(ID, 1, task);
+        // Update localStorage
+        localStorage.clear();
+        for (let i = 0; i <= objectCatcher.length - 1; i += 1) {
+          localStorage.setItem(`${i}`, JSON.stringify(objectCatcher[i]));
+        }
+        // Reload page
+        window.location.reload();
       }
       // Makes sure that projectCatcher does not contain letters or numbers
       if (
@@ -162,11 +170,17 @@ function taskCreator(e) {
           checked,
           ID,
         };
-        console.log(task);
-        e.stopPropagation();
+        // Update objectCather
+        objectCatcher.splice(ID, 1, task);
+        // Update localStorage
+        localStorage.clear();
+        for (let i = 0; i <= objectCatcher.length - 1; i += 1) {
+          localStorage.setItem(`${i}`, JSON.stringify(objectCatcher[i]));
+        }
+        // Reload page
+        window.location.reload();
       }
     }
-    e.preventDefault();
   }
 }
 formButton.addEventListener("click", taskCreator);

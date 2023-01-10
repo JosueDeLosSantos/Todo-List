@@ -108,7 +108,7 @@ if (projectRepo.length > 0) {
 }
 
 function taskCreator(e) {
-  if (form.dataset.edit === false) {
+  if (form.dataset.edit === "false") {
     const title = e.target.parentNode.children[2].value;
     const description = e.target.parentNode.children[4].value;
     const date = e.target.parentNode.children[6].value;
@@ -143,9 +143,6 @@ function taskCreator(e) {
         e.stopPropagation();
       }
     }
-  }
-  if (form.dataset.edit === true) {
-    console.log("yes");
   }
 }
 formButton.addEventListener("click", taskCreator);
