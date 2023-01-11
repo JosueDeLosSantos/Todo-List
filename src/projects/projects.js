@@ -10,6 +10,7 @@ const main = document.querySelector("main");
 const taskPresenter = document.querySelector(".taskPresenter");
 const h1Alltasks = document.querySelector(".h1Alltasks");
 const cardList = document.querySelector(".cardList");
+cardList.classList.add("cardList");
 const resetButton = document.querySelector(".resetButton");
 const addButton = document.querySelector(".addButton");
 
@@ -83,8 +84,6 @@ const h1Projects = document.createElement("h1");
 h1Projects.innerText = "Projects";
 const projectList = document.createElement("div");
 projectList.classList.add("projectList");
-const cardList2 = document.createElement("div");
-cardList2.classList.add("cardList");
 
 const newAddButton = document.createElement("div");
 newAddButton.classList.add("addButton");
@@ -102,6 +101,7 @@ main.appendChild(projectsPresenter);
 projectsPresenter.appendChild(pPtitle);
 pPtitle.appendChild(h1Projects);
 projectsPresenter.appendChild(projectList);
+main.appendChild(newAddButton);
 
 projects.forEach((index) => {
   const projectSection = document.createElement("div");
@@ -138,12 +138,11 @@ projects.forEach((index) => {
     const projectName = projectSection.children[0].innerText;
     projectsPresenter.replaceWith(taskPresenter);
     h1Alltasks.innerText = `${projectName}`;
-    cardList.replaceWith(cardList2);
-    main.appendChild(newAddButton);
+    taskPresenter.removeChild(cardList);
     main.appendChild(newResetButton);
 
     // Show only the cards of the project selected
-    tasks.showCard(projectCards(projectName), cardList2);
+    tasks.showCard(projectCards(projectName));
   };
   projectSection.onclick = projectsContent;
 });

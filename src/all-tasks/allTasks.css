@@ -14,19 +14,25 @@ main {
 
 .cardList {
     border-radius: 8px;
-    width: 50%;
+    height: 100%;
+    width: 75%;
     margin-left: auto;
     margin-right: auto;
+    display: flex;
+    flex-wrap: wrap;
+    
 }
 
 .cardSection {
+    margin-left: var(--common-spacing);
+    margin-bottom: var(--common-spacing);
     background-color: aliceblue;
     border: 1px solid gray;
     border-radius: 5px;
-    margin-bottom: var(--common-spacing);
     padding-left: var(--common-spacing);
     padding-right: var(--common-spacing);
     padding-bottom: var(--common-spacing);
+    width: 200px;
 }
 
 .card {
@@ -82,10 +88,10 @@ main {
 
 .addButton {
     background-color: hsl(240, 50%, 50%);
-    font-size: 6rem;
+    font-size: 5rem;
     color: white;
-    width: 100px;
-    height: 100px;
+    width: 75px;
+    height: 75px;
     position: fixed;
     bottom: 35px;
     right: 35px;
@@ -99,8 +105,8 @@ main {
     background-color: hsl(0, 50%, 50%);
     font-size: 2rem;
     color: white;
-    width: 100px;
-    height: 100px;
+    width: 75px;
+    height: 75px;
     position: fixed;
     bottom: 35px;
     left: 35px;
@@ -111,7 +117,7 @@ main {
 }
 
 .renewImage, .fdImage {
-    width: 60px
+    width: 50px
 }
 
 .deleteButton, .editButton {

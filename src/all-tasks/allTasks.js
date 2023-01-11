@@ -13,8 +13,6 @@ tPtitle.classList.add("tPtitle");
 const h1Alltasks = document.createElement("h1");
 h1Alltasks.classList.add("h1Alltasks");
 h1Alltasks.innerText = "All tasks";
-const cardList = document.createElement("div");
-cardList.classList.add("cardList");
 const addButton = document.createElement("div");
 addButton.classList.add("addButton");
 addButton.innerText = "+";
@@ -43,7 +41,6 @@ main.appendChild(resetButton);
 taskPresenter.appendChild(tPtitle);
 taskPresenter.hidden = false;
 tPtitle.appendChild(h1Alltasks);
-taskPresenter.appendChild(cardList);
 
 function addButtonAction() {
   taskPresenter.replaceWith(form);
@@ -88,8 +85,10 @@ function checkboxAction(e) {
 
 function deletion(e) {
   const targetNode = e.target.parentNode.parentNode.dataset.Id;
+
   // remove targetNode immediately
-  cardList.removeChild(e.target.parentNode.parentNode);
+  const container = main.children[1].children[1];
+  container.removeChild(e.target.parentNode.parentNode);
   // Update objectCatcher
   objectCatcher.splice(+targetNode, 1);
   // Update objects ID
@@ -113,8 +112,13 @@ function editAction(e) {
   form.dataset.check = check;
   taskPresenter.replaceWith(form);
   form.hidden = false;
-  main.removeChild(addButton);
-  main.removeChild(resetButton);
+  /* I removed main.children[i] instead of "addButton".
+  'the "addButton" variable cannot be used in this case, because
+  it will trigger errors on other sections like "Projects"' */
+  main.removeChild(main.children[1]);
+  /* I removed it egain because by the time children[1] be removed
+  children[2] will become children[1] or "resetButton" */
+  main.removeChild(main.children[1]);
   const title = form.children[0].children[2];
   const description = form.children[0].children[4];
   const date = form.children[0].children[6];
@@ -200,10 +204,17 @@ function taskCreator(e) {
 }
 formButton.addEventListener("click", taskCreator);
 
-export function showCard(objectCatcher, cardList) {
+// eslint-disable-next-line no-shadow
+export function showCard(objectCatcher) {
+  // eslint-disable-next-line no-shadow
+  const cardList = document.createElement("div");
+  cardList.classList.add("cardList");
+  taskPresenter.appendChild(cardList);
   for (let i = 0; i <= objectCatcher.length - 1; i += 1) {
+    // creates card section
     const cardSection = document.createElement("div");
     cardSection.classList.add("cardSection");
+    // adds data attributes to cardsection
     cardSection.dataset.Id = objectCatcher[i].ID;
     cardSection.dataset.checked = objectCatcher[i].checked;
     cardList.appendChild(cardSection);
@@ -293,4 +304,4 @@ export function showCard(objectCatcher, cardList) {
     editButton.onclick = editAction;
   }
 }
-showCard(objectCatcher, cardList);
+showCard(objectCatcher);
