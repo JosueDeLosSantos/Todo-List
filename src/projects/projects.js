@@ -48,8 +48,8 @@ projectRepo.forEach((index) => {
     }
   }
 
-  let title = index;
-  let completed = tempObjectCatcher.length;
-  let incompleted = tempObjectCatcher2.length;
+  const title = index;
+  const completed = tempObjectCatcher.length;
+  const incompleted = tempObjectCatcher2.length;
   console.log({ title, completed, incompleted });
 });
