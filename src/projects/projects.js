@@ -1,10 +1,15 @@
 import "../index.css";
 import "../form/form.css";
 import "../all-tasks/allTasks.css";
+import "./projects.css";
+import folderDelete from "../icons/folder_delete.svg";
 import * as services from "../services";
+import * as tasks from "../all-tasks/allTasks";
 
 const main = document.querySelector("main");
 const taskPresenter = document.querySelector(".taskPresenter");
+const h1Alltasks = document.querySelector(".h1Alltasks");
+const cardList = document.querySelector(".cardList");
 const resetButton = document.querySelector(".resetButton");
 const addButton = document.querySelector(".addButton");
 
@@ -14,7 +19,6 @@ main.removeChild(addButton);
 
 const oldPR = [];
 const objectCatcher = [];
-const projects = {};
 
 for (let i = 0; i <= localStorage.length - 1; i += 1) {
   objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
@@ -29,6 +33,8 @@ const projectRepo = services.noDupArray(oldPR);
 
 console.log(projectRepo);
 console.log(objectCatcher);
+
+const projects = [];
 
 projectRepo.forEach((index) => {
   const tempObjectCatcher = [];
@@ -49,7 +55,95 @@ projectRepo.forEach((index) => {
   }
 
   const title = index;
-  const completed = tempObjectCatcher.length;
-  const incompleted = tempObjectCatcher2.length;
-  console.log({ title, completed, incompleted });
+  const done = tempObjectCatcher.length;
+  const pending = tempObjectCatcher2.length;
+  const task = { title, done, pending };
+  projects.push(task);
+});
+
+/* Capture only the cards with the project name 'pam' and 
+saves them on tempArray */
+function projectCards(pam) {
+  const tempArray = [];
+  for (let i = 0; i < objectCatcher.length; i++) {
+    if (pam === objectCatcher[i].projectList) {
+      tempArray.push(objectCatcher[i]);
+    }
+  }
+  return tempArray;
+}
+
+console.log(projects);
+
+const projectsPresenter = document.createElement("div");
+projectsPresenter.classList.add("projectsPresenter");
+const pPtitle = document.createElement("div");
+pPtitle.classList.add("pPtitle");
+const h1Projects = document.createElement("h1");
+h1Projects.innerText = "Projects";
+const projectList = document.createElement("div");
+projectList.classList.add("projectList");
+const cardList2 = document.createElement("div");
+cardList2.classList.add("cardList");
+
+const newAddButton = document.createElement("div");
+newAddButton.classList.add("addButton");
+newAddButton.innerText = "+";
+newAddButton.setAttribute("title", "Add new task");
+const newResetButton = document.createElement("div");
+newResetButton.classList.add("resetButton");
+const fdImage = new Image();
+fdImage.classList.add("fdImage");
+fdImage.src = folderDelete;
+newResetButton.appendChild(fdImage);
+newResetButton.setAttribute("title", "Delete project");
+
+main.appendChild(projectsPresenter);
+projectsPresenter.appendChild(pPtitle);
+pPtitle.appendChild(h1Projects);
+projectsPresenter.appendChild(projectList);
+
+projects.forEach((index) => {
+  const projectSection = document.createElement("div");
+  projectSection.classList.add("projectSection");
+  const projectSectionT = document.createElement("div");
+  projectSectionT.classList.add("projectSectionT");
+  projectSectionT.innerText = `${index.title}`;
+  projectSection.appendChild(projectSectionT);
+  const PSdata = document.createElement("div");
+  PSdata.classList.add("PSdata");
+  projectSection.appendChild(PSdata);
+  const done = document.createElement("div");
+  done.classList.add("done");
+  const doneT = document.createElement("div");
+  doneT.innerText = "done:";
+  const doneD = document.createElement("div");
+  doneD.innerText = `${index.done}`;
+  const pending = document.createElement("div");
+  pending.classList.add("pending");
+  const pendingT = document.createElement("div");
+  pendingT.innerText = "pending:";
+  const pendingD = document.createElement("div");
+  pendingD.innerText = `${index.pending}`;
+  PSdata.appendChild(done);
+  done.appendChild(doneT);
+  done.appendChild(doneD);
+  PSdata.appendChild(pending);
+  pending.appendChild(pendingT);
+  pending.appendChild(pendingD);
+
+  projectList.appendChild(projectSection);
+
+  const projectsContent = () => {
+    const projectName = projectSection.children[0].innerText;
+    projectsPresenter.replaceWith(taskPresenter);
+    h1Alltasks.innerText = `${projectName}`;
+    cardList.replaceWith(cardList2);
+    main.appendChild(newAddButton);
+    main.appendChild(newResetButton);
+
+    // Show only the cards of the project selected
+    tasks.showCard(projectCards(projectName), cardList2);
+  };
+  projectSection.onclick = projectsContent;
 });

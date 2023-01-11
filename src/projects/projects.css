@@ -1,0 +1,66 @@
+:root {
+    --danger-red: hsl(0, 50%, 50%);
+    --sad-green: hsl(120, 50%, 25%);
+    --common-spacing: 15px;
+}
+
+.projectsPresenter{
+    width: 100%;
+    height: 100%;
+}
+
+.pPtitle {
+    text-align: center;
+}
+
+.projectList {
+    border-radius: 8px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: minmax(100px, auto);
+    gap: var(--common-spacing);
+
+}
+
+.projectSection {
+    padding: var(--common-spacing);
+    background-color: aliceblue;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+.projectSectionT {
+    text-align: center;
+    height: 50%;
+    font-weight: 600;
+}
+
+.PSdata {
+    display: flex;
+    justify-content: space-around;
+    height: 50%;
+    align-items: center;
+}
+
+.done, .pending  {
+    display: flex;
+    gap: 5px;
+}
+
+.done > div:first-child {
+    color: var(--sad-green);
+}
+
+.pending > div:first-child {
+    color: var(--danger-red);
+}
+.done > div:last-child, .pending > div:last-child {
+    font-style: italic;
+    font-size: 0.9rem;
+}
+

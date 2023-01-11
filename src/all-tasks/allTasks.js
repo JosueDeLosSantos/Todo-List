@@ -11,6 +11,7 @@ taskPresenter.classList.add("taskPresenter");
 const tPtitle = document.createElement("div");
 tPtitle.classList.add("tPtitle");
 const h1Alltasks = document.createElement("h1");
+h1Alltasks.classList.add("h1Alltasks");
 h1Alltasks.innerText = "All tasks";
 const cardList = document.createElement("div");
 cardList.classList.add("cardList");
@@ -199,7 +200,7 @@ function taskCreator(e) {
 }
 formButton.addEventListener("click", taskCreator);
 
-(function showCard() {
+export function showCard(objectCatcher, cardList) {
   for (let i = 0; i <= objectCatcher.length - 1; i += 1) {
     const cardSection = document.createElement("div");
     cardSection.classList.add("cardSection");
@@ -247,7 +248,7 @@ formButton.addEventListener("click", taskCreator);
     description.hidden = true;
     const descriptionT = document.createElement("div");
     descriptionT.classList.add("descriptionT");
-    descriptionT.innerText = "description";
+    descriptionT.innerText = "Description";
     const descriptionB = document.createElement("div");
     descriptionB.classList.add("descriptionB");
     descriptionB.innerText = "";
@@ -260,12 +261,13 @@ formButton.addEventListener("click", taskCreator);
     edition.classList.add("edition");
     edition.hidden = true;
     const editButton = document.createElement("button");
+    editButton.classList.add("editButton");
     editButton.hidden = true;
-    editButton.innerText = "edit";
+    editButton.innerText = "Edit";
     const deleteButton = document.createElement("button");
     deleteButton.classList.add("deleteButton");
     deleteButton.hidden = true;
-    deleteButton.innerText = "delete";
+    deleteButton.innerText = "Delete";
     cardSection.appendChild(edition);
     edition.appendChild(editButton);
     edition.appendChild(deleteButton);
@@ -290,4 +292,5 @@ formButton.addEventListener("click", taskCreator);
     deleteButton.onclick = deletion;
     editButton.onclick = editAction;
   }
-})();
+}
+showCard(objectCatcher, cardList);

@@ -62,7 +62,7 @@ main {
 }
 
 .descriptionT {
-
+    font-weight: 600;
 }
 
 .descriptionB {
@@ -81,7 +81,7 @@ main {
 }
 
 .addButton {
-    background-color: blue;
+    background-color: hsl(240, 50%, 50%);
     font-size: 6rem;
     color: white;
     width: 100px;
@@ -96,7 +96,7 @@ main {
   }
 
 .resetButton {
-    background-color: red;
+    background-color: hsl(0, 50%, 50%);
     font-size: 2rem;
     color: white;
     width: 100px;
@@ -110,6 +110,12 @@ main {
     align-items: center;
 }
 
-.renewImage {
+.renewImage, .fdImage {
     width: 60px
+}
+
+.deleteButton, .editButton {
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 3px 8px;
 }
