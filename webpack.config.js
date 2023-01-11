@@ -11,17 +11,32 @@ module.exports = {
       "./src/DOM.js",
       "./src/all-tasks/allTasks.js",
     ],
+    projects: [
+      "./src/index.js",
+      "./src/services.js",
+      "./src/DOM.js",
+      "./src/all-tasks/allTasks.js",
+      "./src/projects/projects.js",
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
       filename: "index.html",
+      title: "Home",
       template: "src/index.html",
       chunks: ["index"],
     }),
     new HtmlWebpackPlugin({
       filename: "allTasks.html",
+      title: "All tasks",
       template: "src/index.html",
       chunks: ["allTasks"],
+    }),
+    new HtmlWebpackPlugin({
+      filename: "projects.html",
+      title: "Projects",
+      template: "src/index.html",
+      chunks: ["projects"],
     }),
   ],
   devtool: "eval-source-map",

@@ -141,8 +141,7 @@ function taskCreator(e) {
     } else {
       checked = true;
     }
-
-    const ID = +e.target.parentNode.parentNode.dataset.id;
+    const ID = e.target.parentNode.parentNode.dataset.id;
 
     // Makes sure that tasks title contains any letter or number
     if (services.containsLetters(title) || services.containsNumbers(title)) {

@@ -15,7 +15,8 @@
     "rules": {
         "prettier/prettier": "error",
         "import/prefer-default-export": "off",
-        "import/no-cycle": [2, { "maxDepth": 1 }]
+        "import/no-cycle": [2, { "maxDepth": 1 }],
+        "no-plusplus": 0
     }
     
 }
