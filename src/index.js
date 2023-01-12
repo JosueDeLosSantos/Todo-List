@@ -39,7 +39,10 @@ projectsA.innerText = "Projects";
 projects.appendChild(projectsA);
 const priorityCSS = document.createElement("li");
 priorityCSS.classList.add("priorityCSS");
-priorityCSS.innerText = "Priority";
+const priorityCSSA = document.createElement("a");
+priorityCSSA.setAttribute("href", "priority.html");
+priorityCSSA.innerText = "Priority";
+priorityCSS.appendChild(priorityCSSA);
 nav.appendChild(ul);
 ul.appendChild(allTasks);
 ul.appendChild(projects);
@@ -83,7 +86,6 @@ const addProjectLink = document.querySelector(".addProjectLink");
 const selectProjectList = document.querySelector(".selectProjectList");
 
 main.appendChild(centerDiv);
-/* localStorage.clear(); */
 
 const oldPR = [];
 const objectCatcher = [];

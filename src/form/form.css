@@ -1,7 +1,7 @@
 :root {
-    --gray-border:hsl(0, 0%, 30%);
-    --form-background: hsl(200, 100%, 94%);
-    --select-background: hsl(0, 0%, 95%);
+    --gray-border: gray;
+    --form-background: aliceblue;
+    --letters-color: black;
     --addProject-color: hwb(240 20% 0%);
 }
 
@@ -10,8 +10,16 @@ form {
     padding: 15px;
     border-radius: 10px;
     border: 1px solid var(--gray-border);
-    color: var(--gray-border);
+    color: var(--letters-color);
     margin-top: 30px;
+}
+
+#title, textarea, input, #date {
+    background-color: white;
+}
+
+label {
+    font-weight: 500;
 }
 
 input, select {
@@ -24,6 +32,12 @@ input, textarea, .projectCatcher {
     border-radius: 5px;
     width: 93%;
     color: inherit;
+}
+
+.cardDate > p {
+    font-size: 0.9rem;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .projectCatcher {
@@ -46,7 +60,7 @@ textarea:focus-visible {
 select {
     border: none;
     outline: none;
-    background-color: var(--select-background);
+    background-color: hsl(0, 0%, 95%);
     border: 1px solid var(--gray-border);
     width: 100%;
     color: inherit;
@@ -74,7 +88,7 @@ fieldset>label {
     margin-top: 30px;
     border-radius: 5px;
     border: 1px solid var(--gray-border);
-    background-color: aliceblue;
+    background-color: hwb(0 100% 5%);
 }
 
 .addProject {

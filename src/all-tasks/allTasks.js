@@ -258,14 +258,10 @@ export function showCard(objectCatcher) {
     const description = document.createElement("div");
     description.classList.add("description");
     description.hidden = true;
-    const descriptionT = document.createElement("div");
-    descriptionT.classList.add("descriptionT");
-    descriptionT.innerText = "Description";
     const descriptionB = document.createElement("div");
     descriptionB.classList.add("descriptionB");
     descriptionB.innerText = "";
     cardSection.appendChild(description);
-    description.appendChild(descriptionT);
     description.appendChild(descriptionB);
     descriptionB.innerText = `${objectCatcher[i].description}`;
 

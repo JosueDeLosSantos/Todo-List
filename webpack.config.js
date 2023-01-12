@@ -18,6 +18,13 @@ module.exports = {
       "./src/all-tasks/allTasks.js",
       "./src/projects/projects.js",
     ],
+    priority: [
+      "./src/index.js",
+      "./src/services.js",
+      "./src/DOM.js",
+      "./src/all-tasks/allTasks.js",
+      "./src/priority/priority.js",
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -37,6 +44,12 @@ module.exports = {
       title: "Projects",
       template: "src/index.html",
       chunks: ["projects"],
+    }),
+    new HtmlWebpackPlugin({
+      filename: "priority.html",
+      title: "Priority",
+      template: "src/index.html",
+      chunks: ["priority"],
     }),
   ],
   devtool: "eval-source-map",

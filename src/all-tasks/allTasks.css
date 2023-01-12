@@ -1,13 +1,14 @@
 
 :root {
     --common-spacing: 15px;
+    --card-background: hsl(208deg 0% 97%);
 }
 
 main {
     height: 100%;
 }
 
-.taskPresenter{
+.taskPresenter, .projectsPresenter{
     width: 100%;
     height: 100%;
 }
@@ -26,18 +27,18 @@ main {
 .cardSection {
     margin-left: var(--common-spacing);
     margin-bottom: var(--common-spacing);
-    background-color: aliceblue;
+    background-color: var(--card-background);
     border: 1px solid gray;
     border-radius: 5px;
-    padding-left: var(--common-spacing);
-    padding-right: var(--common-spacing);
-    padding-bottom: var(--common-spacing);
-    width: 200px;
+    padding: var(--common-spacing);
+    padding-bottom: 0;
+    width: 225px;
 }
 
 .card {
     width: 100%;
     display: flex;
+    height: auto;
 }
 
 .cardTitle {
@@ -45,18 +46,27 @@ main {
     flex: 2;
 }
 
+.cardTitle > p {
+    margin-top: 5px;
+}
+
 .cardDate {
     padding-right: var(--common-spacing);
+    color: hsl(0, 0%, 40%);
+}
+
+.cardDate > p {
+    margin-top: 6px;
 }
 
 .checkbox {
-    margin-top: 9px;
+    margin: 0;
     padding-right: var(--common-spacing);
 }
 
 .chevronDown {
     width: 30px;
-    margin-top: 10px;
+    margin: 0;
 }
 
 .tPtitle {
@@ -75,7 +85,6 @@ main {
     width: 70%;
     margin-left: auto;
     margin-right: auto;
-    margin-top: var(--common-spacing);
 }
 
 
@@ -84,6 +93,8 @@ main {
     justify-content: center;
     gap: var(--common-spacing);
     margin-top: var(--common-spacing);
+    margin-bottom: var(--common-spacing);    margin-top: var(--common-spacing);
+
 }
 
 .addButton {

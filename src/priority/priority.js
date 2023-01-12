@@ -1,9 +1,8 @@
 import "../index.css";
 import "../form/form.css";
 import "../all-tasks/allTasks.css";
-import "./projects.css";
+import "../projects/projects.css";
 import folderDelete from "../icons/folder_delete.svg";
-import * as services from "../services";
 import * as tasks from "../all-tasks/allTasks";
 
 const main = document.querySelector("main");
@@ -18,34 +17,28 @@ main.removeChild(taskPresenter);
 main.removeChild(resetButton);
 main.removeChild(addButton);
 
-const oldPR = [];
 const objectCatcher = [];
 
 for (let i = 0; i <= localStorage.length - 1; i += 1) {
   objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
 }
 
-for (let i = 0; i <= objectCatcher.length - 1; i += 1) {
-  oldPR.push(`${objectCatcher[i].projectList}`);
-}
-
-// noDupArray() returns "oldPR" without duplicates.
-const projectRepo = services.noDupArray(oldPR);
+const categories = ["low", "medium", "high"];
 
 const projects = [];
 
-projectRepo.forEach((index) => {
+categories.forEach((index) => {
   const tempObjectCatcher = [];
   const tempObjectCatcher2 = [];
   for (let i = 0; i < objectCatcher.length; i++) {
     if (
-      index === objectCatcher[i].projectList &&
+      index === objectCatcher[i].priority &&
       objectCatcher[i].checked === true
     ) {
       tempObjectCatcher.push(objectCatcher[i]);
     }
     if (
-      index === objectCatcher[i].projectList &&
+      index === objectCatcher[i].priority &&
       objectCatcher[i].checked === false
     ) {
       tempObjectCatcher2.push(objectCatcher[i]);
@@ -59,24 +52,12 @@ projectRepo.forEach((index) => {
   projects.push(task);
 });
 
-/* Capture only the cards with the project name 'pam' and 
-saves them on tempArray */
-function projectCards(pam) {
-  const tempArray = [];
-  for (let i = 0; i < objectCatcher.length; i++) {
-    if (pam === objectCatcher[i].projectList) {
-      tempArray.push(objectCatcher[i]);
-    }
-  }
-  return tempArray;
-}
-
 const projectsPresenter = document.createElement("div");
 projectsPresenter.classList.add("projectsPresenter");
 const pPtitle = document.createElement("div");
 pPtitle.classList.add("pPtitle");
 const h1Projects = document.createElement("h1");
-h1Projects.innerText = "Projects";
+h1Projects.innerText = "Priorities";
 const projectList = document.createElement("div");
 projectList.classList.add("projectList");
 
@@ -94,13 +75,13 @@ function addButtonAction() {
 }
 
 function deleteProject(e) {
-  const projectName =
+  const prioritytName =
     e.target.parentNode.parentNode.children[1].children[0].children[0]
       .innerText;
 
   for (let i = 0; i < objectCatcher.length; i++) {
-    // Spot all elements that contain "projectName"
-    if (projectName === objectCatcher[i].projectList) {
+    // Spot all elements that contain "priorityName"
+    if (prioritytName === objectCatcher[i].priority) {
       // delete found elements from objectCatcher
       delete objectCatcher[i];
     }
@@ -119,10 +100,22 @@ function deleteProject(e) {
   // Reload page
   window.location.reload();
 }
+
+function projectCards(pam) {
+  const tempArray = [];
+  for (let i = 0; i < objectCatcher.length; i++) {
+    if (pam === objectCatcher[i].priority) {
+      tempArray.push(objectCatcher[i]);
+    }
+  }
+  return tempArray;
+}
+
 const newAddButton = document.createElement("div");
 newAddButton.classList.add("addButton");
 newAddButton.innerText = "+";
 newAddButton.setAttribute("title", "Add new task");
+main.appendChild(newAddButton);
 newAddButton.onclick = addButtonAction;
 const newResetButton = document.createElement("div");
 newResetButton.classList.add("resetButton");
