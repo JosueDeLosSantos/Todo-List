@@ -355,21 +355,22 @@ template {
 }
 
 :root {
-  --body-background: hsl(180, 100%, 100%);
+  --body-background: hsl(0, 0%, 100%);
+  --nav-background: hsl(159, 100%, 94%);
   --nav-border: hsl(0, 0%, 90%);
   --logo-color: black;
 }
 
 body {
   background-color: var(--body-background);
-  
 }
 
 nav {
     display: flex;
     justify-content: space-between;
+    background-color: var(--nav-background);
     border-bottom: 1px solid var(--nav-border);
-    margin-top: 10px;
+    padding-top: 10px;
     font-size: 1.2rem;
 }
 

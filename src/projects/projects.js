@@ -85,10 +85,23 @@ h1Projects.innerText = "Projects";
 const projectList = document.createElement("div");
 projectList.classList.add("projectList");
 
+function addButtonAction() {
+  const form = document.querySelector("form");
+  if (main.children[3]) {
+    tasks.addButtonAction();
+    return;
+  }
+  const targetNode = main.children[1];
+  const blueButton = main.children[2];
+  main.removeChild(blueButton);
+  targetNode.replaceWith(form);
+  form.hidden = false;
+}
 const newAddButton = document.createElement("div");
 newAddButton.classList.add("addButton");
 newAddButton.innerText = "+";
 newAddButton.setAttribute("title", "Add new task");
+newAddButton.onclick = addButtonAction;
 const newResetButton = document.createElement("div");
 newResetButton.classList.add("resetButton");
 const fdImage = new Image();

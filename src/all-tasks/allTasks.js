@@ -42,11 +42,14 @@ taskPresenter.appendChild(tPtitle);
 taskPresenter.hidden = false;
 tPtitle.appendChild(h1Alltasks);
 
-function addButtonAction() {
-  taskPresenter.replaceWith(form);
+export function addButtonAction() {
+  const redButton = main.children[3];
+  const blueButton = main.children[2];
+  const targetNode = main.children[1];
+  main.removeChild(redButton);
+  main.removeChild(blueButton);
+  targetNode.replaceWith(form);
   form.hidden = false;
-  main.removeChild(addButton);
-  main.removeChild(resetButton);
 }
 addButton.addEventListener("click", addButtonAction);
 
@@ -115,9 +118,7 @@ function editAction(e) {
   /* I removed main.children[i] instead of "addButton".
   'the "addButton" variable cannot be used in this case, because
   it will trigger errors on other sections like "Projects"' */
-  main.removeChild(main.children[1]);
-  /* I removed it egain because by the time children[1] be removed
-  children[2] will become children[1] or "resetButton" */
+  main.removeChild(main.children[2]);
   main.removeChild(main.children[1]);
   const title = form.children[0].children[2];
   const description = form.children[0].children[4];
