@@ -152,3 +152,11 @@ main {
   border-radius: 5px;
   padding: 3px 8px;
 }
+
+.expandButton,
+.deleteButton,
+.editButton,
+.checkbox,
+.checkboxInput {
+  cursor: pointer;
+}
