@@ -1,103 +1,107 @@
 :root {
-    --gray-border: gray;
-    --form-background: aliceblue;
-    --letters-color: black;
-    --addProject-color: hwb(240 20% 0%);
+  --gray-border: gray;
+  --form-background: rgb(214 232 180);
+  --letters-color: black;
+  --addProject-color: hwb(240 20% 0%);
 }
 
 form {
-    background-color: var(--form-background);
-    padding: 15px;
-    border-radius: 10px;
-    border: 1px solid var(--gray-border);
-    color: var(--letters-color);
-    margin-top: 30px;
+  background-color: var(--form-background);
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid var(--gray-border);
+  color: var(--letters-color);
+  margin-top: 30px;
 }
 
-#title, textarea, input, #date {
-    background-color: white;
+#title,
+textarea,
+input,
+#date {
+  background-color: white;
 }
 
 label {
-    font-weight: 500;
+  font-weight: 500;
 }
 
-input, select {
-    height: 30px;
-    padding: 0 10px 0 10px;
+input,
+select {
+  height: 30px;
+  padding: 0 10px 0 10px;
 }
 
-input, textarea, .projectCatcher {
-    border: 1px solid var(--gray-border);
-    border-radius: 5px;
-    width: 93%;
-    color: inherit;
+input,
+textarea,
+.projectCatcher {
+  border: 1px solid var(--gray-border);
+  border-radius: 5px;
+  width: 93%;
+  color: inherit;
 }
 
 .cardDate > p {
-    font-size: 0.9rem;
-    margin-top: 0;
-    margin-bottom: 0;
+  font-size: 0.9rem;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .projectCatcher {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .projectCatcher:focus-visible {
-    outline: none;
+  outline: none;
 }
 
 textarea {
-    padding: 10px;
+  padding: 10px;
 }
 
 input:focus-visible,
 textarea:focus-visible {
-    outline: 1px solid var(--gray-border);
+  outline: 1px solid var(--gray-border);
 }
 
 select {
-    border: none;
-    outline: none;
-    background-color: hsl(0, 0%, 95%);
-    border: 1px solid var(--gray-border);
-    width: 100%;
-    color: inherit;
+  border: none;
+  outline: none;
+  background-color: hsl(0, 0%, 95%);
+  border: 1px solid var(--gray-border);
+  width: 100%;
+  color: inherit;
 }
 
 fieldset {
-    border: none;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    align-items: center;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
 }
 
-fieldset>legend {
-    font-weight: 600;
+fieldset > legend {
+  font-weight: 600;
 }
 
-fieldset>label {
-    margin-top: 15px;
-    margin-bottom: 5px;
+fieldset > label {
+  margin-top: 15px;
+  margin-bottom: 5px;
 }
 
 .formButton {
-    padding: 5px 20px 5px 20px;
-    margin-top: 30px;
-    border-radius: 5px;
-    border: 1px solid var(--gray-border);
-    background-color: hwb(0 100% 5%);
+  padding: 5px 20px 5px 20px;
+  margin-top: 30px;
+  border-radius: 5px;
+  border: 1px solid var(--gray-border);
+  background-color: hwb(0 100% 5%);
 }
 
 .addProject {
-    width: 98%;
-    font-family:Arial, Helvetica, sans-serif;
-    font-size: 14px;
-    color: var(--addProject-color);
-    text-decoration: underline;
-    cursor: pointer;
+  width: 98%;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  color: var(--addProject-color);
+  text-decoration: underline;
+  cursor: pointer;
 }
-
-  

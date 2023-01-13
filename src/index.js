@@ -69,9 +69,9 @@ logoPinIcon2.classList.add("centerPin");
 logoCenterIcon.appendChild(logoPinIcon2);
 const spanCenter3 = document.createElement("div");
 spanCenter3.classList.add("spanCenter3");
-const spanCenter3B = document.createElement("button");
+const spanCenter3B = document.createElement("a");
 spanCenter3B.classList.add("spanCenter3B");
-spanCenter3B.innerText = "Add task";
+spanCenter3B.innerText = "Add Task";
 spanCenter3.appendChild(spanCenter3B);
 centerDiv.appendChild(spanCenter3);
 
@@ -87,8 +87,8 @@ const selectProjectList = document.querySelector(".selectProjectList");
 
 main.appendChild(centerDiv);
 
-const oldPR = [];
-const objectCatcher = [];
+export const oldPR = [];
+export const objectCatcher = [];
 
 // Loops through "localStorage"
 for (let i = 0; i <= localStorage.length - 1; i += 1) {
@@ -103,7 +103,7 @@ for (let i = 0; i <= objectCatcher.length - 1; i += 1) {
 }
 
 // noDupArray() returns "oldPR" without duplicates.
-const projectRepo = services.noDupArray(oldPR);
+export const projectRepo = services.noDupArray(oldPR);
 
 if (projectRepo.length > 0) {
   // arrElementKiller() returns a new array without the value "All"

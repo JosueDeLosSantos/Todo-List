@@ -215,6 +215,15 @@ export function showCard(objectCatcher) {
     // creates card section
     const cardSection = document.createElement("div");
     cardSection.classList.add("cardSection");
+    if (objectCatcher[i].priority === "low") {
+      cardSection.classList.add("green");
+    }
+    if (objectCatcher[i].priority === "medium") {
+      cardSection.classList.add("yellow");
+    }
+    if (objectCatcher[i].priority === "high") {
+      cardSection.classList.add("red");
+    }
     // adds data attributes to cardsection
     cardSection.dataset.Id = objectCatcher[i].ID;
     cardSection.dataset.checked = objectCatcher[i].checked;

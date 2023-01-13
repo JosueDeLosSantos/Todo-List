@@ -34,10 +34,13 @@ const projectRepo = services.noDupArray(oldPR);
 
 const projects = [];
 
+/* go through each project name */
 projectRepo.forEach((index) => {
   const tempObjectCatcher = [];
   const tempObjectCatcher2 = [];
   for (let i = 0; i < objectCatcher.length; i++) {
+    /* compares each project name with each element.projectList
+    from objectCatcher and checks if elements have been marked */
     if (
       index === objectCatcher[i].projectList &&
       objectCatcher[i].checked === true
@@ -51,7 +54,8 @@ projectRepo.forEach((index) => {
       tempObjectCatcher2.push(objectCatcher[i]);
     }
   }
-
+  /* Creates new object containing the name of the project,
+  number of completed tasks and number of incompleted tasks and */
   const title = index;
   const done = tempObjectCatcher.length;
   const pending = tempObjectCatcher2.length;
@@ -59,8 +63,9 @@ projectRepo.forEach((index) => {
   projects.push(task);
 });
 
-/* Capture only the cards with the project name 'pam' and 
-saves them on tempArray */
+/* Capture only the taks with the project name 'pam' and 
+saves them on tempArray. this function returns tasks that belong
+to a specific project. */
 function projectCards(pam) {
   const tempArray = [];
   for (let i = 0; i < objectCatcher.length; i++) {
