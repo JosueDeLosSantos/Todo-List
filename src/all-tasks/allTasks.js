@@ -28,39 +28,27 @@ const selectProjectList = document.querySelector(".selectProjectList");
 function checkboxAction(e) {
   const objectCatcher = [];
 
-  // Loops through "localStorage"
   for (let i = 0; i <= localStorage.length - 1; i += 1) {
-    // JSON.parse() converts localStorage JSON items into JS objects
-    // Appends each object to objectCatcher
     objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
   }
+
   const targetNode = e.target.parentNode.parentNode.parentNode.dataset;
 
-  if (objectCatcher[targetNode.Id].checked === false) {
-    objectCatcher[targetNode.Id].checked = true;
-
-    //  console.log(objectCatcher[targetNode.Id]);
+  if (objectCatcher[targetNode.Id].checked === "false") {
+    objectCatcher[targetNode.Id].checked = "true";
     // update localStorage
     localStorage.setItem(
       `${targetNode.Id}`,
       JSON.stringify(objectCatcher[targetNode.Id])
     );
-    targetNode.checked = true;
-  } else if (objectCatcher[targetNode.Id].checked === true) {
-    objectCatcher[targetNode.Id].checked = false;
+  } else {
+    objectCatcher[targetNode.Id].checked = "false";
 
-    //  console.log(objectCatcher[targetNode.Id]);
     localStorage.setItem(
       `${targetNode.Id}`,
       JSON.stringify(objectCatcher[targetNode.Id])
     );
-    targetNode.checked = false;
   }
-
-  // Update localStorage
-  /* for (let i = 0; i < objectCatcher.length; i += 1) {
-    localStorage.setItem(`${i}`, `${JSON.stringify(objectCatcher[i])}`);
-  } */
 }
 
 function deletion(e) {
@@ -193,8 +181,13 @@ export function showCard() {
     checkboxInput.classList.add("checkboxInput");
     checkboxInput.setAttribute("type", "checkbox");
     checkboxInput.setAttribute("name", "checkbox");
-    checkboxInput.checked = false;
-    if (objectCatcher[i].checked === true) checkboxInput.checked = true;
+
+    if (objectCatcher[i].checked === "true") {
+      checkboxInput.checked = true;
+    } else {
+      checkboxInput.checked = false;
+    }
+
     card.appendChild(checkbox);
 
     const cardTitle = document.createElement("div");
