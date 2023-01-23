@@ -41,6 +41,7 @@ function checkboxAction(e) {
       `${targetNode.Id}`,
       JSON.stringify(objectCatcher[targetNode.Id])
     );
+    targetNode.checked = true;
   } else {
     objectCatcher[targetNode.Id].checked = "false";
 
@@ -48,6 +49,7 @@ function checkboxAction(e) {
       `${targetNode.Id}`,
       JSON.stringify(objectCatcher[targetNode.Id])
     );
+    targetNode.checked = false;
   }
 }
 
