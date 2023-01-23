@@ -25,7 +25,6 @@ const formButton = document.querySelector(".formButton");
 const addProjectLink = document.querySelector(".addProjectLink");
 const selectProjectList = document.querySelector(".selectProjectList");
 
-// BUG, this function do not work if the taskCreator button is clicked.
 function checkboxAction(e) {
   const objectCatcher = [];
 
