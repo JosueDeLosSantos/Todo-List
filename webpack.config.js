@@ -4,52 +4,21 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   mode: "development",
   entry: {
-    index: ["./src/index.js", "./src/services.js", "./src/DOM.js"],
-    allTasks: [
+    index: [
       "./src/index.js",
       "./src/services.js",
       "./src/DOM.js",
       "./src/all-tasks/allTasks.js",
-    ],
-    projects: [
-      "./src/index.js",
-      "./src/services.js",
-      "./src/DOM.js",
-      "./src/all-tasks/allTasks.js",
-      "./src/projects/projects.js",
-    ],
-    priority: [
-      "./src/index.js",
-      "./src/services.js",
-      "./src/DOM.js",
-      "./src/all-tasks/allTasks.js",
-      "./src/priority/priority.js",
+      /*  "./src/projects/projects.js",
+      "./src/priority/priority.js", */
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
       filename: "index.html",
-      title: "Home",
+      title: "Do it",
       template: "src/index.html",
       chunks: ["index"],
-    }),
-    new HtmlWebpackPlugin({
-      filename: "allTasks.html",
-      title: "All tasks",
-      template: "src/index.html",
-      chunks: ["allTasks"],
-    }),
-    new HtmlWebpackPlugin({
-      filename: "projects.html",
-      title: "Projects",
-      template: "src/index.html",
-      chunks: ["projects"],
-    }),
-    new HtmlWebpackPlugin({
-      filename: "priority.html",
-      title: "Priority",
-      template: "src/index.html",
-      chunks: ["priority"],
     }),
   ],
   devtool: "eval-source-map",

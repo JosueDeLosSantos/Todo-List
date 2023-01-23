@@ -4,6 +4,7 @@ import * as DOM from "./DOM";
 import "./index.css";
 import "./form/form.css";
 import pinIcon from "./icons/pin.svg";
+import * as allProjects from "./all-tasks/allTasks";
 
 const nav = document.querySelector("nav");
 const logoA = document.createElement("a");
@@ -28,19 +29,16 @@ const ul = document.createElement("ul");
 const allTasks = document.createElement("li");
 allTasks.classList.add("allTasks");
 const allTasksA = document.createElement("a");
-allTasksA.setAttribute("href", "allTasks.html");
 allTasksA.innerText = "All tasks";
 allTasks.appendChild(allTasksA);
 const projects = document.createElement("li");
 projects.classList.add("projects");
 const projectsA = document.createElement("a");
-projectsA.setAttribute("href", "projects.html");
 projectsA.innerText = "Projects";
 projects.appendChild(projectsA);
 const priorityCSS = document.createElement("li");
 priorityCSS.classList.add("priorityCSS");
 const priorityCSSA = document.createElement("a");
-priorityCSSA.setAttribute("href", "priority.html");
 priorityCSSA.innerText = "Priority";
 priorityCSS.appendChild(priorityCSSA);
 nav.appendChild(ul);
@@ -82,75 +80,14 @@ const formButton = document.querySelector(".formButton");
 const addProject = document.querySelector(".addProject");
 const fieldset = document.querySelector("fieldset");
 const projectCatcher = document.querySelector(".projectCatcher");
-const addProjectLink = document.querySelector(".addProjectLink");
 const selectProjectList = document.querySelector(".selectProjectList");
+const addProjectLink = document.querySelector(".addProjectLink");
+
+if (localStorage.length === 9) {
+  main.setAttribute("style", "  height: 100%;");
+}
 
 main.appendChild(centerDiv);
-
-export const oldPR = [];
-export const objectCatcher = [];
-
-// Loops through "localStorage"
-for (let i = 0; i <= localStorage.length - 1; i += 1) {
-  // JSON.parse() converts localStorage JSON items into JS objects
-  // Appends each object to objectCatcher
-  objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
-}
-
-// Adds all projectList values to 'oldPR'
-for (let i = 0; i <= objectCatcher.length - 1; i += 1) {
-  oldPR.push(`${objectCatcher[i].projectList}`);
-}
-
-// noDupArray() returns "oldPR" without duplicates.
-export const projectRepo = services.noDupArray(oldPR);
-
-if (projectRepo.length > 0) {
-  // arrElementKiller() returns a new array without the value "All"
-  const subPrepo = services.arrElementKiller(projectRepo, "All");
-  // Appends all elements of subPrepo to selectProjectList
-  subPrepo.forEach((index) => DOM.appendOption(selectProjectList, index));
-}
-
-function taskCreator(e) {
-  if (form.dataset.edit === "false") {
-    const title = e.target.parentNode.children[2].value;
-    const description = e.target.parentNode.children[4].value;
-    const date = e.target.parentNode.children[6].value;
-    const priority = e.target.parentNode.children[8].value;
-    let projectList = fieldset.children[10].value;
-    const checked = false;
-
-    // Makes sure that tasks title contains any letter or number
-    if (services.containsLetters(title) || services.containsNumbers(title)) {
-      // Makes sure that projectCatcher contains letters or numbers
-      if (
-        services.containsLetters(projectCatcher.value) ||
-        services.containsNumbers(projectCatcher.value)
-      ) {
-        projectList = projectCatcher.value;
-        let task = { title, description, date, priority, projectList, checked };
-        const ID = localStorage.length;
-        // Adds new projects to 'localStorage'.
-        task = { title, description, date, priority, projectList, checked, ID };
-        localStorage.setItem(`${localStorage.length}`, JSON.stringify(task));
-        return;
-      }
-      // Makes sure that projectCatcher does not contain letters or numbers
-      if (
-        !services.containsLetters(projectCatcher.value) ||
-        !services.containsNumbers(projectCatcher.value)
-      ) {
-        let task = { title, description, date, priority, projectList, checked };
-        const ID = localStorage.length;
-        task = { title, description, date, priority, projectList, checked, ID };
-        localStorage.setItem(`${localStorage.length}`, JSON.stringify(task));
-        e.stopPropagation();
-      }
-    }
-  }
-}
-formButton.addEventListener("click", taskCreator);
 
 // Uncovers a new input inside the form to add new projects
 function projectMaker(e) {
@@ -159,11 +96,12 @@ function projectMaker(e) {
   projectList.value = "";
   projectCatcher.hidden = false;
 }
+
 window.projectMaker = projectMaker;
 addProject.addEventListener("click", projectMaker);
 /* Hides the "add project" option of the form when a project from 
 the project list is selected. */
-function hideProjectMaker() {
+export function hideProjectMaker() {
   addProjectLink.hidden = false;
   projectCatcher.hidden = true;
   projectCatcher.value = "";
@@ -171,13 +109,60 @@ function hideProjectMaker() {
 selectProjectList.addEventListener("click", hideProjectMaker);
 
 function showForm() {
-  console.log(form);
   if (main.contains(centerDiv)) {
     main.removeChild(centerDiv);
-    main.appendChild(form);
     form.hidden = false;
+
+    const oldPR = [];
+    const objectCatcher = [];
+
+    // Loops through "localStorage"
+    for (let i = 0; i <= localStorage.length - 1; i += 1) {
+      // JSON.parse() converts localStorage JSON items into JS objects
+      // Appends each object to objectCatcher
+      objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
+    }
+
+    // Adds all projectList values to 'oldPR'
+    for (let i = 0; i <= objectCatcher.length - 1; i += 1) {
+      oldPR.push(`${objectCatcher[i].projectList}`);
+    }
+
+    // noDupArray() returns "oldPR" without duplicates.
+    const projectRepo = services.noDupArray(oldPR);
+
+    if (projectRepo.length > 0) {
+      // arrElementKiller() returns a new array without the value "All"
+      const subPrepo = services.arrElementKiller(projectRepo, "All");
+      // Appends all elements of subPrepo to selectProjectList
+      subPrepo.forEach((index) => DOM.appendOption(selectProjectList, index));
+    }
+
+    // clear all inputs
+
+    const title = document.querySelector("#title");
+    const description = document.querySelector("#description");
+    const date = document.querySelector("#date");
     const priority = document.querySelector("#priority");
+    const projectList = document.querySelector("#project");
+    const newProjectCatcher = document.querySelector(".projectCatcher");
+
+    title.value = "";
+    description.value = "";
+    date.value = "";
     priority.value = "";
+    projectList.value = "All";
+    newProjectCatcher.value = "";
+
+    addProjectLink.hidden = false;
+    newProjectCatcher.hidden = true;
   }
 }
 spanCenter3B.addEventListener("click", showForm);
+
+function showTasks() {
+  if (form.hidden === false) form.hidden = true;
+  if (main.children[3]) main.removeChild(main.children[3]);
+  allProjects.showCard();
+}
+allTasksA.addEventListener("click", showTasks);

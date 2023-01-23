@@ -4,28 +4,17 @@ import chevronIcon from "../icons/chevron.svg";
 import renew from "../icons/autorenew.svg";
 import "./allTasks.css";
 import * as services from "../services";
+import * as DOM from "../DOM";
+// import * as index from "..index/index";
 
+/* const body = document.querySelector("body"); */
 const main = document.querySelector("main");
-const taskPresenter = document.createElement("div");
-taskPresenter.classList.add("taskPresenter");
-const tPtitle = document.createElement("div");
-tPtitle.classList.add("tPtitle");
-const h1Alltasks = document.createElement("h1");
-h1Alltasks.classList.add("h1Alltasks");
-h1Alltasks.innerText = "All tasks";
-const addButton = document.createElement("div");
-addButton.classList.add("addButton");
-addButton.innerText = "+";
-addButton.setAttribute("title", "Add new task");
-const resetButton = document.createElement("div");
-resetButton.classList.add("resetButton");
-const renewImage = new Image();
-renewImage.classList.add("renewImage");
+
+const addButton = document.querySelector(".addButton");
+const resetButton = document.querySelector(".resetButton");
+const renewImage = document.querySelector(".renewImage");
 renewImage.src = renew;
 resetButton.appendChild(renewImage);
-resetButton.setAttribute("title", "clear all");
-
-const centerDiv = document.querySelector(".centerDiv");
 
 const form = document.querySelector("form");
 const projectCatcher = document.querySelector(".projectCatcher");
@@ -33,43 +22,25 @@ const formPriority = document.querySelector("#priority");
 formPriority.value = "";
 const fieldset = document.querySelector("fieldset");
 const formButton = document.querySelector(".formButton");
+const addProjectLink = document.querySelector(".addProjectLink");
+const selectProjectList = document.querySelector(".selectProjectList");
 
-// Update screen
-centerDiv.replaceWith(taskPresenter);
-main.appendChild(addButton);
-main.appendChild(resetButton);
-taskPresenter.appendChild(tPtitle);
-taskPresenter.hidden = false;
-tPtitle.appendChild(h1Alltasks);
-
-export function addButtonAction() {
-  const redButton = main.children[3];
-  const blueButton = main.children[2];
-  const targetNode = main.children[1];
-  main.removeChild(redButton);
-  main.removeChild(blueButton);
-  targetNode.replaceWith(form);
-  form.hidden = false;
-}
-addButton.addEventListener("click", addButtonAction);
-
-function resetButtonAction() {
-  localStorage.clear();
-  window.location.reload();
-}
-resetButton.addEventListener("click", resetButtonAction);
-
-// Update objectCatcher
-const objectCatcher = [];
-for (let i = 0; i <= localStorage.length - 1; i += 1) {
-  objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
-}
-
+// BUG, this function do not work if the taskCreator button is clicked.
 function checkboxAction(e) {
+  const objectCatcher = [];
+
+  // Loops through "localStorage"
+  for (let i = 0; i <= localStorage.length - 1; i += 1) {
+    // JSON.parse() converts localStorage JSON items into JS objects
+    // Appends each object to objectCatcher
+    objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
+  }
   const targetNode = e.target.parentNode.parentNode.parentNode.dataset;
 
   if (objectCatcher[targetNode.Id].checked === false) {
     objectCatcher[targetNode.Id].checked = true;
+
+    //  console.log(objectCatcher[targetNode.Id]);
     // update localStorage
     localStorage.setItem(
       `${targetNode.Id}`,
@@ -78,22 +49,38 @@ function checkboxAction(e) {
     targetNode.checked = true;
   } else if (objectCatcher[targetNode.Id].checked === true) {
     objectCatcher[targetNode.Id].checked = false;
+
+    //  console.log(objectCatcher[targetNode.Id]);
     localStorage.setItem(
       `${targetNode.Id}`,
       JSON.stringify(objectCatcher[targetNode.Id])
     );
     targetNode.checked = false;
   }
+
+  // Update localStorage
+  /* for (let i = 0; i < objectCatcher.length; i += 1) {
+    localStorage.setItem(`${i}`, `${JSON.stringify(objectCatcher[i])}`);
+  } */
 }
 
 function deletion(e) {
-  const targetNode = e.target.parentNode.parentNode.dataset.Id;
+  const objectCatcher = [];
+
+  // Loops through "localStorage"
+  for (let i = 0; i <= localStorage.length - 1; i += 1) {
+    // JSON.parse() converts localStorage JSON items into JS objects
+    // Appends each object to objectCatcher
+    objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
+  }
+
+  const target = e.target.parentNode.parentNode.dataset.Id;
 
   // remove targetNode immediately
-  const container = main.children[1].children[1];
+  const container = e.target.parentNode.parentNode.parentNode;
   container.removeChild(e.target.parentNode.parentNode);
   // Update objectCatcher
-  objectCatcher.splice(+targetNode, 1);
+  objectCatcher.splice(+target, 1);
   // Update objects ID
   for (let i = 0; i <= objectCatcher.length - 1; i += 1) {
     objectCatcher[i].ID = `${i}`;
@@ -103,23 +90,31 @@ function deletion(e) {
   for (let i = 0; i <= objectCatcher.length - 1; i += 1) {
     localStorage.setItem(`${i}`, JSON.stringify(objectCatcher[i]));
   }
-  // Reload page
-  window.location.reload();
 }
 
 function editAction(e) {
+  const objectCatcher = [];
+
+  // Loops through "localStorage"
+  for (let i = 0; i <= localStorage.length - 1; i += 1) {
+    // JSON.parse() converts localStorage JSON items into JS objects
+    // Appends each object to objectCatcher
+    objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
+  }
+
   const targetNode = e.target.parentNode.parentNode.dataset.Id;
   const check = e.target.parentNode.parentNode.dataset.checked;
   form.dataset.edit = true;
   form.dataset.id = targetNode;
+  // eslint-disable-next-line consistent-return
   form.dataset.check = check;
-  taskPresenter.replaceWith(form);
+
+  const taskPresenter = document.querySelector(".taskPresenter");
+  main.removeChild(taskPresenter);
   form.hidden = false;
-  /* I removed main.children[i] instead of "addButton".
-  'the "addButton" variable cannot be used in this case, because
-  it will trigger errors on other sections like "Projects"' */
-  main.removeChild(main.children[2]);
-  main.removeChild(main.children[1]);
+
+  addButton.hidden = true;
+  resetButton.hidden = true;
   const title = form.children[0].children[2];
   const description = form.children[0].children[4];
   const date = form.children[0].children[6];
@@ -133,84 +128,44 @@ function editAction(e) {
   project.value = objectCatcher[targetNode].projectList;
 }
 
-function taskCreator(e) {
-  if (e.target.parentNode.parentNode.dataset.edit === "true") {
-    const title = e.target.parentNode.children[2].value;
-    const description = e.target.parentNode.children[4].value;
-    const date = e.target.parentNode.children[6].value;
-    const priority = e.target.parentNode.children[8].value;
-    let projectList = fieldset.children[10].value;
-    let checked = null;
-    // Change string value to boolean
-    if (e.target.parentNode.parentNode.dataset.check === "false") {
-      checked = false;
-    } else {
-      checked = true;
-    }
-    const ID = e.target.parentNode.parentNode.dataset.id;
-
-    // Makes sure that tasks title contains any letter or number
-    if (services.containsLetters(title) || services.containsNumbers(title)) {
-      // Makes sure that projectCatcher contains letters or numbers
-      if (
-        services.containsLetters(projectCatcher.value) ||
-        services.containsNumbers(projectCatcher.value)
-      ) {
-        projectList = projectCatcher.value;
-        const task = {
-          title,
-          description,
-          date,
-          priority,
-          projectList,
-          checked,
-          ID,
-        };
-        // Update objectCatcher
-        objectCatcher.splice(ID, 1, task);
-        // Update localStorage
-        localStorage.clear();
-        for (let i = 0; i <= objectCatcher.length - 1; i += 1) {
-          localStorage.setItem(`${i}`, JSON.stringify(objectCatcher[i]));
-        }
-        // Reload page
-        window.location.reload();
-      }
-      // Makes sure that projectCatcher does not contain letters or numbers
-      if (
-        !services.containsLetters(projectCatcher.value) ||
-        !services.containsNumbers(projectCatcher.value)
-      ) {
-        const task = {
-          title,
-          description,
-          date,
-          priority,
-          projectList,
-          checked,
-          ID,
-        };
-        // Update objectCather
-        objectCatcher.splice(ID, 1, task);
-        // Update localStorage
-        localStorage.clear();
-        for (let i = 0; i <= objectCatcher.length - 1; i += 1) {
-          localStorage.setItem(`${i}`, JSON.stringify(objectCatcher[i]));
-        }
-        // Reload page
-        window.location.reload();
-      }
-    }
-  }
-}
-formButton.addEventListener("click", taskCreator);
-
 // eslint-disable-next-line no-shadow
-export function showCard(objectCatcher) {
+export function showCard() {
+  if (localStorage.length > 8) {
+    main.setAttribute("style", "height: 100%;");
+  } else if (localStorage.length <= 8) {
+    main.setAttribute("style", "height: 100vh;");
+  }
+
+  // Update objectCatcher
+  const objectCatcher = [];
+  for (let i = 0; i <= localStorage.length - 1; i += 1) {
+    objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
+  }
+
+  const taskPresenter = document.createElement("div");
+  taskPresenter.classList.add("taskPresenter");
+  const tPtitle = document.createElement("div");
+  tPtitle.classList.add("tPtitle");
+  const h1Alltasks = document.createElement("h1");
+  h1Alltasks.classList.add("h1Alltasks");
+  h1Alltasks.innerText = "All tasks";
+
+  if (form.hidden === false) {
+    form.hidden = true;
+  }
+
+  main.appendChild(taskPresenter);
+
+  addButton.hidden = false;
+  resetButton.hidden = false;
+  taskPresenter.appendChild(tPtitle);
+  tPtitle.appendChild(h1Alltasks);
+
   // eslint-disable-next-line no-shadow
   const cardList = document.createElement("div");
   cardList.classList.add("cardList");
   taskPresenter.appendChild(cardList);
+
   for (let i = 0; i <= objectCatcher.length - 1; i += 1) {
     // creates card section
     const cardSection = document.createElement("div");
@@ -310,4 +265,225 @@ export function showCard(objectCatcher) {
     editButton.onclick = editAction;
   }
 }
-showCard(objectCatcher);
+
+function addButtonAction() {
+  addButton.hidden = true;
+  resetButton.hidden = true;
+
+  // remove old "taskPresenter" if there is one
+  if (main.children[3]) main.removeChild(main.children[3]);
+  // update dataset 'edit' if needed
+  if (form.dataset.edit === "true") form.dataset.edit = "false";
+
+  form.hidden = false;
+  form.dataset.section = "All";
+  const title = document.querySelector("#title");
+  const description = document.querySelector("#description");
+  const date = document.querySelector("#date");
+  const priority = document.querySelector("#priority");
+  const projectList = document.querySelector("#project");
+  const newProjectCatcher = document.querySelector(".projectCatcher");
+
+  title.value = "";
+  description.value = "";
+  date.value = "";
+  priority.value = "";
+  projectList.value = "All";
+  newProjectCatcher.value = "";
+
+  addProjectLink.hidden = false;
+  newProjectCatcher.hidden = true;
+
+  // reset selectProjectList
+  while (selectProjectList.children[1]) {
+    selectProjectList.removeChild(selectProjectList.children[1]);
+  }
+
+  const oldPR = [];
+  const objectCatcher = [];
+
+  // Loops through "localStorage"
+  for (let i = 0; i <= localStorage.length - 1; i += 1) {
+    // JSON.parse() converts localStorage JSON items into JS objects
+    // Appends each object to objectCatcher
+    objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
+  }
+
+  // Adds all projectList values to 'oldPR'
+  for (let i = 0; i <= objectCatcher.length - 1; i += 1) {
+    oldPR.push(`${objectCatcher[i].projectList}`);
+  }
+
+  // noDupArray() returns "oldPR" without duplicates.
+  const projectRepo = services.noDupArray(oldPR);
+
+  if (projectRepo.length > 0) {
+    // arrElementKiller() returns a new array without the value "All"
+    const subPrepo = services.arrElementKiller(projectRepo, "All");
+    // Appends all elements of subPrepo to selectProjectList
+    subPrepo.forEach((index) => DOM.appendOption(selectProjectList, index));
+  }
+}
+addButton.addEventListener("click", addButtonAction);
+
+function resetButtonAction() {
+  // Clear local storage
+  localStorage.clear();
+
+  if (main.children[3]) main.removeChild(main.children[3]);
+
+  showCard();
+}
+resetButton.addEventListener("click", resetButtonAction);
+
+function taskCreator(e) {
+  e.preventDefault();
+
+  if (form.dataset.edit === "false") {
+    const title = e.target.parentNode.children[2].value;
+    const description = e.target.parentNode.children[4].value;
+    const date = e.target.parentNode.children[6].value;
+    const priority = e.target.parentNode.children[8].value;
+    let projectList = fieldset.children[10].value;
+    const checked = false;
+
+    // Makes sure that tasks title contains any letter or number
+    if (services.containsLetters(title) || services.containsNumbers(title)) {
+      // Makes sure that projectCatcher contains letters or numbers
+      if (
+        services.containsLetters(projectCatcher.value) ||
+        services.containsNumbers(projectCatcher.value)
+      ) {
+        projectList = projectCatcher.value;
+        let task = {
+          title,
+          description,
+          date,
+          priority,
+          projectList,
+          checked,
+        };
+        const ID = localStorage.length;
+        // Adds new projects to 'localStorage'.
+        task = {
+          title,
+          description,
+          date,
+          priority,
+          projectList,
+          checked,
+          ID,
+        };
+        localStorage.setItem(`${localStorage.length}`, JSON.stringify(task));
+
+        if (localStorage.length > 8) {
+          main.setAttribute("style", "height: 100%;");
+        } else if (localStorage.length <= 8) {
+          main.setAttribute("style", "height: 100vh;");
+        }
+
+        showCard();
+        return;
+      }
+      // Makes sure that projectCatcher does not contain letters or numbers
+      if (
+        !services.containsLetters(projectCatcher.value) ||
+        !services.containsNumbers(projectCatcher.value)
+      ) {
+        let task = {
+          title,
+          description,
+          date,
+          priority,
+          projectList,
+          checked,
+        };
+        const ID = localStorage.length;
+        task = {
+          title,
+          description,
+          date,
+          priority,
+          projectList,
+          checked,
+          ID,
+        };
+        localStorage.setItem(`${localStorage.length}`, JSON.stringify(task));
+
+        if (localStorage.length > 8) {
+          main.setAttribute("style", "height: 100%;");
+        } else if (localStorage.length <= 8) {
+          main.setAttribute("style", "height: 100vh;");
+        }
+
+        showCard();
+      }
+    }
+  }
+
+  if (form.dataset.edit === "true") {
+    const title = e.target.parentNode.children[2].value;
+    const description = e.target.parentNode.children[4].value;
+    const date = e.target.parentNode.children[6].value;
+    const priority = e.target.parentNode.children[8].value;
+    let projectList = fieldset.children[10].value;
+    const ID = form.dataset.id;
+    const checked = form.dataset.check;
+
+    // Makes sure that tasks title contains any letter or number
+    if (services.containsLetters(title) || services.containsNumbers(title)) {
+      // Makes sure that projectCatcher contains letters or numbers
+      if (
+        services.containsLetters(projectCatcher.value) ||
+        services.containsNumbers(projectCatcher.value)
+      ) {
+        projectList = projectCatcher.value;
+        const task = {
+          title,
+          description,
+          date,
+          priority,
+          projectList,
+          checked,
+          ID,
+        };
+
+        localStorage.setItem(`${ID}`, JSON.stringify(task));
+
+        if (localStorage.length > 8) {
+          main.setAttribute("style", "height: 100%;");
+        } else if (localStorage.length <= 8) {
+          main.setAttribute("style", "height: 100vh;");
+        }
+
+        showCard();
+        return;
+      }
+      // Makes sure that projectCatcher does not contain letters or numbers
+      if (
+        !services.containsLetters(projectCatcher.value) ||
+        !services.containsNumbers(projectCatcher.value)
+      ) {
+        const task = {
+          title,
+          description,
+          date,
+          priority,
+          projectList,
+          checked,
+          ID,
+        };
+        localStorage.setItem(`${ID}`, JSON.stringify(task));
+
+        if (localStorage.length > 8) {
+          main.setAttribute("style", "height: 100%;");
+        } else if (localStorage.length <= 8) {
+          main.setAttribute("style", "height: 100vh;");
+        }
+
+        showCard();
+      }
+    }
+  }
+}
+formButton.addEventListener("click", taskCreator);

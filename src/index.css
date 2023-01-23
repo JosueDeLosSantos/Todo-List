@@ -381,6 +381,7 @@ nav {
 
 nav > ul > li > a {
   color: white;
+  cursor: pointer;
 }
 
 .logo {
@@ -423,7 +424,6 @@ main {
   justify-content: center;
   padding-bottom: 30px;
   background-color: rgba(0, 0, 0, 0.7);
-  height: 100vh;
 }
 
 .centerDiv {

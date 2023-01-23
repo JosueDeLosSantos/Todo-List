@@ -2,12 +2,12 @@
   --common-spacing: 15px;
   --card-background: rgb(250 250 252);
 }
-body {
+/* body {
   background-image: url("../background-image/coffee-list.jpg");
   background-size: cover;
   box-sizing: border-box;
   z-index: 0;
-}
+} */
 
 main {
   height: 100vh;
@@ -21,11 +21,11 @@ main {
 
 .cardList {
   border-radius: 8px;
-  width: 75%;
+  width: 50%;
   margin-left: auto;
   margin-right: auto;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
 }
 
 .cardSection {
@@ -36,7 +36,7 @@ main {
   border-radius: 5px;
   padding: var(--common-spacing);
   padding-bottom: 0;
-  width: 225px;
+  width: 100%;
 }
 
 .green {
@@ -157,6 +157,16 @@ main {
 .deleteButton,
 .editButton,
 .checkbox,
-.checkboxInput {
+.checkboxInput,
+.resetButton,
+.addButton,
+#date,
+#priority,
+#project:not(.projectCatcher),
+.formButton {
   cursor: pointer;
+}
+
+[hidden] {
+  display: none !important;
 }
