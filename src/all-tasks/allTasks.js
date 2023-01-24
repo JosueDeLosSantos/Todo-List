@@ -33,6 +33,7 @@ function checkboxAction(e) {
   }
 
   const targetNode = e.target.parentNode.parentNode.parentNode.dataset;
+  console.log(targetNode.checked);
 
   if (objectCatcher[targetNode.Id].checked === "false") {
     objectCatcher[targetNode.Id].checked = "true";
@@ -189,6 +190,7 @@ export function showCard() {
     } else {
       checkboxInput.checked = false;
     }
+    console.log(objectCatcher[i].checked);
 
     card.appendChild(checkbox);
 
@@ -339,7 +341,7 @@ function taskCreator(e) {
     const date = e.target.parentNode.children[6].value;
     const priority = e.target.parentNode.children[8].value;
     let projectList = fieldset.children[10].value;
-    const checked = false;
+    const checked = "false";
 
     // Makes sure that tasks title contains any letter or number
     if (services.containsLetters(title) || services.containsNumbers(title)) {
