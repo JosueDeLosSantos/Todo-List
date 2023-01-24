@@ -190,7 +190,6 @@ export function showCard() {
     } else {
       checkboxInput.checked = false;
     }
-    console.log(objectCatcher[i].checked);
 
     card.appendChild(checkbox);
 

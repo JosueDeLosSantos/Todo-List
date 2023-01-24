@@ -8,7 +8,6 @@ import * as allProjects from "./all-tasks/allTasks";
 
 const nav = document.querySelector("nav");
 const logoA = document.createElement("a");
-logoA.setAttribute("href", "index.html");
 const logo = document.createElement("div");
 logoA.appendChild(logo);
 logo.classList.add("logo");
@@ -82,6 +81,10 @@ const fieldset = document.querySelector("fieldset");
 const projectCatcher = document.querySelector(".projectCatcher");
 const selectProjectList = document.querySelector(".selectProjectList");
 const addProjectLink = document.querySelector(".addProjectLink");
+
+const taskPresenter = document.querySelector(".taskPresenter");
+const resetButton = document.querySelector(".resetButton");
+const addButton = document.querySelector(".addButton");
 
 if (localStorage.length === 9) {
   main.setAttribute("style", "  height: 100%;");
@@ -166,3 +169,17 @@ function showTasks() {
   allProjects.showCard();
 }
 allTasksA.addEventListener("click", showTasks);
+
+function home() {
+  if (form.hidden === false) {
+    form.hidden = true;
+    main.appendChild(centerDiv);
+  }
+  if (resetButton.hidden === false) resetButton.hidden = true;
+  if (addButton.hidden === false) addButton.hidden = true;
+  if (main.children[3].classList.contains("taskPresenter")) {
+    main.removeChild(main.children[3]);
+    main.appendChild(centerDiv);
+  }
+}
+logoA.addEventListener("click", home);

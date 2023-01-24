@@ -419,6 +419,10 @@ ul {
   gap: 20px;
 }
 
+a {
+  cursor: pointer;
+}
+
 main {
   display: flex;
   justify-content: center;
