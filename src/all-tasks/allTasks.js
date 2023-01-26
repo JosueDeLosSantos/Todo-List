@@ -5,7 +5,7 @@ import renew from "../icons/autorenew.svg";
 import "./allTasks.css";
 import * as services from "../services";
 import * as DOM from "../DOM";
-// import * as index from "..index/index";
+import * as projectSect2 from "../projects/projects";
 
 /* const body = document.querySelector("body"); */
 const main = document.querySelector("main");
@@ -33,7 +33,6 @@ function checkboxAction(e) {
   }
 
   const targetNode = e.target.parentNode.parentNode.parentNode.dataset;
-  console.log(targetNode.checked);
 
   if (objectCatcher[targetNode.Id].checked === "false") {
     objectCatcher[targetNode.Id].checked = "true";
@@ -127,9 +126,14 @@ export function showCard() {
   }
 
   // Update objectCatcher
-  const objectCatcher = [];
+  let objectCatcher = [];
   for (let i = 0; i <= localStorage.length - 1; i += 1) {
     objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
+  }
+
+  const projectsA = document.querySelector(".projectsA");
+  if (projectsA.dataset.project) {
+    objectCatcher = projectSect2.projectCards(projectsA.dataset.project);
   }
 
   const taskPresenter = document.createElement("div");
@@ -144,7 +148,15 @@ export function showCard() {
     form.hidden = true;
   }
 
-  main.appendChild(taskPresenter);
+  if (main.children[3]) {
+    if (main.children[3].classList.contains("projectsPresenter")) {
+      main.removeChild(main.children[3]);
+      main.appendChild(taskPresenter);
+      h1Alltasks.innerText = `${projectsA.dataset.project}`;
+    }
+  } else {
+    main.appendChild(taskPresenter);
+  }
 
   addButton.hidden = false;
   resetButton.hidden = false;

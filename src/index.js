@@ -5,6 +5,7 @@ import "./index.css";
 import "./form/form.css";
 import pinIcon from "./icons/pin.svg";
 import * as allProjects from "./all-tasks/allTasks";
+import * as projectSect from "./projects/projects";
 
 const nav = document.querySelector("nav");
 const logoA = document.createElement("a");
@@ -33,6 +34,7 @@ allTasks.appendChild(allTasksA);
 const projects = document.createElement("li");
 projects.classList.add("projects");
 const projectsA = document.createElement("a");
+projectsA.classList.add("projectsA");
 projectsA.innerText = "Projects";
 projects.appendChild(projectsA);
 const priorityCSS = document.createElement("li");
@@ -75,14 +77,11 @@ centerDiv.appendChild(spanCenter3);
 const main = document.querySelector("main");
 
 const form = document.querySelector("form");
-const formButton = document.querySelector(".formButton");
 const addProject = document.querySelector(".addProject");
-const fieldset = document.querySelector("fieldset");
 const projectCatcher = document.querySelector(".projectCatcher");
 const selectProjectList = document.querySelector(".selectProjectList");
 const addProjectLink = document.querySelector(".addProjectLink");
 
-const taskPresenter = document.querySelector(".taskPresenter");
 const resetButton = document.querySelector(".resetButton");
 const addButton = document.querySelector(".addButton");
 
@@ -111,35 +110,60 @@ export function hideProjectMaker() {
 }
 selectProjectList.addEventListener("click", hideProjectMaker);
 
+function oldPRaction() {
+  const oldPR = [];
+  const objectCatcher = [];
+
+  // Loops through "localStorage"
+  for (let i = 0; i <= localStorage.length - 1; i += 1) {
+    // JSON.parse() converts localStorage JSON items into JS objects
+    // Appends each object to objectCatcher
+    objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
+  }
+
+  // Adds all projectList values to 'oldPR'
+  for (let i = 0; i <= objectCatcher.length - 1; i += 1) {
+    oldPR.push(`${objectCatcher[i].projectList}`);
+  }
+  return oldPR;
+}
+oldPRaction();
+
+function optionAppender() {
+  const selectProjectList2 = document.querySelector(".selectProjectList");
+  // noDupArray() returns "oldPR" without duplicates.
+  const projectRepo = services.noDupArray(oldPRaction());
+
+  const optionNumber = document.querySelectorAll(".auto");
+
+  // Check to see if projects have been added
+  if (projectRepo.length > 0) {
+    // Check to see if options have been added to the select input
+    if (optionNumber[1]) {
+      const temp = optionNumber.length;
+      // Clean the select input option list and leaves the default 'All' option.
+      for (let i = temp; i > 1; i -= 1) {
+        selectProjectList2.removeChild(selectProjectList2.lastChild);
+      }
+    }
+  }
+
+  if (projectRepo.length > 1) {
+    // arrElementKiller() returns a new array without the value "All"
+    const subPrepo = services.arrElementKiller(projectRepo, "All");
+    // Appends all elements of subPrepo to selectProjectList
+    subPrepo.forEach((index) => DOM.appendOption(selectProjectList2, index));
+  }
+}
+optionAppender();
+
 function showForm() {
   if (main.contains(centerDiv)) {
     main.removeChild(centerDiv);
     form.hidden = false;
 
-    const oldPR = [];
-    const objectCatcher = [];
-
-    // Loops through "localStorage"
-    for (let i = 0; i <= localStorage.length - 1; i += 1) {
-      // JSON.parse() converts localStorage JSON items into JS objects
-      // Appends each object to objectCatcher
-      objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
-    }
-
-    // Adds all projectList values to 'oldPR'
-    for (let i = 0; i <= objectCatcher.length - 1; i += 1) {
-      oldPR.push(`${objectCatcher[i].projectList}`);
-    }
-
-    // noDupArray() returns "oldPR" without duplicates.
-    const projectRepo = services.noDupArray(oldPR);
-
-    if (projectRepo.length > 0) {
-      // arrElementKiller() returns a new array without the value "All"
-      const subPrepo = services.arrElementKiller(projectRepo, "All");
-      // Appends all elements of subPrepo to selectProjectList
-      subPrepo.forEach((index) => DOM.appendOption(selectProjectList, index));
-    }
+    oldPRaction();
+    optionAppender();
 
     // clear all inputs
 
@@ -163,13 +187,6 @@ function showForm() {
 }
 spanCenter3B.addEventListener("click", showForm);
 
-function showTasks() {
-  if (form.hidden === false) form.hidden = true;
-  if (main.children[3]) main.removeChild(main.children[3]);
-  allProjects.showCard();
-}
-allTasksA.addEventListener("click", showTasks);
-
 function home() {
   if (form.hidden === false) {
     form.hidden = true;
@@ -177,9 +194,33 @@ function home() {
   }
   if (resetButton.hidden === false) resetButton.hidden = true;
   if (addButton.hidden === false) addButton.hidden = true;
-  if (main.children[3].classList.contains("taskPresenter")) {
-    main.removeChild(main.children[3]);
-    main.appendChild(centerDiv);
+  if (main.children[3]) {
+    if (main.children[3].classList.contains("taskPresenter")) {
+      main.removeChild(main.children[3]);
+      main.appendChild(centerDiv);
+    }
   }
 }
 logoA.addEventListener("click", home);
+
+function showTasks() {
+  if (form.hidden === false) form.hidden = true;
+  if (main.children[3]) main.removeChild(main.children[3]);
+
+  if (projectsA.dataset.project) {
+    console.log(projectsA);
+    projectsA.removeAttribute("data-project");
+  }
+
+  allProjects.showCard();
+}
+allTasksA.addEventListener("click", showTasks);
+
+function showProjects() {
+  if (form.hidden === false) form.hidden = true;
+  if (resetButton.hidden === false) resetButton.hidden = true;
+  if (addButton.hidden === false) addButton.hidden = true;
+  if (main.children[3]) main.removeChild(main.children[3]);
+  projectSect.projectViewer();
+}
+projectsA.addEventListener("click", showProjects);

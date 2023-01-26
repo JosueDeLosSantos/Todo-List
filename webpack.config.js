@@ -9,8 +9,8 @@ module.exports = {
       "./src/services.js",
       "./src/DOM.js",
       "./src/all-tasks/allTasks.js",
-      /*  "./src/projects/projects.js",
-      "./src/priority/priority.js", */
+      "./src/projects/projects.js",
+      /* "./src/priority/priority.js", */
     ],
   },
   plugins: [
