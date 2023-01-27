@@ -196,10 +196,8 @@ function home() {
   if (resetButton.hidden === false) resetButton.hidden = true;
   if (addButton.hidden === false) addButton.hidden = true;
   if (main.children[3]) {
-    if (main.children[3].classList.contains("taskPresenter")) {
-      main.removeChild(main.children[3]);
-      main.appendChild(centerDiv);
-    }
+    main.removeChild(main.children[3]);
+    main.appendChild(centerDiv);
   }
 }
 logoA.addEventListener("click", home);
