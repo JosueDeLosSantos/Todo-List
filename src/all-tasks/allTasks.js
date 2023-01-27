@@ -2,10 +2,14 @@ import "../index.css";
 import "../form/form.css";
 import chevronIcon from "../icons/chevron.svg";
 import renew from "../icons/autorenew.svg";
+import renew2 from "../icons/folder_delete.svg";
 import "./allTasks.css";
 import * as services from "../services";
 import * as DOM from "../DOM";
+// eslint-disable-next-line import/no-cycle
 import * as projectSect2 from "../projects/projects";
+// eslint-disable-next-line import/no-cycle
+import * as index from "../index";
 
 /* const body = document.querySelector("body"); */
 const main = document.querySelector("main");
@@ -13,6 +17,8 @@ const main = document.querySelector("main");
 const addButton = document.querySelector(".addButton");
 const resetButton = document.querySelector(".resetButton");
 const renewImage = document.querySelector(".renewImage");
+// renewImage.classList.add("renew");
+renewImage.setAttribute("title", "clear all");
 renewImage.src = renew;
 resetButton.appendChild(renewImage);
 
@@ -23,6 +29,7 @@ formPriority.value = "";
 const fieldset = document.querySelector("fieldset");
 const formButton = document.querySelector(".formButton");
 const addProjectLink = document.querySelector(".addProjectLink");
+const newProjectCatcher = document.querySelector(".projectCatcher");
 const selectProjectList = document.querySelector(".selectProjectList");
 
 function checkboxAction(e) {
@@ -82,6 +89,9 @@ function deletion(e) {
 }
 
 function editAction(e) {
+  index.oldPRaction();
+  index.optionAppender();
+
   const objectCatcher = [];
 
   // Loops through "localStorage"
@@ -131,11 +141,6 @@ export function showCard() {
     objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
   }
 
-  const projectsA = document.querySelector(".projectsA");
-  if (projectsA.dataset.project) {
-    objectCatcher = projectSect2.projectCards(projectsA.dataset.project);
-  }
-
   const taskPresenter = document.createElement("div");
   taskPresenter.classList.add("taskPresenter");
   const tPtitle = document.createElement("div");
@@ -143,6 +148,25 @@ export function showCard() {
   const h1Alltasks = document.createElement("h1");
   h1Alltasks.classList.add("h1Alltasks");
   h1Alltasks.innerText = "All tasks";
+
+  if (addButton.hidden === true) {
+    addButton.hidden = false;
+  }
+
+  const projectsA = document.querySelector(".projectsA");
+
+  if (projectsA.dataset.project) {
+    objectCatcher = projectSect2.projectCards(projectsA.dataset.project);
+    h1Alltasks.innerText = `${projectsA.dataset.project}`;
+    renewImage.src = renew2;
+    renewImage.setAttribute("title", "empty project");
+    // renewImage.classList.remove("renew");
+    // renewImage.classList.add("renew2");
+    if (addButton.hidden === true) addButton.hidden = false;
+  } else {
+    renewImage.src = renew;
+    renewImage.setAttribute("title", "clear all");
+  }
 
   if (form.hidden === false) {
     form.hidden = true;
@@ -158,7 +182,6 @@ export function showCard() {
     main.appendChild(taskPresenter);
   }
 
-  addButton.hidden = false;
   resetButton.hidden = false;
   taskPresenter.appendChild(tPtitle);
   tPtitle.appendChild(h1Alltasks);
@@ -253,6 +276,9 @@ export function showCard() {
     cardDate.appendChild(cardDateP);
     cardDateP.innerText = `${objectCatcher[i].date}`;
 
+    addProjectLink.hidden = false;
+    newProjectCatcher.hidden = true;
+
     const expander = () => {
       if (description.hidden && edition.hidden) {
         description.hidden = false;
@@ -289,7 +315,6 @@ function addButtonAction() {
   const date = document.querySelector("#date");
   const priority = document.querySelector("#priority");
   const projectList = document.querySelector("#project");
-  const newProjectCatcher = document.querySelector(".projectCatcher");
 
   title.value = "";
   description.value = "";
@@ -334,6 +359,12 @@ function addButtonAction() {
 addButton.addEventListener("click", addButtonAction);
 
 function resetButtonAction() {
+  const projectsA = document.querySelector(".projectsA");
+  if (projectsA.dataset.project) {
+    projectSect2.deleteProject();
+    return;
+  }
+
   // Clear local storage
   localStorage.clear();
 
@@ -389,6 +420,12 @@ function taskCreator(e) {
           main.setAttribute("style", "height: 100vh;");
         }
 
+        const projectsA2 = document.querySelector(".projectsA");
+        if (projectsA2) {
+          index.showProjects();
+          return;
+        }
+
         showCard();
         return;
       }
@@ -421,6 +458,12 @@ function taskCreator(e) {
           main.setAttribute("style", "height: 100%;");
         } else if (localStorage.length <= 8) {
           main.setAttribute("style", "height: 100vh;");
+        }
+
+        const projectsA2 = document.querySelector(".projectsA");
+        if (projectsA2) {
+          index.showProjects();
+          return;
         }
 
         showCard();

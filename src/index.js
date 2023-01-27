@@ -4,6 +4,7 @@ import * as DOM from "./DOM";
 import "./index.css";
 import "./form/form.css";
 import pinIcon from "./icons/pin.svg";
+// eslint-disable-next-line import/no-cycle
 import * as allProjects from "./all-tasks/allTasks";
 import * as projectSect from "./projects/projects";
 
@@ -110,7 +111,7 @@ export function hideProjectMaker() {
 }
 selectProjectList.addEventListener("click", hideProjectMaker);
 
-function oldPRaction() {
+export function oldPRaction() {
   const oldPR = [];
   const objectCatcher = [];
 
@@ -129,7 +130,7 @@ function oldPRaction() {
 }
 oldPRaction();
 
-function optionAppender() {
+export function optionAppender() {
   const selectProjectList2 = document.querySelector(".selectProjectList");
   // noDupArray() returns "oldPR" without duplicates.
   const projectRepo = services.noDupArray(oldPRaction());
@@ -148,7 +149,7 @@ function optionAppender() {
     }
   }
 
-  if (projectRepo.length > 1) {
+  if (projectRepo.length > 0) {
     // arrElementKiller() returns a new array without the value "All"
     const subPrepo = services.arrElementKiller(projectRepo, "All");
     // Appends all elements of subPrepo to selectProjectList
@@ -208,7 +209,6 @@ function showTasks() {
   if (main.children[3]) main.removeChild(main.children[3]);
 
   if (projectsA.dataset.project) {
-    console.log(projectsA);
     projectsA.removeAttribute("data-project");
   }
 
@@ -216,10 +216,10 @@ function showTasks() {
 }
 allTasksA.addEventListener("click", showTasks);
 
-function showProjects() {
+export function showProjects() {
   if (form.hidden === false) form.hidden = true;
   if (resetButton.hidden === false) resetButton.hidden = true;
-  if (addButton.hidden === false) addButton.hidden = true;
+  if (addButton.hidden === true) addButton.hidden = false;
   if (main.children[3]) main.removeChild(main.children[3]);
   projectSect.projectViewer();
 }

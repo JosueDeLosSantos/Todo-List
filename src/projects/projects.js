@@ -2,15 +2,11 @@ import "../index.css";
 import "../form/form.css";
 import "../all-tasks/allTasks.css";
 import "./projects.css";
-// import folderDelete from "../icons/folder_delete.svg";
 import * as services from "../services";
+// eslint-disable-next-line import/no-cycle
 import * as tasks from "../all-tasks/allTasks";
 
 const main = document.querySelector("main");
-const taskPresenter = document.querySelector(".taskPresenter");
-const h1Alltasks = document.querySelector(".h1Alltasks");
-const cardList = document.querySelector(".cardList");
-// cardList.classList.add("cardList");
 
 /* Capture only the task with the project name 'pam' and 
 saves them on tempArray. this function returns tasks that belong
@@ -44,10 +40,22 @@ export function projectCards(pam) {
   form.hidden = false;
 } */
 
-/* function deleteProject(e) {
-  const projectName =
-    e.target.parentNode.parentNode.children[1].children[0].children[0]
-      .innerText;
+// const resetButton = document.querySelector(".resetButton");
+
+export function deleteProject() {
+  const cardList = document.querySelector(".cardList");
+  const h1Alltasks = document.querySelector(".h1Alltasks");
+  const projectName = h1Alltasks.innerText;
+
+  // clean cardList
+  while (cardList.firstChild) {
+    cardList.removeChild(cardList.firstChild);
+  }
+
+  const objectCatcher = [];
+  for (let i = 0; i <= localStorage.length - 1; i += 1) {
+    objectCatcher.push(JSON.parse(localStorage.getItem(`${i}`)));
+  }
 
   for (let i = 0; i < objectCatcher.length; i++) {
     // Spot all elements that contain "projectName"
@@ -67,9 +75,7 @@ export function projectCards(pam) {
   for (let i = 0; i < tempArray.length; i += 1) {
     localStorage.setItem(`${i}`, JSON.stringify(tempArray[i]));
   }
-  // Reload page
-  window.location.reload();
-} */
+}
 
 /* const newAddButton = document.createElement("div");
 newAddButton.classList.add("addButton");
@@ -182,10 +188,6 @@ export function projectViewer() {
       const projectName = projectSection.children[0].innerText;
       projectsA.dataset.project = `${projectName}`;
       console.log(projectsA);
-
-      /* h1Alltasks.innerText = `${projectName}`;
-      taskPresenter.removeChild(cardList); */
-      // main.appendChild(newResetButton);
 
       // Show only the cards of the project selected
       tasks.showCard();
