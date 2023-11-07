@@ -1,5 +1,7 @@
 # Todo-List
 
+See a live preview at: https://josuedelossantos.github.io/Todo-List/
+
 Icons were taken from:
 https://icons8.com/icons
 https://fonts.google.com/icons
